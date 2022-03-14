@@ -1,0 +1,321 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+html {
+    margin: 0 auto;
+    max-width: 1200px;
+    scroll-behavior: smooth;
+}
+
+.section-header {
+    text-align: center;
+    margin: 100px auto 48px;
+}
+
+.section-title {
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #56B280;
+    color: white;
+    padding: 8px 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.btn:hover {
+    /* border: #56B280 1px; */
+    background-color: white;
+    color: #56B280;
+    border-color: #56B280;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.space {
+    height: 40px;
+}
+
+/*********************************/
+
+/* Begin: Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background-color: #56B280;
+    z-index: 1;
+}
+
+/* End: Header */
+
+/* Begin: Slideshow */
+.slideshow {
+    margin-top: 70px;
+    text-align: center;
+    height: 490px;
+    background: url("../img/home/slideshow-bg.jpg") no-repeat center / cover;
+}
+
+.welcome-banner {
+    position: absolute;
+    top: 160px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    height: 290px;
+    width: 600px;
+    background: rgba(247, 248, 250, 0.8);
+    backdrop-filter: blur(24px);
+    padding: 32px 32px;
+    border-radius: 4px;
+}
+
+.welcome-banner h1,
+.welcome-banner .icon {
+    font-size: 32px;
+    line-height: 50px;
+    font-weight:bold;
+}
+
+.welcome-banner p {
+    padding: 8px 32px;
+}
+/* End: Slideshow */
+
+
+/* Begin: Category */
+
+.category .section-header {
+    margin-top: 48px;
+}
+
+.category .category-cards {
+    padding: 0 112px;
+    width: 100%;
+}
+
+.category-cards .category-card {
+    text-align: center;
+}
+
+.category-card .category-img {
+    margin: 0 auto 28px;
+    width: 170px;
+    height: 170px;
+    box-shadow: 0px 0px 60px 8px rgba(225, 225, 225, 0.9);
+    border-radius: 110px;
+}
+
+.category-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 110px;
+    object-fit: contain;
+}
+
+.category-img:hover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0px 0px 40px 10px rgba(91, 192, 138, 0.3);;
+}
+/* End: Category */
+
+
+/* Begin: Latest products*/
+.products {
+    padding: 0 112px;
+    margin: auto;
+}
+
+.product {
+    margin: auto;
+    max-width: 200px;
+    height: 240px;
+    padding: 0;
+    box-shadow: 0px 0px 80px #E1E1E1;
+}
+
+.product:hover {
+    border: 2px solid #56B280;
+}
+
+.product .product-img {
+    /* width: 180px; */
+    padding: 10px 10px 0;
+    height: 155px;  
+}
+
+.product img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+}
+
+.product .name {
+    padding: 0 10px;
+    margin: 0;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.product .price {
+    padding: 0 10px;
+    margin: 0;
+    color: #56B280;
+}
+
+.product .address {    
+    padding: 0 10px;
+    font-size: 14px;
+    color: #b7b7b7;
+    text-align: right;
+}
+
+/* End: Latest products*/
+
+
+/* Begin: Info*/
+.home-info .infos {
+    padding: 0 100px;
+    margin: auto;
+}
+
+.infos .info {
+    text-align: center;
+    margin: 0 13px;
+    max-width: 220px;
+    height: 190px;
+    padding: 20px 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.info .info-container {
+    margin: auto 0;
+}
+
+.info i {
+    font-size: 40px;
+    color: #56B280;
+}
+
+.info .info-description {
+    font-size: 13px;
+    color: #8d8a8a;
+}
+/* End: Info*/
+
+
+/* Begin: Banner*/
+.banner {
+    margin-top: 120px;
+    background-color: #EEF7F2;
+}
+
+.banner-info p, .banner-info span {
+    color: #56B280;
+}
+
+.banner-row {
+    margin: auto;
+    padding: 84px 112px;
+}
+
+.banner-img {
+    margin: 0 32px;
+}
+
+.banner-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+}
+
+.banner-info ul {
+    padding: 0;
+}
+/* End: Banner*/
+
+
+
+/* Begin: Discount*/
+.discount {
+    margin: 120px auto;
+    background-color: #F7F8FA;
+}
+
+.related-prod {
+    padding: 0 116px;
+    margin: -48px auto 20px;
+}
+
+.related-prod .see-all {
+    text-align: right;
+    color: #56B280;
+}
+/* End: Discount*/
+
+
+/* Begin: Feedback*/
+.customers {
+    padding: 0 112px;
+}
+
+.customer {
+    text-align: center;
+    box-shadow: 0px 4px 24px rgba(139, 167, 178, 0.16);
+    border-radius: 6px;
+    max-width: 250px;
+    margin: auto;
+}
+
+.customer-pic {
+    height: 90px;
+    width: 90px;
+    margin: 24px auto;
+}
+
+.customer-pic img{
+    width: 100%;
+    height: 100%;
+    border-radius: 110px;
+    object-fit: cover;
+}
+/* End: Feedback*/
+
+
+/* Begin: Footer*/
+.footer {
+    height: 370px;
+    background-color: black;
+    margin-top: 84px;
+}
+/* End: Footer*/
+
+
+
+/* Begin: */
+/* End: */
+
+
+/* Begin: */
+/* End: */
+
+
+/* Begin: */
+/* End: */
+
