@@ -1,54 +1,36 @@
 const functions = require("firebase-functions");
-
 const express = require('express');
 const engines = require('consolidate');
 var hbs = require('handlebars');
-const admin = require('firebase-admin');
 
 const app = express();
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
 app.set('view engine','hbs');
 
-var serviceAccount = require("./farmnine-6d2d9-firebase-adminsdk-4ty87-7e33a93cfe.json");
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
+var firebase = require("firebase/app");
+require("firebase/firebase-auth");
+require("firebase/firebase-firestore");
 
+const firebaseConfig = {
+    apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
+    authDomain: "farmnine-6d2d9.firebaseapp.com",
+    projectId: "farmnine-6d2d9",
+    storageBucket: "farmnine-6d2d9.appspot.com",
+    messagingSenderId: "527234496843",
+    appId: "1:527234496843:web:8651706cd64f05f19690ce",
+    measurementId: "G-GB1RK8N62V"
+};
 
-async function getFirestore(){
-    const firestore_con  = await admin.firestore();
-    const writeResult = firestore_con.collection('sample').doc('sample_doc').get().then(doc => {
-    if (!doc.exists) { console.log('No such document!'); }
-    else {return doc.data();}})
-    .catch(err => { console.log('Error getting document', err);});
-    return writeResult;
-}
+var defaultProject=firebase.initializeApp(firebaseConfig);
+var auth = defaultProject.auth();
 
-async function insertFormData(request){
-    const writeResult = await admin.firestore().collection('form_data').add({
-    firstname: request.body.firstname,
-    lastname: request.body.lastname
-    })
-    .then(function() {console.log("Document successfully written!");})
-    .catch(function(error) {console.error("Error writing document: ", error);});
-}
+const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService")
 
 app.get('/',async (request,response) =>{
-    var db_result = await getFirestore();
-    response.render('index',{db_result});
-});
-
-app.post('/insert_data',async (request,response) =>{
-    var insert = await insertFormData(request);
-    response.sendStatus(200);
+    registerUser("abcdef@abcd.com", "123456", auth);
+    response.send("test")
 });
 
 exports.app = functions.https.onRequest(app);
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+
