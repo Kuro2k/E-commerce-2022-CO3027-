@@ -52,5 +52,8 @@ app.get('/about', async (req, res) => {
     res.render("about");
 })
 
+app.get('*', (req, res) => {
+    res.render("404")
+})
 exports.app = functions.https.onRequest(app);
 
