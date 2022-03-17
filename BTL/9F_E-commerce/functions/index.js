@@ -25,8 +25,8 @@ filenames.forEach(function (filename) {
 });
 
 var firebase = require("firebase/app");
-require("firebase/firebase-auth");
-require("firebase/firebase-firestore");
+// var auth = require("firebase/auth");
+// require("firebase/firestore");
 
 const firebaseConfig = {
     apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
@@ -39,10 +39,12 @@ const firebaseConfig = {
 };
 
 var defaultProject=firebase.initializeApp(firebaseConfig);
-var auth = defaultProject.auth();
+// console.log(auth);
+// nhiệm màu ghê :))
+// vậy nữa t push lên bản này luôn phải ko
 
-const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
-const { async } = require("@firebase/util");
+// const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
+// const { async } = require("@firebase/util");
 
 app.get('/',async (req, res) =>{
     res.render("index");

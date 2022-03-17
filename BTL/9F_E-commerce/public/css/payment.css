@@ -1,0 +1,157 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+html {
+    margin: 0 auto;
+    /* max-width: 1200px; */
+    scroll-behavior: smooth;
+}
+
+.header {
+    height: 70px;
+    background-color: #56B280;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #56B280;
+    color: white;
+    padding: 8px 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.btn:hover {
+    /* border: #56B280 1px; */
+    background-color: white;
+    color: #56B280;
+    border-color: #56B280;
+}
+
+hr {
+    margin: 12px 0;
+    color: #56B280;
+}
+
+p {
+    line-height: 24px;
+    margin: 0;
+}
+
+/* span { display:inline-block;
+} */
+
+a, a:hover {
+    color: #56B280;
+}
+
+
+/* Begin: Page-info */
+.page-info {
+    margin-top: 70px;
+    background-color: rgba(86, 178, 128, 15%);
+    height: 180px;
+    padding: 56px 112px;
+}
+
+.page-info .page-name {
+    font-weight: bolder;
+}
+
+/* End: Page-info */
+
+
+/* Begin: payment content */
+.payment-content {
+    margin: 70px auto;
+}
+/* End:  payment content */
+
+
+/* Begin: payment info */
+.payment-info {
+    margin: 0 64px 0 112px;
+    padding: 48px 0;
+}
+
+.info-container {
+    /* width: 400px; */
+    border: 1px solid rgba(86, 178, 128, 0.4);
+    border-radius: 7px;
+    padding: 20px;
+    margin-bottom: 32px;
+}
+
+.price {
+    text-align: right;
+    color: #56B280;
+}
+
+input[type="radio"] {
+    accent-color: #56B280;
+}
+
+.nav-btn .back {
+    line-height: 42px;
+}
+
+.btn-container {
+    text-align: right;
+}
+
+.add-card {
+    background-color:white;
+    box-shadow: none;
+    color: #56B280;
+    border: 1px solid #56B280;
+    margin-top: 12px;
+    display: block;
+}
+
+/* End: payment info*/
+
+
+/* Begin:  Cart info*/
+.cart-info {
+    background-color: #F2F2F2;
+    padding: 48px 112px 48px 64px;
+}
+/* End:  Cart info*/
+
+
+/* Begin:  Discount*/
+.discount-input {
+    margin: 28px auto;
+}
+.discount-input a {
+    background-color: #A8A8A8;
+    padding: 8px;
+    margin-left: 20px;
+    box-shadow: none;
+}
+/* End:  Discount*/
+
+/* Begin:  Total */
+.total .price {
+    color: black;
+}
+
+.total p {
+    margin: 8px 0;
+}
+/* End:  Total */
+
+
+
+
+
+
+
