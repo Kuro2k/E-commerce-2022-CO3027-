@@ -15,13 +15,9 @@
   "dependencies": {
     "consolidate": "^0.16.0",
     "express": "^4.17.3",
-    "firebase": "^8.9.1",
+    "firebase": "^9.6.8",
     "firebase-functions": "^3.19.0",
-    "handlebars": "^4.7.7",
-    "hbs": "^4.2.0"
-  },
-  "devDependencies": {
-    "firebase-functions-test": "^0.2.0"
+    "handlebars": "^4.7.7"
   },
   "private": true
 }

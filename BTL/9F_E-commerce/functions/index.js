@@ -25,8 +25,7 @@ filenames.forEach(function (filename) {
 });
 
 var firebase = require("firebase/app");
-require("firebase/firebase-auth");
-require("firebase/firebase-firestore");
+var auth = require("firebase/auth");
 
 const firebaseConfig = {
     apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
@@ -39,8 +38,6 @@ const firebaseConfig = {
 };
 
 var defaultProject=firebase.initializeApp(firebaseConfig);
-var auth = defaultProject.auth();
-
 const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
 const { async } = require("@firebase/util");
 

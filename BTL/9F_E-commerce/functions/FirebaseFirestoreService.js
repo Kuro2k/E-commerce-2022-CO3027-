@@ -1,13 +1,7 @@
-import firebase from "firebase";
-
-const firestore = firebase.firestore();
+var firestore = require("firebase/firestore");
 
 const createDocument = (collection, document) => {
-    return firebase.collection(collection).add(document);
+    return firestore.collection(collection).add(document);
 };
 
-const FirebaseFirestoreService = {
-    createDocument,
-};
-
-export default FirebaseFirestoreService;
+module.exports = createDocument;
