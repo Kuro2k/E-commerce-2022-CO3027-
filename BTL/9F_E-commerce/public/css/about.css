@@ -1,0 +1,318 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+html {
+    margin: 0 auto;
+    max-width: 1200px;
+    scroll-behavior: smooth;
+}
+
+.section-header {
+    text-align: center;
+    margin: 100px auto 48px;
+}
+
+.section-title {
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #56B280;
+    color: white;
+    padding: 8px 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.btn:hover {
+    /* border: #56B280 1px; */
+    background-color: white;
+    color: #56B280;
+    border-color: #56B280;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.space {
+    height: 40px;
+}
+
+
+:root{
+    --mcolor: #56B280;
+}
+
+
+h2 {
+    font-weight: bold;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.subheader{
+    height: 29px;
+    background: var(--mcolor) !important;
+    font-size: 12px;
+    color: white;
+}
+
+.mainheader{
+    font-size: 16px;
+    color: black;
+}
+
+
+/* Begin: Intro */
+.intro {
+    margin: 84px auto;
+    padding: 0 112px;
+}
+
+.intro img{
+    width: 100%;
+}
+
+.intro-img {
+    padding: 0;
+    margin: 0 32px 0 0;
+}
+
+.intro-description p {
+    margin-top: 28px;
+    text-align: justify;
+}
+/* End: Intro */
+
+
+/* Begin: Page-info */
+.page-info {
+    margin-top: 70px;
+    background-color: rgba(86, 178, 128, 15%);
+    height: 180px;
+    padding: 56px 112px;
+}
+
+.page-info .page-name {
+    font-weight: bolder;
+}
+
+/* End: Page-info */
+
+/* Begin:  Slideshow*/
+.slide .member-intro {
+    height: 250px;
+    width: 100%;
+}
+
+.slide {
+    background-color: rgba(86, 178, 128, 0.15);
+    padding: 32px 112px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.slide i {
+    font-size: 40px;
+    color: #56B280;
+}
+/* End:  Slideshow*/
+
+/* Reason-why */
+
+.content-container .reason-why {
+    margin-top: 48px;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+.section-title {
+    margin-top: 28px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.member-list {
+    padding: 24px 112px;
+    margin-bottom: 36px;
+}
+
+.member-list .member-item i {
+    margin: auto 0;
+    height: 83px;
+    line-height: 83px;
+}
+
+.content-container .member-list .member-item {
+    width: calc(100% / 3);
+    text-align: center;
+    margin: auto;
+    padding: 0 24px;
+}
+
+.content-container .rw-icon {
+    color: var(--mcolor);
+    font-size: 20px;
+    line-height: 46px;
+}
+
+.content-container .member-item .member-name {
+    color: var(--mcolor);
+    margin-top: 10px;
+    margin-bottom: -16px;
+}
+
+.content-container .member-content {
+    margin-top: 25px;
+    font-size: 15px;
+    text-align: justify;
+    line-height: 1.4;
+}
+
+/* Rating */
+.customers {
+    padding: 0 112px;
+}
+
+.customer {
+    text-align: center;
+    box-shadow: 0px 4px 24px rgba(139, 167, 178, 0.16);
+    border-radius: 6px;
+    max-width: 250px;
+    margin: auto;
+}
+
+.customer-pic {
+    height: 90px;
+    width: 90px;
+    margin: 24px auto;
+}
+
+.customer-pic img{
+    width: 100%;
+    height: 100%;
+    border-radius: 110px;
+    object-fit: cover;
+}
+/* End-Rating */
+
+/*Begin-Contact */
+.content-container .contact-means {
+    margin-top: 48px;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+.content-container .contact-means .cm-icon {
+    float: left;
+    font-size: 64px;
+    text-align: left;
+    margin-right: 12px;
+    color: var(--mcolor);
+}
+
+.content-container .contact-means .cm-content {
+    float: left;
+    text-align: left;
+    height: 96px;
+    margin: auto 0;
+}
+
+.fast-contact {
+    margin: 0 auto;
+    padding: 0 112px;
+}
+
+.contact-form input, .contact-form textarea{
+    margin-bottom: 8px;
+}
+/* End-Contact */
+
+/* Begin-map */
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */ 
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  /* margin-top: 6px; 
+  margin-bottom: 16px;  */
+  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+/* End-Map */
+
+/* Begin-Thanks */
+
+.content .check-icon {
+    color: var(--mcolor);
+    font-size: 52px;
+}
+
+.content .bill-code {
+    color: var(--mcolor);
+}
+
+.content .make-bill {
+    color: var(--mcolor);
+}
+
+
+/* Begin:  Feedback*/
+.customers {
+    margin: 0 auto;
+    padding: 36px 112px 0;
+}
+
+.customers i {
+    color: #56B280;
+}
+
+.customer {
+    text-align: center;
+    box-shadow: 0px 4px 24px rgba(139, 167, 178, 0.16);
+    border-radius: 6px;
+    max-width: 250px;
+    margin: auto;
+}
+
+.customer-pic {
+    height: 90px;
+    width: 90px;
+    margin: 24px auto;
+}
+
+.customer-pic img{
+    width: 100%;
+    height: 100%;
+    border-radius: 110px;
+    object-fit: cover;
+}
+/* End: Feedback*/

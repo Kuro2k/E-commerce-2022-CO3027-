@@ -1,27 +1,27 @@
-const registerUser = (email, password, auth) => {
-    return auth.createUserWithEmailAndPassword(email, password);
+var auth = require("firebase/auth");
+const registerUser = (email, password) => {
+    return auth.createUserWithEmailAndPassword(auth.getAuth(), email, password);
 };
 
-const loginUser = (email, password, auth) => {
-    return auth.signInWithEmailAndPassword(email, password);
+const loginUser = (email, password) => {
+    return auth.signInWithEmailAndPassword(auth.getAuth(), email, password);
 };
 
-const logoutUser = (auth) => {
-    return auth.signOut();
+const logoutUser = () => {
+    return auth.signOut(auth.getAuth());
 };
 
-const sendPasswordResetEmail = (email, auth) => {
-    return auth.sendPasswordResetEmail(email);
+const sendPasswordResetEmail = (email) => {
+    return auth.sendPasswordResetEmail(auth.getAuth(), email);
 };
 
-const loginWithGoogle = (auth, firebase) => {
-    const provider = new firebase.auth.GoogleAuthProvider;
-
-    return auth.signInWithPopup(provider);
+const loginWithGoogle = () => {
+    const provider = new auth.GoogleAuthProvider();
+    return auth.signInWithPopup(auth.getAuth(), provider);
 };
 
-const subscribeToAuthChanges = (handleAuthChange, auth) => {
-    auth.onAuthStateChanged((user) => {
+const subscribeToAuthChanges = (handleAuthChange) => {
+    auth.onAuthStateChanged(auth.getAuth(), (user) => {
         handleAuthChange(user);
     });
 };

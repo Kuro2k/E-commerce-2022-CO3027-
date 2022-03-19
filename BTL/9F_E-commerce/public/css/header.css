@@ -1,0 +1,151 @@
+/* Begin: Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 1;
+    background-color: white;
+}
+
+.header .top-bar {
+    background-color: #56B280;
+    height: 20px;
+}
+
+.top-bar .row {
+    padding: 0 calc(0px + 8vw);
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact li {
+    display: inline-block;
+    font-size: 13px;
+    margin-right: 24px;
+}
+
+.contact i {
+    margin-right: 6px;
+}
+
+.contact, .account {
+    height: 20px;
+    line-height: 20px;
+    color: white;
+}
+
+.account {
+    text-align: right;
+}
+
+.account a {
+    text-decoration: none;
+    color: white;
+    font-size: 13px;
+}
+
+.account a:hover {
+    text-decoration: underline;
+}
+
+.account i {
+    margin-left: 6px;
+}
+
+/* Nav */
+.nav {
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* padding: 0 112px; */
+}
+
+.nav .logo img {
+    margin-left: -8px;
+    height: 100%;
+}
+
+.logo {
+    width: 13%;
+    height: 50px;
+    padding-left: 0;
+}
+
+.nav-btn {
+    min-width: 400px;
+    padding-left: 12px;
+    margin: 0 3%;
+}
+
+.nav-btn a {
+    text-decoration: none;
+    color: black;
+    line-height: 50px;
+    margin-right: 20px;
+}
+
+.nav-btn a:hover {
+    color: #56B280;
+}
+
+.search {
+    height: 50px;
+    padding: 10px 0; 
+    width: 250px;
+    margin-right: 20px;
+}
+
+.search input {
+    max-width: 200px;
+    border-radius: 0;
+    height: 30px;
+}
+
+.search a {
+    border-radius: 0;
+    box-shadow: none;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding: 3px;
+    vertical-align: middle;   
+}
+
+.search i {
+    margin: auto 0;
+}
+
+.cart-btn {
+    padding: 0;
+    line-height: 50px;
+    font-size: 24px;
+}
+
+.cart-btn a {
+    color: black;
+    width: 100px;
+}
+
+
+.count-product {
+    float: right;
+    position: relative;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    background-color: #56B280;
+    font-size: 9px;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.header hr {
+    background-color: #56B280;
+    margin: 1px;
+}
+/* End: Header */

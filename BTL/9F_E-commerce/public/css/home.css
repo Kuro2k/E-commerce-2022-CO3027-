@@ -47,19 +47,6 @@ ul {
 
 /*********************************/
 
-/* Begin: Header */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background-color: #56B280;
-    z-index: 1;
-}
-
-/* End: Header */
-
 /* Begin: Slideshow */
 .slideshow {
     margin-top: 70px;
@@ -272,7 +259,12 @@ ul {
 
 /* Begin: Feedback*/
 .customers {
+    margin: 0 auto;
     padding: 0 112px;
+}
+
+.customers i {
+    color: #56B280;
 }
 
 .customer {
@@ -298,24 +290,6 @@ ul {
 /* End: Feedback*/
 
 
-/* Begin: Footer*/
-.footer {
-    height: 370px;
-    background-color: black;
-    margin-top: 84px;
-}
-/* End: Footer*/
 
 
-
-/* Begin: */
-/* End: */
-
-
-/* Begin: */
-/* End: */
-
-
-/* Begin: */
-/* End: */
 

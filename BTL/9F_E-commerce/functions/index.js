@@ -6,11 +6,13 @@ var hbs = require("handlebars");
 var fs = require('fs');
 
 const app = express();
+const publicDirectoryPath = path.join(__dirname, "../public")
+app.use(express.static(publicDirectoryPath))
+
 const partialsPath = path.join(__dirname, "/partials");
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
 app.set('view engine','hbs');
-
 
 var partialsDir = __dirname + '/partials';
 var filenames = fs.readdirSync(partialsDir);
@@ -25,8 +27,7 @@ filenames.forEach(function (filename) {
 });
 
 var firebase = require("firebase/app");
-// var auth = require("firebase/auth");
-// require("firebase/firestore");
+var auth = require("firebase/auth");
 
 const firebaseConfig = {
     apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
@@ -39,12 +40,8 @@ const firebaseConfig = {
 };
 
 var defaultProject=firebase.initializeApp(firebaseConfig);
-// console.log(auth);
-// nhiệm màu ghê :))
-// vậy nữa t push lên bản này luôn phải ko
-
-// const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
-// const { async } = require("@firebase/util");
+const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
+const { async } = require("@firebase/util");
 
 app.get('/',async (req, res) =>{
     res.render("index");
@@ -52,6 +49,10 @@ app.get('/',async (req, res) =>{
 
 app.get('/about', async (req, res) => {
     res.render("about");
+})
+
+app.get('/contact', async (req, res) => {
+    res.render("contact");
 })
 
 app.get('*', (req, res) => {
