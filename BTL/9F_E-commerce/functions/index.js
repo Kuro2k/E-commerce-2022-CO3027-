@@ -55,6 +55,10 @@ app.get('/contact', async (req, res) => {
     res.render("contact");
 })
 
+app.get('/product-detail', async (req, res) => {
+    res.render("product-detail");
+})
+
 app.get('*', (req, res) => {
     res.render("404")
 })

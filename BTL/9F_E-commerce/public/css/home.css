@@ -172,6 +172,10 @@ ul {
     text-align: right;
 }
 
+.product a {
+    text-decoration: none;
+    color: inherit;
+}
 /* End: Latest products*/
 
 
