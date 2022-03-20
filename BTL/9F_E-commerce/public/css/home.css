@@ -83,6 +83,10 @@ ul {
 
 
 /* Begin: Category */
+.category-card a {
+    text-decoration: none;
+    color: black;
+}
 
 .category .section-header {
     margin-top: 48px;
