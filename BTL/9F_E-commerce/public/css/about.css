@@ -106,6 +106,14 @@ h3 {
     font-weight: bolder;
 }
 
+.page-info a {
+    color: black;
+}
+
+.page-info a:hover {
+    color: #56B280;
+}
+
 /* End: Page-info */
 
 /* Begin:  Slideshow*/
