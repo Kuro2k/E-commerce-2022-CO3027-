@@ -67,11 +67,11 @@ app.get('/cart', async (req, res) => {
     res.render("cart");
 })
 
-app.get('/cart/shippng', async (req, res) => {
+app.get('/shipping', async (req, res) => {
     res.render("shipping");
 })
 
-app.get('/cart/shippng/payment', async (req, res) => {
+app.get('/payment', async (req, res) => {
     res.render("payment");
 })
 

@@ -8,63 +8,63 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     
-    <link rel="stylesheet" href="../../public/css/payment.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css"> 
+    <link rel="stylesheet" href="./css/shipping.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <title>Farmnine - Thanh toán</title>
+    <title>Vận chuyển</title>
 </head>
 <body>
-    <div class="header">
-    </div>
+    {{>header}}
+
 
     <div class="page-info">
-        <h2 class="page-name">Thanh toán</h2>
-        <p class="route">Trang chủ / Giỏ hàng / Vận chuyển / Thanh toán</p>
+        <h2 class="page-name">Vận chuyển</h2>
+        <p class="route">
+            <a href="/">Trang chủ</a> /
+            <a href="/cart">Giỏ hàng</a> /
+            <a href="/shipping">Vận chuyển</a>
+        </p>
     </div>
 
-    <div class="row payment-content">
-        <div class="col payment-info">
+    <div class="row shipping-content">
+        <div class="col shipping-info">
             <h6 class="title"><b>Thông tin vận chuyển</b></h6>
             <div class="info-container">
-                <span><b>Tên:</b></span>
-                <span class="customer-name">Nguyễn Văn A</span>
-                <hr>
-
-                <span><b>Địa chỉ:</b></span>
-                <span class="customer-address">Số 123, Đường 456, Huyện ABC, Quận E, TP. Z</span>
-                <br>
-                <span><b>Điện thoại:</b></span>
-                <span class="customer-phone">0123456789</span>
+                <div class="row address-edit-btn">
+                    <p class="col col-md-9">Địa chỉ giao hàng</p>
+                    <button class="col col-md-3">Sửa</button>
+                </div>
                 <hr>
                 
-                <span><b>Phương thức:</b></span>
-                <span class="customer-ship-method">Vận chuyển bình thường</span>
+                <div class="customer-info">
+                    <span><b>Tên:</b></span>
+                    <span class="customer-name">Nguyễn Văn A</span>
+                    <br>
+                    <span><b>Địa chỉ:</b></span>
+                    <span class="customer-address">Số 123, Đường 456, Huyện ABC, Quận E, TP. Z</span>
+                    <br>
+                    <span><b>Điện thoại:</b></span>
+                    <span class="customer-phone">0123456789</span>
+                </div>
             </div>
 
-            <h6 class="title"><b>Phương thức thanh toán</b></h6>
+            <h6 class="title"><b>Phương thức vận chuyển</b></h6>
             <div class="info-container">
-                <input type="radio" name="pay-method" id="cash">
-                <label for="cash">Thanh toán khi nhận hàng</label>
-                <hr>
-                
-                <input type="radio" name="pay-method" id="momo">
-                <label for="momo">Thanh toán bằng ví momo</label>
-                <hr>
-                
-                <span class="credit-card">
-                    
-                    <input type="radio" name="pay-method" id="card">
-                    <label for="card">
-                        Thanh toán bằng thẻ tín dụng <br>
-                    </label>
-                </span>
-                <a href="" class="btn add-card">Thêm thẻ</a>
-                
+                <div class="row ship-input">
+                    <div class="method-radio col-md-9">
+                        <input type="radio" name="ship-method" id="normal">
+                        <label for="normal">Vận chuyển thường</label>
+                    </div>
+
+                    <span class="price col-md-3">15.000đ</span>
+                </div>
             </div>
 
-            <div class="row nav-btn">
-                <a href="#" class="col back">Trở về vận chuyển</a>
+            <div class="row navigation">
+                <a href="/cart" class="col back">Trở về giỏ hàng</a>
                 <div class="btn-container col">
-                    <a href="#" class="btn">Đặt hàng</a>
+                    <a href="/payment" class="btn">Thanh toán</a>
                 </div>
             </div>
         </div>
@@ -89,7 +89,9 @@
                 
                 <div class="row discount-input">
                     <input type="text" class="col" placeholder="Mã giảm giá">
-                    <a href="#" class="btn col">Thêm mã</a>
+                    <!-- <div class="btn-container col col-md-3"> -->
+                    <button class="btn col">Thêm mã</button>
+                    <!-- </div> -->
                 </div>
                 <hr>
                 <div class="total">
@@ -117,5 +119,7 @@
 
         </div>
     </div>
+
+    {{>footer}}
 </body>
 </html>

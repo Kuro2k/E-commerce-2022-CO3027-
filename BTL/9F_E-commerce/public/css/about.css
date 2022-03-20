@@ -324,3 +324,25 @@ input[type=submit]:hover {
     object-fit: cover;
 }
 /* End: Feedback*/
+
+
+/* Begin: Thanks */
+.order-container {
+    text-align: center;
+    margin-top: 70px;
+    padding: 72px 270px;
+}
+
+.order-container i {
+    font-size: 70px;
+    color: #56B280;
+}
+
+.order-code-container {
+    color: #56B280;
+}
+
+.thanks {
+    color: #818181;
+}
+/* End: Thanks */

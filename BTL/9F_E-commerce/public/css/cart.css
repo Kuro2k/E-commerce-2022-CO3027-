@@ -51,6 +51,10 @@ a {
     text-decoration: underline;
 }
 
+.page-info a {
+    text-decoration: none;
+}
+
 
 /* Begin: title section*/
 .title-section {

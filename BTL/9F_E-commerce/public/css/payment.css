@@ -7,17 +7,8 @@
 
 html {
     margin: 0 auto;
-    /* max-width: 1200px; */
+    max-width: 1200px;
     scroll-behavior: smooth;
-}
-
-.header {
-    height: 70px;
-    background-color: #56B280;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
 }
 
 .btn {
@@ -99,9 +90,9 @@ input[type="radio"] {
     accent-color: #56B280;
 }
 
-.nav-btn .back {
+/* .navigation .back {
     line-height: 42px;
-}
+} */
 
 .btn-container {
     text-align: right;
