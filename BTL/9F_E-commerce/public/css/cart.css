@@ -1,0 +1,133 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+html {
+    margin: 0 auto;
+    max-width: 1200px;
+    scroll-behavior: smooth;
+}
+
+.header {
+    height: 70px;
+    background-color: #56B280;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.btn {
+    text-decoration: none;
+    background-color: #56B280;
+    color: white;
+    padding: 8px 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.btn:hover {
+    /* border: #56B280 1px; */
+    background-color: white;
+    color: #56B280;
+    border-color: #56B280;
+}
+
+hr {
+    margin: 24px 0;
+    color: #56B280;
+}
+
+p {
+    line-height: 24px;
+    margin: 0;
+}
+
+a {
+    color: #56B280;
+    text-decoration: underline;
+}
+
+
+/* Begin: title section*/
+.title-section {
+    margin: 48px auto; 
+    text-align: center;
+}
+/* End:  title section*/
+
+
+/* Begin: product list*/
+.qty-counter,
+.price-container {
+    margin: auto;
+}
+
+.price {
+    color: black;
+}
+
+.total-products {
+    padding: 24px 112px;
+}
+
+.total-product hr {
+    margin-top: 24px;
+}
+
+.total-product button {
+    border: none;
+    background-color: white;
+    color: #56B280;
+    text-decoration: underline;
+}
+
+.list-heading {
+    font-weight: bold;
+}
+
+.product-info {
+    padding: 0;
+}
+
+.product-info .product-img {
+    width: 100%;
+}
+
+.product-info .row {
+    margin: auto;
+}
+
+.product-info .img-container {
+    padding-right: 0;
+    /* margin-bottom: 24px; */
+}
+
+.counter {
+    margin-left: -12px;
+}
+/* End:  product list*/
+
+/* Begin: Subtotal*/
+.total-cal {
+    padding: 24px 112px;
+    margin: auto;
+}
+
+.total-cal .calc {
+    text-align: right;
+}
+
+.calc > .row {
+    float: right;
+    width: 375px;
+}
+
+.calc p {
+    color: #616161
+}
+/* End:  Subtotal*/
+

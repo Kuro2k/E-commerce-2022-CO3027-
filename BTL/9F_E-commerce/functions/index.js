@@ -63,6 +63,22 @@ app.get('/all-products', async (req, res) => {
     res.render("all-products");
 })
 
+app.get('/cart', async (req, res) => {
+    res.render("cart");
+})
+
+app.get('/cart/shippng', async (req, res) => {
+    res.render("shipping");
+})
+
+app.get('/cart/shippng/payment', async (req, res) => {
+    res.render("payment");
+})
+
+app.get('/thank-you', async (req, res) => {
+    res.render("thanks");
+})
+
 app.get('*', (req, res) => {
     res.render("404")
 })
