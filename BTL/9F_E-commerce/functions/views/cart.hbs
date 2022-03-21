@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-md-2 price-container"><span class="price">20.000</span>đ</div>
+            <div class="col col-md-2 price-container"><span class="price">20000</span>đ</div>
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-md-2 price-container"><span class="price">10.000</span>đ</div>
+            <div class="col col-md-2 price-container"><span class="price">10000</span>đ</div>
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
@@ -109,52 +109,6 @@
     {{>footer}}
     
 
-    <script >
-        const price = document.getElementsByClassName("price");
-        const len = price.length;
-        const total = document.getElementsByClassName("total-product-price");
-        const qty = document.getElementsByClassName("qty");
-        const total_all = document.getElementsByClassName("count-price");
-        var total_count = 0;
-        
-        for (let i = 0; i < len; i++){
-            let total_ammount = parseFloat(price[i].innerHTML) * 1000 * qty[i].value;
-            total[i].innerHTML = total_ammount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-            total_count += total_ammount;
-        }
-        total_all[0].innerHTML = total_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        
-        function calculateProduct() {
-            total_count = 0;
-            for (let i = 0; i < document.getElementsByClassName("price").length; i++){
-                let total_ammount = parseFloat(document.getElementsByClassName("price")[i].innerHTML) * 1000 * qty[i].value;
-                total[i].innerHTML = total_ammount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-                total_count += total_ammount;
-            }
-            total_all[0].innerHTML = total_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        
-        }
-        
-        function increaseCount(a, b) {
-            var input = b.previousElementSibling;
-            var value = parseInt(input.value, 10);
-            value = isNaN(value) ? 0 : value;
-            value++;
-            input.value = value;
-            calculateProduct();
-        }
-            
-        function decreaseCount(a, b) {
-            var input = b.nextElementSibling;
-            var value = parseInt(input.value, 10);
-            if (value > 1) {
-                value = isNaN(value) ? 0 : value;
-                value--;
-                input.value = value;
-            }
-            calculateProduct();
-        }
-    
-    </script>
+    <script src="./js/cart.js"></script>
 </body>
 </html>
