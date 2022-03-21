@@ -139,14 +139,10 @@
 
     {{>footer}}
 
+    <script src="./js/app.js"></script>
     <script>
         const product_price = document.getElementsByClassName("product-price");
         product_price[0].innerHTML =  product_price[0].innerHTML.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        const price = document.getElementsByClassName("price");
-        const len = price.length;
-        for (let i = 0; i < len; i++){
-            price[i].innerHTML = price[i].innerHTML.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
-        }
     </script>
 
 </body>

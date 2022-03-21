@@ -51,7 +51,9 @@
             <div class="info-container">
                 <input type="radio" name="pay-method" id="cash">
                 <label for="cash">Thanh toán khi nhận hàng</label>
-                <hr>
+
+                <!-- Các phương thức khác -->
+                <!-- <hr>
                 
                 <input type="radio" name="pay-method" id="momo">
                 <label for="momo">Thanh toán bằng ví momo</label>
@@ -64,7 +66,7 @@
                         Thanh toán bằng thẻ tín dụng <br>
                     </label>
                 </span>
-                <a href="" class="btn add-card">Thêm thẻ</a>
+                <a href="" class="btn add-card">Thêm thẻ</a> -->
                 
             </div>
 
@@ -79,45 +81,47 @@
         <div class="col cart-info">
             <div class="items">
                 <div class="row item">
-                    <p class="col col-md-1 quantity">1</p>
+                    <p class="col col-md-1 qty">1</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Dưa hấu</p>
-                    <p class="col col-md-3 price">20.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">20000</span>đ</p>
                 </div>
                 <hr>
 
                 <div class="row item">
-                    <p class="col col-md-1 quantity">3</p>
+                    <p class="col col-md-1 qty">3</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Cà chua</p>
-                    <p class="col col-md-3 price">10.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">10000</span>đ</p>
                 </div>
                 <hr>
                 
                 <div class="row discount-input">
                     <input type="text" class="col" placeholder="Mã giảm giá">
-                    <a href="#" class="btn col">Thêm mã</a>
+                    <!-- <div class="btn-container col col-md-3"> -->
+                    <button class="btn col">Thêm mã</button>
+                    <!-- </div> -->
                 </div>
                 <hr>
                 <div class="total">
                     <div class="row">
                         <p class="col col-md-9">Tạm tính</p>
-                        <p class="col col-md-3 price">50.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="subtotal"></span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Phí vận chuyển</p>
-                        <p class="col col-md-3 price">15.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price shipping-price-cal">15.000</span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Giảm giá</p>
-                        <p class="col col-md-3 price">- 10.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price discount-price">-20000</span>đ</p>
                     </div>
                     <hr>
                     
                     <div class="row">
                         <p class="col col-md-9">Tổng cộng</p>
-                        <h5 class="col col-md-3 price">55.000đ</h5>
-                    </div>
+                        <h5 class="col col-md-3 price-container" style="color:black"><span class="price total-price"></span>đ</h5>
+                </div>
                     
                 </div>
             </div>
@@ -126,6 +130,24 @@
     </div>
 
     {{>footer}}
+    <script src="./js/app.js">
+    </script>
 
+    <script>
+        const qty = document.getElementsByClassName("qty");
+        const product_price = document.getElementsByClassName("product-price");
+        const ship_fee = document.getElementsByClassName("shipping-price-cal")[0].innerHTML.slice(0, -1);
+        const discount = document.getElementsByClassName("discount-price")[0].innerHTML.slice(0, -1);
+        var subtotal_count = 0;
+        
+        for (let i = 0; i < qty.length; i++){
+            let total_ammount = parseFloat(product_price[i].innerHTML) * 1000 * parseInt(qty[i].innerHTML, 10);
+            subtotal_count += total_ammount;    
+        }
+
+        const total = subtotal_count + unformatPrice(ship_fee) + unformatPrice(discount);
+        document.getElementsByClassName("subtotal")[0].innerHTML = subtotal_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        document.getElementsByClassName("total-price")[0].innerHTML = formatOnePrice(total);
+    </script>
 </body>
 </html>

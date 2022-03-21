@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="./css/shipping.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <title>Vận chuyển</title>
+
+    <style>
+        .price-container {
+            text-align: right;
+            color: #56B280;
+        }
+    </style>
 </head>
 <body>
     {{>header}}
@@ -57,7 +64,7 @@
                         <label for="normal">Vận chuyển thường</label>
                     </div>
 
-                    <span class="price col-md-3">15.000đ</span>
+                    <span class="price shipping-price col-md-3">15000đ</span>
                 </div>
             </div>
 
@@ -72,18 +79,18 @@
         <div class="col cart-info">
             <div class="items">
                 <div class="row item">
-                    <p class="col col-md-1 quantity">1</p>
+                    <p class="col col-md-1 qty">1</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Dưa hấu</p>
-                    <p class="col col-md-3 price">20.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">20000</span>đ</p>
                 </div>
                 <hr>
 
                 <div class="row item">
-                    <p class="col col-md-1 quantity">3</p>
+                    <p class="col col-md-1 qty">3</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Cà chua</p>
-                    <p class="col col-md-3 price">10.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">10000</span>đ</p>
                 </div>
                 <hr>
                 
@@ -97,22 +104,22 @@
                 <div class="total">
                     <div class="row">
                         <p class="col col-md-9">Tạm tính</p>
-                        <p class="col col-md-3 price">50.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="subtotal"></span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Phí vận chuyển</p>
-                        <p class="col col-md-3 price">15.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price shipping-price-cal"></span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Giảm giá</p>
-                        <p class="col col-md-3 price">- 10.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price discount-price">-20000</span>đ</p>
                     </div>
                     <hr>
                     
                     <div class="row">
                         <p class="col col-md-9">Tổng cộng</p>
-                        <h5 class="col col-md-3 price">55.000đ</h5>
-                    </div>
+                        <h5 class="col col-md-3 price-container" style="color:black"><span class="price total-price"></span>đ</h5>
+                </div>
                     
                 </div>
             </div>
@@ -121,5 +128,25 @@
     </div>
 
     {{>footer}}
+    <script src="./js/app.js">
+    </script>
+
+    <script>
+        const qty = document.getElementsByClassName("qty");
+        const product_price = document.getElementsByClassName("product-price");
+        const ship_fee = document.getElementsByClassName("shipping-price")[0].innerHTML.slice(0, -1);
+        const discount = document.getElementsByClassName("discount-price")[0].innerHTML.slice(0, -1);
+        var subtotal_count = 0;
+        document.getElementsByClassName("shipping-price-cal")[0].innerHTML = ship_fee;
+        for (let i = 0; i < qty.length; i++){
+            let total_ammount = parseFloat(product_price[i].innerHTML) * 1000 * parseInt(qty[i].innerHTML, 10);
+            subtotal_count += total_ammount;    
+        }
+
+        const total = subtotal_count + unformatPrice(ship_fee) + unformatPrice(discount);
+        document.getElementsByClassName("subtotal")[0].innerHTML = subtotal_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        document.getElementsByClassName("total-price")[0].innerHTML = formatOnePrice(total);
+        
+    </script>
 </body>
 </html>
