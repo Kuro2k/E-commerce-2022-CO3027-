@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    
     <title>Giỏ hàng</title>
 </head>
 <body>
@@ -36,9 +37,9 @@
     <div class="total-products">
         <div class="row list-heading">
             <div class="col col-md-6 name">Sản phẩm</div>
-            <div class="col col-md-2 price">Đơn giá</div>
-            <div class="col col-md-2 qty">Số lượng</div>
-            <div class="col col-md-2 price">Số tiền</div>
+            <div class="col col-md-2">Đơn giá</div>
+            <div class="col col-md-2">Số lượng</div>
+            <div class="col col-md-2">Số tiền</div>
         </div>
         <hr>
 
@@ -50,7 +51,7 @@
                     </div>
                     <div class="col col-md-8">
                         <h5 class="product-name"><b>Dưa hấu</b></h5>
-                        <button>Xóa</button>
+                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct();">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -58,11 +59,11 @@
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input type="text" value="1">
+                    <input class="qty" type="text" value="1">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
-            <div class="col col-md-2 price-container"><span class="price">20.000</span>đ</div>
+            <div class="col col-md-2 price-container"><span class="total-product-price"></span>đ</div>
             <hr>
         </div>
 
@@ -74,7 +75,7 @@
                     </div>
                     <div class="col col-md-8">
                         <h5 class="product-name"><b>Cà chua</b></h5>
-                        <button>Xóa</button>
+                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct();">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -82,11 +83,11 @@
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input type="text" value="3">
+                    <input class="qty" type="text" value="3">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
-            <div class="col col-md-2 price-container"><span class="price">30.000</span>đ</div>
+            <div class="col col-md-2 price-container"><span class="total-product-price"></span>đ</div>
             <hr>
         </div>
     </div>
@@ -95,7 +96,7 @@
         <div class="col col-md-9 calc">
             <div class="row">
                 <div class="col sub-total-text"><b>Tạm tính</b></div>
-                <div class="col sub-total-count"><b><span class="count-price">50.000</span>đ</b></div>
+                <div class="col sub-total-count"><b><span class="count-price"></span>đ</b></div>
             </div> <br>
             <p>Phí vận chuyển sẽ được tính sau</p>
         </div>
@@ -106,16 +107,43 @@
     </div>
 
     {{>footer}}
+    
 
-    <script>
+    <script >
+        const price = document.getElementsByClassName("price");
+        const len = price.length;
+        const total = document.getElementsByClassName("total-product-price");
+        const qty = document.getElementsByClassName("qty");
+        const total_all = document.getElementsByClassName("count-price");
+        var total_count = 0;
+        
+        for (let i = 0; i < len; i++){
+            let total_ammount = parseFloat(price[i].innerHTML) * 1000 * qty[i].value;
+            total[i].innerHTML = total_ammount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            total_count += total_ammount;
+        }
+        total_all[0].innerHTML = total_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        
+        function calculateProduct() {
+            total_count = 0;
+            for (let i = 0; i < document.getElementsByClassName("price").length; i++){
+                let total_ammount = parseFloat(document.getElementsByClassName("price")[i].innerHTML) * 1000 * qty[i].value;
+                total[i].innerHTML = total_ammount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+                total_count += total_ammount;
+            }
+            total_all[0].innerHTML = total_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        
+        }
+        
         function increaseCount(a, b) {
             var input = b.previousElementSibling;
             var value = parseInt(input.value, 10);
             value = isNaN(value) ? 0 : value;
             value++;
             input.value = value;
+            calculateProduct();
         }
-          
+            
         function decreaseCount(a, b) {
             var input = b.nextElementSibling;
             var value = parseInt(input.value, 10);
@@ -124,7 +152,9 @@
                 value--;
                 input.value = value;
             }
+            calculateProduct();
         }
+    
     </script>
 </body>
 </html>
