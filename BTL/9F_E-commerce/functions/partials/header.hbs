@@ -7,9 +7,69 @@
                 </ul>
     
                 <div class="col account">
-                    <a href="#" class="login">Đăng nhập</a> /
-                    <a href="#" class="signup">Đăng ký</a>
+                    <a href="#" class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a> /
+                    <a href="#" class="signup" data-bs-toggle="modal" data-bs-target="#signupModal">Đăng ký</a>
                     <i class="bi bi-person"></i>
+
+                    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-fullscreen">
+                            <div class="modal-content">
+                                <div class="login-form">
+                                    <form method="get" name="login" class="form-style">
+                                        <div class="form-logo">
+                                            <img src="./img/logo.png" alt="logo">
+                                        </div>
+                                        <label for="email"><b>Email</b></label> <br>
+                                        <input type="email" placeholder="Nhập E-mail" name="email" required> <br>
+
+                                        <label for="psw"><b>Mật khẩu</b></label> <br>
+                                        <input type="password" placeholder="Nhập mật khẩu" name="psw" required> <br>
+
+                                        <button class="btn login-btn" onclick="document.getElementsByClassName("account")[0].removeChild(list.children[0]);">
+                                            Đăng nhập
+                                        </button>
+
+                                        <div class="forgot">
+                                            <button class="forgotPass" style="float: left;" data-bs-toggle="modal" data-bs-target="#signupModal">
+                                                Đăng ký
+                                            </button>
+
+                                            <button type="button" class="forgotPass" onclick="alert("Mật khẩu mới đã được gửi đến email bạn đã đăng ký")">
+                                                Quên mật khẩu
+                                            </button>
+                                        </div>
+                                </label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-fullscreen">
+                            <div class="modal-content">
+                                <div class="signup-form">
+                                    <form method="get" name="signup" class="form-style">
+                                        <div class="form-logo">
+                                            <img src="./img/logo.png" alt="logo">
+                                        </div>
+
+                                        <label for="name"><b>Họ và tên</b></label> <br>
+                                        <input type="name" placeholder="Nhập Họ và tên" name="name" required> <br>
+
+                                        <label for="email"><b>Email</b></label> <br>
+                                        <input type="email" placeholder="Nhập E-mail" name="email" required> <br>
+
+                                        <label for="psw"><b>Mật khẩu</b></label> <br>
+                                        <input type="password" placeholder="Nhập mật khẩu" name="psw" required> <br>
+
+                                        <button type="button" class="btn login-btn" onclick="alert("Đăng ký thành công! Vui lòng kiểm tra email của bạn")">Đăng ký</button>
+                                </label>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,3 +100,5 @@
         </div>
         <hr>
     </div>
+
+    

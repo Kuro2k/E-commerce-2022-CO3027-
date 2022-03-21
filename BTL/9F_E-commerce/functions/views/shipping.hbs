@@ -9,10 +9,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/about.css">
     <link rel="stylesheet" href="./css/footer.css"> 
     <link rel="stylesheet" href="./css/shipping.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <title>Vận chuyển</title>
+
+    <style>
+        .price-container {
+            text-align: right;
+            color: #56B280;
+        }
+    </style>
 </head>
 <body>
     {{>header}}
@@ -33,19 +41,48 @@
             <div class="info-container">
                 <div class="row address-edit-btn">
                     <p class="col col-md-9">Địa chỉ giao hàng</p>
-                    <button class="col col-md-3">Sửa</button>
+                    <button  type="button" class="col col-md-3" data-bs-toggle="modal" data-bs-target="#editAddress">
+                        Sửa
+                    </button>
+
+                <div class="modal fade" id="editAddress" tabindex="-1" aria-labelledby="editAddressLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editAddressLabel"><b>Địa chỉ nhận hàng</b></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="" name="edit-form">
+                            <div class="modal-body">
+                                <input type="text" id="name" name="name" placeholder="Họ và tên*">
+                                <input type="text" id="phone" name="phone" placeholder="Số điện thoại*">
+                                <textarea id="address" name="address" placeholder="Địa chỉ nhận hàng*" style="height:100px"></textarea>
+                                <!-- <textarea id="address-note" name="address-note" placeholder="Ghi chú về địa chỉ" style="height:70px"></textarea> -->
+                                <input type="checkbox" name="default-address" id="default-address">
+                                <label for="default-address">Sử dụng làm địa chỉ mặc định</label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-liner" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn" data-bs-dismiss="modal" onClick="editAddress();">Lưu</button>
+                            </div>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    </div>
+
                 </div>
                 <hr>
                 
                 <div class="customer-info">
                     <span><b>Tên:</b></span>
-                    <span class="customer-name">Nguyễn Văn A</span>
+                    <span id="customer-name">Nguyễn Văn A</span>
                     <br>
                     <span><b>Địa chỉ:</b></span>
-                    <span class="customer-address">Số 123, Đường 456, Huyện ABC, Quận E, TP. Z</span>
+                    <span id="customer-address">Số 123, Đường 456, Huyện ABC, Quận E, TP. Z</span>
                     <br>
                     <span><b>Điện thoại:</b></span>
-                    <span class="customer-phone">0123456789</span>
+                    <span id="customer-phone">0123456789</span>
                 </div>
             </div>
 
@@ -54,10 +91,19 @@
                 <div class="row ship-input">
                     <div class="method-radio col-md-9">
                         <input type="radio" name="ship-method" id="normal">
-                        <label for="normal">Vận chuyển thường</label>
+                        <label for="normal" onClick="chooseShipMethod(0);">Vận chuyển thường</label>
                     </div>
 
-                    <span class="price col-md-3">15.000đ</span>
+                    <span class="price shipping-price col-md-3">15000đ</span>
+                </div>
+                <hr>
+                <div class="row ship-input">
+                    <div class="method-radio col-md-9">
+                        <input type="radio" name="ship-method" id="fast">
+                        <label for="fast" onClick="chooseShipMethod(1);">Vận chuyển nhanh</label>
+                    </div>
+
+                    <span class="price shipping-price col-md-3">35000đ</span>
                 </div>
             </div>
 
@@ -72,18 +118,18 @@
         <div class="col cart-info">
             <div class="items">
                 <div class="row item">
-                    <p class="col col-md-1 quantity">1</p>
+                    <p class="col col-md-1 qty">1</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Dưa hấu</p>
-                    <p class="col col-md-3 price">20.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">20000</span>đ</p>
                 </div>
                 <hr>
 
                 <div class="row item">
-                    <p class="col col-md-1 quantity">3</p>
+                    <p class="col col-md-1 qty">3</p>
                     <p class="col col-md-1">x</p>
                     <p class="col col-md-7 item-name">Cà chua</p>
-                    <p class="col col-md-3 price">10.000đ</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">10000</span>đ</p>
                 </div>
                 <hr>
                 
@@ -97,22 +143,22 @@
                 <div class="total">
                     <div class="row">
                         <p class="col col-md-9">Tạm tính</p>
-                        <p class="col col-md-3 price">50.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="subtotal"></span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Phí vận chuyển</p>
-                        <p class="col col-md-3 price">15.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price shipping-price-cal"></span>đ</p>
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Giảm giá</p>
-                        <p class="col col-md-3 price">- 10.000đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price discount-price">-20000</span>đ</p>
                     </div>
                     <hr>
                     
                     <div class="row">
                         <p class="col col-md-9">Tổng cộng</p>
-                        <h5 class="col col-md-3 price">55.000đ</h5>
-                    </div>
+                        <h5 class="col col-md-3 price-container" style="color:black"><span class="price total-price"></span>đ</h5>
+                </div>
                     
                 </div>
             </div>
@@ -121,5 +167,40 @@
     </div>
 
     {{>footer}}
+    <script src="./js/app.js">
+    </script>
+
+    <script>
+        const qty = document.getElementsByClassName("qty");
+        const product_price = document.getElementsByClassName("product-price");
+        const discount = document.getElementsByClassName("discount-price")[0].innerHTML.slice(0, -1);
+        var subtotal_count = 0;
+        for (let i = 0; i < qty.length; i++){
+            let total_ammount = parseFloat(product_price[i].innerHTML) * 1000 * parseInt(qty[i].innerHTML, 10);
+            subtotal_count += total_ammount;    
+        }
+
+        document.getElementsByClassName("subtotal")[0].innerHTML = subtotal_count.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+
+        function editAddress() {
+            let name = document.forms["edit-form"]["name"].value;
+            let phone = document.forms["edit-form"]["phone"].value;
+            let address = document.forms["edit-form"]["address"].value;
+
+            document.getElementById("customer-name").innerHTML = name;
+            document.getElementById("customer-phone").innerHTML = phone;
+            document.getElementById("customer-address").innerHTML = address;
+        }
+
+        function chooseShipMethod(i){
+            const ship_fee = document.getElementsByClassName("shipping-price")[i].innerHTML.slice(0, -1);
+            document.getElementsByClassName("shipping-price-cal")[0].innerHTML = ship_fee;
+            const total = subtotal_count + unformatPrice(ship_fee) + unformatPrice(discount);
+            document.getElementsByClassName("total-price")[0].innerHTML = formatOnePrice(total);
+        }
+    </script>
 </body>
 </html>
