@@ -8,6 +8,10 @@ var fs = require('fs');
 const app = express();
 const publicDirectoryPath = path.join(__dirname, "../public")
 app.use(express.static(publicDirectoryPath))
+// handle form in post method
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
@@ -28,6 +32,7 @@ filenames.forEach(function (filename) {
 var firebase = require("firebase/app");
 var auth = require("firebase/auth");
 var firestore = require("firebase/firestore");
+var storage = require('firebase/storage');
 const handler_firestore = require('./FirebaseFirestoreService');
 
 const firebaseConfig = {
@@ -42,7 +47,6 @@ const firebaseConfig = {
 
 var defaultProject=firebase.initializeApp(firebaseConfig);
 var db = firestore.getFirestore(defaultProject);
-const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
 const { async } = require("@firebase/util");
 
 hbs.registerHelper("link_product_detail", function(product_id, product_type) {
@@ -50,6 +54,8 @@ hbs.registerHelper("link_product_detail", function(product_id, product_type) {
     var product_type = hbs.escapeExpression(product_type);    
     return new hbs.SafeString("href='/product-detail/" + product_type + '/' + product_id + "'");
 });
+
+
 
 app.get('/',async (req, res) =>{
     const productList =await handler_firestore.getProducts(db);
@@ -61,8 +67,13 @@ app.get('/about', async (req, res) => {
     res.render("about");
 })
 
-app.get('/add_product', async (req, res) =>{
-    res.render("add_product");
+app.get('/fetch_product', (req, res) => {
+    res.render('fetch_product');
+})
+app.post('/api/add_product', async (req, res) => {
+    console.log(req.body);
+    await handler_firestore.addProduct(db, req.body);
+    res.send({result: 'success'})
 })
 
 app.get('/contact', async (req, res) => {

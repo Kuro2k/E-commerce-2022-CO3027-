@@ -1,8 +1,9 @@
 var firestore = require("firebase/firestore");
 const { async } = require("@firebase/util");
 
-const createDocument = (collection, document) => {
-    return firestore.collection(collection).add(document);
+const addProduct = async (db, document) => {
+    const product = firestore.collection(db, 'Product');
+    await firestore.addDoc(product, document);
 };
 
 async function getProducts(db){
@@ -12,6 +13,6 @@ async function getProducts(db){
     return productList;
 }
 module.exports = {
-    createDocument: createDocument,
+    addProduct: addProduct,
     getProducts: getProducts
 };

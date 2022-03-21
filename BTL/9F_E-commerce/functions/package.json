@@ -13,11 +13,13 @@
   },
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "consolidate": "^0.16.0",
     "express": "^4.17.3",
     "firebase": "^9.6.8",
     "firebase-functions": "^3.19.0",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "multiparty": "^4.2.3"
   },
   "private": true
 }

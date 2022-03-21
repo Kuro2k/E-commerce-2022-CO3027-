@@ -66,23 +66,12 @@
                       class="custom-select tm-select-accounts"
                       id="category"
                     >
-                      <option value="1">Rau củ quả</option>
-                      <option value="2">Trái cây</option>
-                      <option value="3">Thịt</option>
-                      <option value="4">Thủy hải sản</option>
+                      <option value="vegetable">Rau củ quả</option>
+                      <option value="fruit">Trái cây</option>
+                      <option value="meat">Thịt</option>
+                      <option value="seafood">Thủy hải sản</option>
                     </select>
                   </div>
-                  
-                  <div class="form-group mb-3">
-                    <label for="availability">Tình trạng</label>
-                      <select 
-                      class="custom-select tm-select-accounts"
-                      id="availability"
-                      >
-                        <option value="1">Còn hàng</option> 
-                        <option value="2">Hết hàng</option> 
-                      </select>
-                    </div>
 
                   <div class="form-group mb-3">
                     <label
@@ -112,15 +101,29 @@
                   </div>
 
                   <div class="form-group mb-3">
+                    <label
+                      for="sold_amount"
+                      >Số lượng đã bán
+                    </label>
+                    <input
+                      id="sold_amount"
+                      name="sold_amount"
+                      type="number"
+                      class="form-control validate"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group mb-3">
                     <label for="location">Nơi bán</label>
                       <select 
                       class="custom-select tm-select-accounts"
                       id="location"
                       >
-                        <option value="1">TP. HCM</option> 
-                        <option value="2">Hà Nội</option> 
-                        <option value="3">Đà Nẵng</option> 
-                        <option value="4">Cần Thơ</option> 
+                        <option value="TP. Hồ Chí Minh">TP. HCM</option> 
+                        <option value="Hà Nội">Hà Nội</option> 
+                        <option value="Đà Nẵng">Đà Nẵng</option> 
+                        <option value="Cần Thơ">Cần Thơ</option> 
                       </select>
                   </div>
                     </div>
@@ -171,3 +174,36 @@
         </script>
       </body>
     </html>
+<script>
+    const reader = new FileReader();
+    const fileByteArray = [];
+    document.getElementById('add_product')
+    .addEventListener('submit', evt => {
+        evt.preventDefault()
+        const form = evt.target
+        const body = JSON.stringify({
+            name: form.elements.name.value,
+            price: parseInt(form.elements.price.value),
+            category: form.elements.category.value,
+            sold_amount: parseInt(form.elements.sold_amount.value),
+            description: form.elements.description.value,
+            stock: parseInt(form.elements.stock.value),
+            location: form.elements.location.value,
+            img : ""
+        })
+        const container = document.getElementById('addProductContainer')
+        const headers = {'Content-Type': 'application/json'}
+        fetch('api/add_product', { method: 'post',body, headers})
+            .then(res => {
+                if (res.status < 200 || res.status >= 300)
+                    throw new Error('Request failed with status ${res.status}')
+                return res.json()
+            })
+            .then(json => {
+                container.innerHTML = '<b>Thank you for signing up!</b>'
+            })
+            .catch(err => {
+                container.innerHTML = '<b>Sorry</b>'
+            })
+    })  
+</script>
