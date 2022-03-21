@@ -56,10 +56,8 @@ function increaseCartCounter() {
     var value = parseInt(document.getElementById("cart-product-counter").innerHTML, 10);
     value += 1;
     document.getElementById("cart-product-counter").innerHTML = value;
+
+
 }
-
-
-
-
 
 formatPrice();

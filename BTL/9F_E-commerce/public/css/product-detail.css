@@ -146,6 +146,15 @@ a, a:hover {
     margin-top: 16px;
 }
 
+.modal-body {
+    text-align: center;
+}
+
+.modal-body i {
+    font-size: 48px;
+    color: #56B280;
+}
+
 .product-share a {
     color: black;
     margin-right: 4px;

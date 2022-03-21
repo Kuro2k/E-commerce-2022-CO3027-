@@ -55,7 +55,20 @@
             </div>
 
             <div class="btn-container add-to-cart">
-                <button class="btn" onclick="increaseCartCounter()"><i class="bi bi-cart3"></i>  Thêm vào giỏ hàng</button>
+                <button class="btn" onclick="increaseCartCounter()" data-bs-toggle="modal" data-bs-target="#addSuccessful">
+                    <i class="bi bi-cart3"></i>  Thêm vào giỏ hàng
+                </button>
+
+                <div class="modal fade" id="addSuccessful" tabindex="-1" aria-labelledby="addSuccessfulLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-body">
+                        <i class="bi bi-check-circle"></i>
+                        <p>Thêm vào giỏ thành công</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
             </div>
             
             <p class="product-share"><b>Chia sẻ:</b> 

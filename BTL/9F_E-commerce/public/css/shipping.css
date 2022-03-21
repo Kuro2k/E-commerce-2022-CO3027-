@@ -11,6 +11,7 @@ html {
     scroll-behavior: smooth;
 }
 
+.modal-footer .btn,
 .btn {
     text-decoration: none;
     background-color: #56B280;
@@ -27,6 +28,15 @@ html {
     border-color: #56B280;
 }
 
+.modal-footer .btn-liner {
+    margin-right: 24px;
+    text-decoration: none;
+    background-color: white;
+    color: #56B280;
+    border-color: #56B280;
+    width: 40px;
+}
+
 hr {
     margin: 12px 0;
     color: #56B280;
@@ -41,6 +51,14 @@ a, a:hover {
     color: #56B280;
 }
 
+
+.modal-body input {
+    margin-bottom: 12px;
+}
+
+.modal-body textarea {
+    margin-bottom: 4px;
+}
 
 /* Begin: Page-info */
 .page-info {
