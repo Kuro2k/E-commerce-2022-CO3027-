@@ -92,53 +92,19 @@
         </div>
 
         <div class="row products">
+            {{#each productlist}}
             <div class="col product">
-                <a href="/product-detail">
+                <a {{ link_product_detail id type}} >
+                
                     <div class="product-img">
-                        <img src="./img/home/watermelon.jpg" alt="Product Image" >
+                        <img src= {{img}} alt="Product Image" >
                     </div>
-
-                    <p class="name"><b>Tên sản phẩm</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
+                    <p class="name"><b>{{name}}</b></p>
+                    <p class="price"> {{price}} đ</p>
+                    <p class="address"> {{location}} </p>
                 </a>
             </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="./img/home/watermelon.jpg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Tên sản phẩm</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="./img/home/watermelon.jpg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Tên sản phẩm</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="./img/home/watermelon.jpg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Tên sản phẩm</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
+            {{/each}}
 
         </div>
     </div>

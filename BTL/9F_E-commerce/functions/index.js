@@ -9,7 +9,6 @@ const app = express();
 const publicDirectoryPath = path.join(__dirname, "../public")
 app.use(express.static(publicDirectoryPath))
 
-const partialsPath = path.join(__dirname, "/partials");
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
 app.set('view engine','hbs');
@@ -28,6 +27,8 @@ filenames.forEach(function (filename) {
 
 var firebase = require("firebase/app");
 var auth = require("firebase/auth");
+var firestore = require("firebase/firestore");
+const handler_firestore = require('./FirebaseFirestoreService');
 
 const firebaseConfig = {
     apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
@@ -40,22 +41,35 @@ const firebaseConfig = {
 };
 
 var defaultProject=firebase.initializeApp(firebaseConfig);
+var db = firestore.getFirestore(defaultProject);
 const {registerUser, loginUser, logoutUser, sendPasswordResetEmail, loginWithGoogle, subscribeToAuthChanges} = require("./FirebaseAuthService");
 const { async } = require("@firebase/util");
 
+hbs.registerHelper("link_product_detail", function(product_id, product_type) {
+    var product_id = hbs.escapeExpression(product_id);
+    var product_type = hbs.escapeExpression(product_type);    
+    return new hbs.SafeString("href='/product-detail/" + product_type + '/' + product_id + "'");
+});
+
 app.get('/',async (req, res) =>{
-    res.render("index");
+    const productList =await handler_firestore.getProducts(db);
+    console.log(productList);
+    res.render("index",{productlist:productList});
 });
 
 app.get('/about', async (req, res) => {
     res.render("about");
 })
 
+app.get('/add_product', async (req, res) =>{
+    res.render("add_product");
+})
+
 app.get('/contact', async (req, res) => {
     res.render("contact");
 })
 
-app.get('/product-detail', async (req, res) => {
+app.get('/product-detail/', async (req, res) => {
     res.render("product-detail");
 })
 
