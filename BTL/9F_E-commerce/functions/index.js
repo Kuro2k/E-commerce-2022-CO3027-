@@ -3,15 +3,19 @@ const functions = require("firebase-functions");
 const express = require('express');
 const engines = require('consolidate');
 var hbs = require("handlebars");
-var fs = require('fs');
+const fs = require("fs");
+
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 const publicDirectoryPath = path.join(__dirname, "../public")
 app.use(express.static(publicDirectoryPath))
 // handle form in post method
-const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+const multer = require("multer")
+const upload = multer({
+    storage: multer.memoryStorage()
+})
 
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
@@ -65,6 +69,21 @@ app.get('/',async (req, res) =>{
 
 app.get('/about', async (req, res) => {
     res.render("about");
+})
+
+
+app.get('/test', (req, res) => {
+    res.render('test_upload');
+})
+// const db_img = storage.getStorage(defaultProject, 'https://console.firebase.google.com/project/farmnine-6d2d9/storage/farmnine-6d2d9.appspot.com/files')
+// const ref = storage.ref(db_img, 'fruit')
+const admin = require("firebase-admin")
+admin.
+const db_img = admin.storage(defaultProject).bucket('https://console.firebase.google.com/project/farmnine-6d2d9/storage/farmnine-6d2d9.appspot.com/files')
+app.put('/api/test', async (req, res) => {
+    console.log(req.body)
+    await storage.uploadBytes(ref, req.body, 'base8')
+    res.send({result: 'success'});
 })
 
 app.get('/fetch_product', (req, res) => {
