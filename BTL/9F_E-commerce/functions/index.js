@@ -1,10 +1,12 @@
-const path = require("path")
-const functions = require("firebase-functions");
+const path = require("path");
+const admin = require("./FirebaseAdminConfig");
+const {user_app} = require("./FirebaseUserConfig");
+const functions = admin.functions;
 const express = require('express');
 const engines = require('consolidate');
 var hbs = require("handlebars");
 const fs = require("fs");
-
+const { async } = require("@firebase/util");
 
 const app = express();
 app.use(express.json());
@@ -12,10 +14,6 @@ app.use(express.urlencoded({extended: true}));
 const publicDirectoryPath = path.join(__dirname, "../public")
 app.use(express.static(publicDirectoryPath))
 // handle form in post method
-const multer = require("multer")
-const upload = multer({
-    storage: multer.memoryStorage()
-})
 
 app.engine('hbs',engines.handlebars);
 app.set('views','./views');
@@ -33,25 +31,15 @@ filenames.forEach(function (filename) {
     hbs.registerPartial(name, template);
 });
 
-var firebase = require("firebase/app");
+
 var auth = require("firebase/auth");
 var firestore = require("firebase/firestore");
 var storage = require('firebase/storage');
 const handler_firestore = require('./FirebaseFirestoreService');
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAYOfXw-7HAFfrOjdwWK8eyKpSNT2Qy1Tg",
-    authDomain: "farmnine-6d2d9.firebaseapp.com",
-    projectId: "farmnine-6d2d9",
-    storageBucket: "farmnine-6d2d9.appspot.com",
-    messagingSenderId: "527234496843",
-    appId: "1:527234496843:web:8651706cd64f05f19690ce",
-    measurementId: "G-GB1RK8N62V"
-};
 
-var defaultProject=firebase.initializeApp(firebaseConfig);
-var db = firestore.getFirestore(defaultProject);
-const { async } = require("@firebase/util");
+var db = firestore.getFirestore(user_app);
+
 
 hbs.registerHelper("link_product_detail", function(product_id, product_type) {
     var product_id = hbs.escapeExpression(product_id);
@@ -77,9 +65,6 @@ app.get('/test', (req, res) => {
 })
 // const db_img = storage.getStorage(defaultProject, 'https://console.firebase.google.com/project/farmnine-6d2d9/storage/farmnine-6d2d9.appspot.com/files')
 // const ref = storage.ref(db_img, 'fruit')
-const admin = require("firebase-admin")
-admin.
-const db_img = admin.storage(defaultProject).bucket('https://console.firebase.google.com/project/farmnine-6d2d9/storage/farmnine-6d2d9.appspot.com/files')
 app.put('/api/test', async (req, res) => {
     console.log(req.body)
     await storage.uploadBytes(ref, req.body, 'base8')
