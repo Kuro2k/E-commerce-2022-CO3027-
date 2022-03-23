@@ -34,7 +34,7 @@
             <div id="addProductContainer" class="row tm-edit-product-row">
               <div class="col-xl-6 col-lg-6 col-md-12">
     
-                <form class="tm-edit-product-form" id="add_product">
+                <form class="tm-edit-product-form" id="add_product" action="/api/add_product" method="post" enctype="multipart/form-data">
                   <div class="form-group mb-3">
                     <label for="name">Tên sản phẩm</label>
                     <input
@@ -64,25 +64,14 @@
                     >
                     <select
                       class="custom-select tm-select-accounts"
-                      id="category"
+                      id="category" name="category"
                     >
-                      <option value="1">Rau củ quả</option>
-                      <option value="2">Trái cây</option>
-                      <option value="3">Thịt</option>
-                      <option value="4">Thủy hải sản</option>
+                      <option value="vegetable">Rau củ quả</option>
+                      <option value="fruit">Trái cây</option>
+                      <option value="meat">Thịt</option>
+                      <option value="seafood">Thủy hải sản</option>
                     </select>
                   </div>
-                  
-                  <div class="form-group mb-3">
-                    <label for="availability">Tình trạng</label>
-                      <select 
-                      class="custom-select tm-select-accounts"
-                      id="availability"
-                      >
-                        <option value="1">Còn hàng</option> 
-                        <option value="2">Hết hàng</option> 
-                      </select>
-                    </div>
 
                   <div class="form-group mb-3">
                     <label
@@ -92,6 +81,7 @@
                     <textarea
                       class="form-control validate"
                       id="description"
+                      name="description"
                       rows="3"
                       required
                     ></textarea>
@@ -112,16 +102,33 @@
                   </div>
 
                   <div class="form-group mb-3">
+                    <label
+                      for="sold_amount"
+                      >Số lượng đã bán
+                    </label>
+                    <input
+                      id="sold_amount"
+                      name="sold_amount"
+                      type="number"
+                      class="form-control validate"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group mb-3">
                     <label for="location">Nơi bán</label>
                       <select 
                       class="custom-select tm-select-accounts"
-                      id="location"
+                      id="location" name="location"
                       >
-                        <option value="1">TP. HCM</option> 
-                        <option value="2">Hà Nội</option> 
-                        <option value="3">Đà Nẵng</option> 
-                        <option value="4">Cần Thơ</option> 
+                        <option value="TP. Hồ Chí Minh">TP. HCM</option> 
+                        <option value="Hà Nội">Hà Nội</option> 
+                        <option value="Đà Nẵng">Đà Nẵng</option> 
+                        <option value="Cần Thơ">Cần Thơ</option> 
                       </select>
+                  </div>
+                  <div class="form-group mb-3">
+                      <input id="fileInput" type="file" name="photo"/>
                   </div>
                     </div>
 
@@ -132,15 +139,6 @@
                         onclick="document.getElementById('fileInput').click();"
                       ></i>
                     </div> -->
-                    <div class="custom-file mt-3 mb-3">
-                      <input id="fileInput" type="file" />
-                      <input
-                        type="button"
-                        class="btn btn-primary btn-block mx-auto"
-                        value="UPLOAD PRODUCT IMAGE"
-                        onclick="document.getElementById('fileInput').click();"
-                      />
-                    </div>
                   </div>
                   <div class="col-12">
                     <button type="submit" class="btn btn-primary btn-block text-uppercase">Thêm</button>

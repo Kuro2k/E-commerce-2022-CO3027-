@@ -7,10 +7,24 @@ const engines = require('consolidate');
 var hbs = require("handlebars");
 const fs = require("fs");
 const { async } = require("@firebase/util");
-
+const multer = require("multer-firebase");
+const { v4: uuidv4 } = require('uuid');
+// SET STORAGE
+const sto = multer.diskStorage({
+    startProcessing (req, busboy) {
+        if (req.rawBody) { // indicates the request was pre-processed
+            busboy.end(req.rawBody)
+        } else {
+            req.pipe(busboy)
+        }
+    },
+})
+var upload = multer({ storage: sto });
+const cors = require("cors");
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(cors({origin: true}))
+app.use(express.json({extended: false}));
+app.use(express.urlencoded({extended: false}));
 const publicDirectoryPath = path.join(__dirname, "../public")
 app.use(express.static(publicDirectoryPath))
 // handle form in post method
@@ -39,7 +53,7 @@ const handler_firestore = require('./FirebaseFirestoreService');
 
 
 var db = firestore.getFirestore(user_app);
-
+const db_img = admin.storageBucket;
 
 hbs.registerHelper("link_product_detail", function(product_id, product_type) {
     var product_id = hbs.escapeExpression(product_id);
@@ -58,26 +72,34 @@ app.get('/',async (req, res) =>{
 app.get('/about', async (req, res) => {
     res.render("about");
 })
-
-
-app.get('/test', (req, res) => {
-    res.render('test_upload');
-})
-// const db_img = storage.getStorage(defaultProject, 'https://console.firebase.google.com/project/farmnine-6d2d9/storage/farmnine-6d2d9.appspot.com/files')
-// const ref = storage.ref(db_img, 'fruit')
-app.put('/api/test', async (req, res) => {
-    console.log(req.body)
-    await storage.uploadBytes(ref, req.body, 'base8')
-    res.send({result: 'success'});
+app.get('/upload', (req, res) => { 
+    res.render("upload")
 })
 
-app.get('/fetch_product', (req, res) => {
-    res.render('fetch_product');
+app.get('/add_product', (req, res) => {
+    res.render('add_product');
 })
-app.post('/api/add_product', async (req, res) => {
-    console.log(req.body);
+
+app.post('/api/add_product',upload.single('photo'), async (req, res) => {
+    if (!req.file) {
+        res.status(400).send("Error: No files found")
+    }
+    const img_uploaded = await db_img.upload(req.file.path, {
+        public: true,
+        destination: `${req.body.category}/${req.file.originalname}`,
+        metadata: {
+            firebaseStorageDownloadTokens: uuidv4(),
+        }
+    });
+    const ref = storage.ref(storage.getStorage(user_app), 'fruit/22-3-2022-express js.jpg');
+    const img_url = await storage.getDownloadURL(ref);
+    req.body.img_url = img_url;
+    req.body.price = parseInt(req.body.price);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.sold_amount = parseInt(req.body.sold_amount);
+    req.body.date_upload = new Date().toISOString().split('T')[0]
     await handler_firestore.addProduct(db, req.body);
-    res.send({result: 'success'})
+    res.send("success")
 })
 
 app.get('/contact', async (req, res) => {
@@ -111,5 +133,6 @@ app.get('/thank-you', async (req, res) => {
 app.get('*', (req, res) => {
     res.render("404")
 })
+// app.listen(3000, () => console.log('Server started on port 3000'));
 exports.app = functions.https.onRequest(app);
 
