@@ -12,7 +12,14 @@ async function getProducts(db){
     const productList = productSnapshot.docs.map(doc => doc.data());
     return productList;
 }
+
+async function getFruitProducts(db){
+    const product = firestore.collection(db, 'Product');
+    const constraint = firestore.where("category", "==", "fruit");
+    return await (await firestore.getDocs(product, constraint)).docs.map(doc => doc.data());
+}
 module.exports = {
     addProduct: addProduct,
-    getProducts: getProducts
+    getProducts: getProducts,
+    getFruitProducts: getFruitProducts
 };

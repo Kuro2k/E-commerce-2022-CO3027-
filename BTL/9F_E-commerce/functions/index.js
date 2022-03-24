@@ -114,6 +114,11 @@ app.get('/all-products', async (req, res) => {
     res.render("all-products");
 })
 
+app.get('/test', async (req, res) => {
+    const fruits = await handler_firestore.getFruitProducts(db);
+    res.send(fruits);
+})
+
 app.get('/cart', async (req, res) => {
     res.render("cart");
 })
