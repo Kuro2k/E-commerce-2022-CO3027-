@@ -91,7 +91,7 @@ app.post('/api/add_product',upload.single('photo'), async (req, res) => {
             firebaseStorageDownloadTokens: uuidv4(),
         }
     });
-    const ref = storage.ref(storage.getStorage(user_app), 'fruit/22-3-2022-express js.jpg');
+    const ref = storage.ref(storage.getStorage(user_app), `${req.body.category}/${req.file.originalname}`);
     const img_url = await storage.getDownloadURL(ref);
     req.body.img_url = img_url;
     req.body.price = parseInt(req.body.price);
