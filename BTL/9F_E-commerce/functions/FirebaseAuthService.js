@@ -16,7 +16,7 @@ const sendPasswordResetEmail = (email) => {
 };
 
 const loginWithGoogle = () => {
-    const provider = new auth.GoogleAuthProvider();
+    const provider = new auth.GoogleAuthProvider(); 
     return auth.signInWithPopup(auth.getAuth(), provider);
 };
 
