@@ -18,114 +18,47 @@ async function getProduct(db, product_query){
     const constraint1 = firestore.where("category", "==", product_query.category);
     const constraint2 = firestore.where("name", "==", product_query.name);
     const product_detail = firestore.query(product, constraint1, constraint2);
-    return await (await firestore.getDocs(product_detail)).docs[0].data();
-}
-
-async function getFruitProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("category", "==", "fruit");
-    const fruit = firestore.query(product, constraint);
-    return (await firestore.getDocs(fruit)).docs.map(doc => doc.data());
-}
-
-async function getMeatProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("category", "==", "meat");
-    const fruit = firestore.query(product, constraint);
-    return (await firestore.getDocs(fruit)).docs.map(doc => doc.data());
+    return (await firestore.getDocs(product_detail)).docs[0].data();
 }
 
 async function getRelatedProducts(db, category, limit=null){
     const product = firestore.collection(db, 'Product');
     const constraint = firestore.where("category", "==", category);
-    var meat;
+    let result;
     if (limit) {
         const constraint1 = firestore.limit(limit);
-        meat = firestore.query(product, constraint, constraint1);
+        result = firestore.query(product, constraint, constraint1);
     } else {
-        meat = firestore.query(product, constraint);
+        result = firestore.query(product, constraint);
     }
-    return (await firestore.getDocs(meat)).docs.map(doc => doc.data());
+    return (await firestore.getDocs(result)).docs.map(doc => doc.data());
 }
 
-async function getSeaFoodProducts(db){
+async function getProductsByLocation(db, location, limit=null){
     const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("category", "==", "seafood");
-    const seaFood = firestore.query(product, constraint);
-    return (await firestore.getDocs(seaFood)).docs.map(doc => doc.data());
+    const constraint = firestore.where("location", "==", location);
+    let result;
+    if (limit) {
+        const constraint1 = firestore.limit(limit);
+        result = firestore.query(product, constraint, constraint1);
+    } else {
+        result = firestore.query(product, constraint);
+    }
+    return (await firestore.getDocs(result)).docs.map(doc => doc.data());
 }
 
-async function getVegeProducts(db){
+async function getProductsByPrice(db, left, right, limit=null){
     const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("category", "==", "vegetable");
-    const vege = firestore.query(product, constraint);
-    return (await firestore.getDocs(vege)).docs.map(doc => doc.data());
-}
-
-async function getSGProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("location", "==", "TP. Hồ Chí Minh");
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getHNProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("location", "==", "Hà Nội");
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getDNProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("location", "==", "Đà Nẵng");
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getCTProducts(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("location", "==", "Cần Thơ");
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getU100Products(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("price", "<=", 100000);
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getU300Products(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint1 = firestore.where("price", ">=", 100000);
-    const constraint2 = firestore.where("price", "<=", 300000);
-    const query = firestore.query(product, constraint1, constraint2);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getU500Products(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint1 = firestore.where("price", ">=", 300000);
-    const constraint2 = firestore.where("price", "<=", 500000);
-    const query = firestore.query(product, constraint1, constraint2);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getU1000Products(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint1 = firestore.where("price", ">=", 500000);
-    const constraint2 = firestore.where("price", "<=", 1000000);
-    const query = firestore.query(product, constraint1, constraint2);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
-}
-
-async function getO1000Products(db){
-    const product = firestore.collection(db, 'Product');
-    const constraint = firestore.where("price", ">=", 1000000);
-    const query = firestore.query(product, constraint);
-    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
+    const constraint = firestore.where("price", ">=", left);
+    const constraint1 = firestore.where("price", "<=", right);
+    let result;
+    if (limit) {
+        const constraint2 = firestore.limit(limit);
+        result = firestore.query(product, constraint, constraint1, constraint2);
+    } else {
+        result = firestore.query(product, constraint, constraint1);
+    }
+    return (await firestore.getDocs(result)).docs.map(doc => doc.data());
 }
 
 async function getProductsByName(db, name){
@@ -152,23 +85,12 @@ async function getHotProducts(db){
 }
 
 module.exports = {
-    getRelatedProducts: getRelatedProducts,
     addProduct: addProduct,
     getProducts: getProducts,
     getProduct: getProduct,
-    getFruitProducts: getFruitProducts,
-    getMeatProducts: getMeatProducts,
-    getSeaFoodProducts: getSeaFoodProducts,
-    getVegeProducts: getVegeProducts,
-    getSGProducts: getSGProducts,
-    getHNProducts: getHNProducts,
-    getDNProducts: getDNProducts,
-    getCTProducts: getCTProducts,
-    getU100Products: getU100Products,
-    getU300Products: getU300Products,
-    getU500Products: getU500Products,
-    getU1000Products: getU1000Products,
-    getO1000Products: getO1000Products,
+    getRelatedProducts: getRelatedProducts,
+    getProductsByLocation: getProductsByLocation,
+    getProductsByPrice: getProductsByPrice,
     getProductsByName: getProductsByName,
     getNewProducts: getNewProducts,
     getHotProducts: getHotProducts,

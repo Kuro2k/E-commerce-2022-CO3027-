@@ -137,67 +137,67 @@ app.get('/all-products', async (req, res) => {
 })
 
 app.get('/fruitdata', async (req, res) => {
-    const fruit = await handler_firestore.getFruitProducts(db);
+    const fruit = await handler_firestore.getRelatedProducts(db, "fruit");
     res.send(fruit);
 })
 
 app.get('/meatdata', async (req, res) => {
-    const meat = await handler_firestore.getMeatProducts(db);
+    const meat = await handler_firestore.getRelatedProducts(db, "meat");
     res.send(meat);
 })
 
 app.get('/seafooddata', async (req, res) => {
-    const seaFood = await handler_firestore.getSeaFoodProducts(db);
+    const seaFood = await handler_firestore.getRelatedProducts(db, "seafood");
     res.send(seaFood);
 })
 
 app.get('/vegedata', async (req, res) => {
-    const vege = await handler_firestore.getVegeProducts(db);
+    const vege = await handler_firestore.getRelatedProducts(db, "vegetable");
     res.send(vege);
 })
 
 app.get('/sgloc', async (req, res) => {
-    const products = await handler_firestore.getSGProducts(db);
+    const products = await handler_firestore.getProductsByLocation(db, "TP. Hồ Chí Minh");
     res.send(products);
 })
 
 app.get('/hnloc', async (req, res) => {
-    const products = await handler_firestore.getHNProducts(db);
+    const products = await handler_firestore.getProductsByLocation(db, "Hà Nội");
     res.send(products);
 })
 
 app.get('/dnloc', async (req, res) => {
-    const products = await handler_firestore.getDNProducts(db);
+    const products = await handler_firestore.getProductsByLocation(db, "Đà Nẵng");
     res.send(products);
 })
 
 app.get('/ctloc', async (req, res) => {
-    const products = await handler_firestore.getCTProducts(db);
+    const products = await handler_firestore.getProductsByLocation(db, "Cần Thơ");
     res.send(products);
 })
 
 app.get('/u100price', async (req, res) => {
-    const products = await handler_firestore.getU100Products(db);
+    const products = await handler_firestore.getProductsByPrice(db, 0, 100000);
     res.send(products);
 })
 
 app.get('/u300price', async (req, res) => {
-    const products = await handler_firestore.getU300Products(db);
+    const products = await handler_firestore.getProductsByPrice(db, 100000, 300000);
     res.send(products);
 })
 
 app.get('/u500price', async (req, res) => {
-    const products = await handler_firestore.getU500Products(db);
+    const products = await handler_firestore.getProductsByPrice(db, 300000, 500000);
     res.send(products);
 })
 
 app.get('/u1000price', async (req, res) => {
-    const products = await handler_firestore.getU1000Products(db);
+    const products = await handler_firestore.getProductsByPrice(db, 500000, 1000000);
     res.send(products);
 })
 
 app.get('/o1000price', async (req, res) => {
-    const products = await handler_firestore.getO1000Products(db);
+    const products = await handler_firestore.getO1000Products(db, 1000000, 100000000);
     res.send(products);
 })
 
