@@ -139,6 +139,11 @@ ul {
     box-shadow: 0px 0px 80px #E1E1E1;
 }
 
+.product .name {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .product:hover {
     border: 2px solid #56B280;
 }
