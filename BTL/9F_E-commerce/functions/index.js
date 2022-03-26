@@ -50,7 +50,7 @@ var auth = require("firebase/auth");
 var firestore = require("firebase/firestore");
 var storage = require('firebase/storage');
 const handler_firestore = require('./FirebaseFirestoreService');
-
+const handler_auth = require('./FirebaseAuthService');
 
 var db = firestore.getFirestore(user_app);
 const db_img = admin.storageBucket;
@@ -80,7 +80,6 @@ app.get('/',async (req, res) =>{
     const meat_productList = await handler_firestore.getMeatProducts(db, 8);
     const meat1_productList = meat_productList.slice(0,4);
     const meat2_productList = meat_productList.slice(4,8);
-    console.log(meat2_productList);
     res.render("index",{
         newest_productList:newest_productList,
         hottest_productList: hottest_productList,
