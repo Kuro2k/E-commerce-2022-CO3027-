@@ -6,11 +6,19 @@ const addProduct = async (db, document) => {
     await firestore.addDoc(product, document);
 };
 
-async function getProducts(db){
+async function getProducts(db, product_detail = {}){
     const product = firestore.collection(db, 'Product');
     const productSnapshot = await firestore.getDocs(product);
     const productList = productSnapshot.docs.map(doc => doc.data());
     return productList;
+}
+
+async function getProduct(db, product_query){
+    const product = firestore.collection(db, 'Product');
+    const constraint1 = firestore.where("category", "==", product_query.category);
+    const constraint2 = firestore.where("name", "==", product_query.name);
+    const product_detail = firestore.query(product, constraint1, constraint2);
+    return await (await firestore.getDocs(product_detail)).docs[0].data();
 }
 
 async function getFruitProducts(db){
@@ -23,7 +31,20 @@ async function getFruitProducts(db){
 async function getMeatProducts(db){
     const product = firestore.collection(db, 'Product');
     const constraint = firestore.where("category", "==", "meat");
-    const meat = firestore.query(product, constraint);
+    const fruit = firestore.query(product, constraint);
+    return (await firestore.getDocs(fruit)).docs.map(doc => doc.data());
+}
+
+async function getRelatedProducts(db, category, limit=null){
+    const product = firestore.collection(db, 'Product');
+    const constraint = firestore.where("category", "==", category);
+    var meat;
+    if (limit) {
+        const constraint1 = firestore.limit(limit);
+        meat = firestore.query(product, constraint, constraint1);
+    } else {
+        meat = firestore.query(product, constraint);
+    }
     return (await firestore.getDocs(meat)).docs.map(doc => doc.data());
 }
 
@@ -131,8 +152,10 @@ async function getHotProducts(db){
 }
 
 module.exports = {
+    getRelatedProducts: getRelatedProducts,
     addProduct: addProduct,
     getProducts: getProducts,
+    getProduct: getProduct,
     getFruitProducts: getFruitProducts,
     getMeatProducts: getMeatProducts,
     getSeaFoodProducts: getSeaFoodProducts,
