@@ -21,29 +21,26 @@
     <!-- Header Section -->
     {{>header}}
 
-
+    {{#with product_detail}}
     <div class="page-info">
         <h2 class="page-name">Chi tiết sản phẩm</h2>
         <p class="route">
                 <a href="/">Trang chủ</a> /
-                <a href="/fruits">Trái cây</a> / 
-                <a href="/product-detail">Dưa hấu</a>
+                <a href="/{{category}}"> {{product_category category}} </a> / 
+                <a href="/product-detail?category={{category}}&name={{name}}"> {{name}}</a>
         </p>
     </div>
     
     <div class="row product-info">
         <div class="col product-big-img">
-            <img src="/img/home/watermelon.jpg" alt="Watermelon">
+            <img src={{img_url}} alt={{name}}>
         </div>
 
         <div class="col product-description">
-            <h4 class="product-name"><b>Dưa hấu</b></h4>
-            <h5 class="price-container"><b class="product-price">20000</b><b> đ/kg</b></h5>
-            <p class="product-category"><b>Danh mục:</b> Trái cây</p>
+            <h4 class="product-name"><b>{{name}}</b></h4>
+            <h5 class="price-container"><b class="product-price">{{price}}</b><b> đ/kg</b></h5>
+            <p class="product-category"><b>Danh mục:</b> {{product_category category}}</p>
             <p class="product-availability"><b>Tình trạng:</b> Còn hàng</p>
-            <p class="product-intro">
-                Đây là sản phẩm dưa hấu. Đây là sản phẩm dưa hấu. Đây là sản phẩm dưa hấu. Đây là sản phẩm dưa hấu. Đây là sản phẩm dưa hấu. 
-            </p>
 
             <div class="row product-qty">
                 <b class="col col-md-3">Số lượng:</b>
@@ -81,75 +78,25 @@
 
     <div class="detail-description">
         <h2 class="title"><b>Mô tả sản phẩm</b></h2>
-        <p>
-            Dưa hấu có tên khoa học là Citrullus lanatus, là một loại thực vật
-            thuộc họ bầu bí, vỏ cứng, chứa nhiều nước, có nguồn gốc từ miền
-            nam Châu Phi. Dưa hấu được được nhiều người ưa chuộng bởi tính
-            ngọt mát và nhiều nước, đồng thời còn giúp cung cấp nhiều vitamin
-            và các nguyên tố vi lượng cho cơ thể.
-        </p>
-        <p><b>Lợi ích của dưa hấu đối với sức khỏe</b></p>
-        <p><b>Cung cấp nước cho cơ thể</b></p>
-        <p>
-            Nước là thành phần chiếm tới 95% quả dưa hấu. Chính vì vậy, bổ
-            sung dưa hấu sẽ giúp giữ nước cho cơ thể và duy trì nồng độ điện
-            giải. Ăn dưa hấu thường xuyên có thể giảm các triệu chứng mất nước
-            sau khi vận động mạnh, luyện tập thể thao như chuột rút, mệt mỏi,
-            choáng…
-        </p>
+        {{description}}
     </div>
-
+    {{/with}}
     <h2 class="related-products title"><b>Sản phẩm liên quan</b></h2>
     <div class="row products">
+            {{#each related_products}}
             <div class="col product">
-                <a href="/product-detail">
+                <a {{ link_product_detail name category}} >
+                
                     <div class="product-img">
-                        <img src="https://idsb.tmgrup.com.tr/ly/uploads/images/2020/05/13/35552.jpeg" alt="Product Image" >
+                        <img src= {{img_url}} alt="Product Image" >
                     </div>
-
-                    <p class="name"><b>Táo</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
+                    <p class="name"><b>{{name}}</b></p>
+                    <p class="price"> {{price}} đ</p>
+                    <p class="address"> {{location}} </p>
                 </a>
             </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="https://cdn.wikifarmer.com/wp-content/uploads/2020/02/tomato-facts.jpg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Cà chua</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="https://www.nipponexpress.com/press/report/img/06-Nov-20-ogp.jpeg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Chuối</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
-
-            <div class="col product">
-                <a href="/product-detail">
-                    <div class="product-img">
-                        <img src="https://images.foody.vn/res/g111/1100789/prof/s1242x600/foody-upload-api-foody-mobile-co-e762a7c4-210907082710.jpeg" alt="Product Image" >
-                    </div>
-
-                    <p class="name"><b>Thịt bò</b></p>
-                    <p class="price-container"><span class="price">20000</span>đ</p>
-                    <p class="address">TP. Hồ Chí Minh</p>
-                </a>
-            </div>
-
-    </div>
+            {{/each}}
+        </div>
 
     {{>footer}}
 

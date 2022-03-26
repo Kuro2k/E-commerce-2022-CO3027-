@@ -55,18 +55,38 @@ const handler_firestore = require('./FirebaseFirestoreService');
 var db = firestore.getFirestore(user_app);
 const db_img = admin.storageBucket;
 
-hbs.registerHelper("link_product_detail", function(product_id, product_type) {
-    var product_id = hbs.escapeExpression(product_id);
+hbs.registerHelper("link_product_detail", function(product_name, product_type) {
+    var product_name = hbs.escapeExpression(product_name);
     var product_type = hbs.escapeExpression(product_type);    
-    return new hbs.SafeString("href='/product-detail/" + product_type + '/' + product_id + "'");
+    return new hbs.SafeString("href='/product-detail?category=" + product_type + '&name=' + product_name + "'");
 });
 
-
+hbs.registerHelper("product_category", function(category) {
+    var category = hbs.escapeExpression(category);
+    if (category === "fruit"){
+        return "Trái cây";
+    } else if (category === "vegetable"){
+        return "Rau củ quả";
+    } else if (category === "meat") {
+        return "Thịt";
+    } else {
+        return "Hải sản";
+    } 
+});
 
 app.get('/',async (req, res) =>{
-    const productList =await handler_firestore.getProducts(db);
-    console.log(productList);
-    res.render("index",{productlist:productList});
+    const newest_productList = await handler_firestore.getNewProducts(db);
+    const hottest_productList = await handler_firestore.getHotProducts(db);
+    const meat_productList = await handler_firestore.getMeatProducts(db, 8);
+    const meat1_productList = meat_productList.slice(0,4);
+    const meat2_productList = meat_productList.slice(4,8);
+    console.log(meat2_productList);
+    res.render("index",{
+        newest_productList:newest_productList,
+        hottest_productList: hottest_productList,
+        meat1_productList: meat1_productList,
+        meat2_productList: meat2_productList
+    });
 });
 
 app.get('/about', async (req, res) => {
@@ -106,8 +126,10 @@ app.get('/contact', async (req, res) => {
     res.render("contact");
 })
 
-app.get('/product-detail/', async (req, res) => {
-    res.render("product-detail");
+app.get('/product-detail', async (req, res) => {
+    const product_detail = await handler_firestore.getProduct(db, req.query);
+    const related_products = await handler_firestore.getRelatedProducts(db, req.query.category, 4)
+    res.render("product-detail", {product_detail: product_detail, related_products: related_products});
 })
 
 app.get('/all-products', async (req, res) => {
