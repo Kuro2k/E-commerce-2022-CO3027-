@@ -20,11 +20,7 @@ const loginWithGoogle = () => {
     return auth.signInWithPopup(auth.getAuth(), provider);
 };
 
-const subscribeToAuthChanges = (handleAuthChange) => {
-    auth.onAuthStateChanged(auth.getAuth(), (user) => {
-        handleAuthChange(user);
-    });
-};
+const subscribeToAuthChanges = () => auth.getAuth().currentUser;
 
 module.exports = {
     registerUser:registerUser,

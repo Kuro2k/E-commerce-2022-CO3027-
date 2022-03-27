@@ -15,7 +15,7 @@
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
                                 <div class="login-form">
-                                    <form method="get" name="login" class="form-style">
+                                    <form method="post" name="login" class="form-style" action="/auth/login">
                                         <div class="form-logo">
                                             <img src="./img/logo.png" alt="logo">
                                         </div>
@@ -62,7 +62,7 @@
                                         <label for="psw"><b>Mật khẩu</b></label> <br>
                                         <input type="password" placeholder="Nhập mật khẩu" name="psw" required> <br>
 
-                                        <button type="button" class="btn login-btn" onclick="alert("Đăng ký thành công! Vui lòng kiểm tra email của bạn")">Đăng ký</button>
+                                        <button type="button" class="btn login-btn" onclick="alert("Đăng ký thành công! Vui lòng kiểm tra email của bạn")" form="/auth/signup">Đăng ký</button>
                                 </label>
                                     </form>
                                 </div>

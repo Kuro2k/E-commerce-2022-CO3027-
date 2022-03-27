@@ -87,7 +87,13 @@ app.get('/',async (req, res) =>{
         meat2_productList: meat2_productList
     });
 });
-
+app.get('/test', async (req, res) => {
+    await handler_auth.loginUser("abc@gmail.com", "123456");
+    console.log(handler_auth.subscribeToAuthChanges())
+    await handler_auth.logoutUser()
+    console.log(handler_auth.subscribeToAuthChanges())
+    res.send("ok")
+})
 app.get('/about', async (req, res) => {
     res.render("about");
 })
