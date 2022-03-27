@@ -119,7 +119,11 @@ app.get('/signup', async (req, res) => {
 })
 
 app.get('/about', async (req, res) => {
-    res.render("about");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("about", {user: user});
 })
 app.get('/upload', (req, res) => { 
     res.render("upload")
@@ -152,17 +156,29 @@ app.post('/api/add_product',upload.single('photo'), async (req, res) => {
 })
 
 app.get('/contact', async (req, res) => {
-    res.render("contact");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("contact", {user: user});
 })
 
 
 app.get('/product-detail', async (req, res) => {
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
     const product_detail = await handler_firestore.getProduct(db, req.query);
     const related_products = await handler_firestore.getRelatedProducts(db, req.query.category, 4)
-    res.render("product-detail", {product_detail: product_detail, related_products: related_products});
+    res.render("product-detail", {user: user, product_detail: product_detail, related_products: related_products});
 })
 
 app.get('/all-products', async (req, res) => {
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
     var product_list = null;
     if (!req.query || Object.keys(req.query).length === 0){
         product_list = await handler_firestore.getProducts(db);
@@ -170,7 +186,7 @@ app.get('/all-products', async (req, res) => {
         product_list = await handler_firestore.getRelatedProducts(db, req.query.category)
     }
     // console.log(product_list);
-    res.render("all-products", {product_list: product_list});
+    res.render("all-products", {product_list: product_list, user:user});
 })
 
 app.get('/ctloc', async (req, res) => {
@@ -216,19 +232,35 @@ app.get('/search', async (req, res) => {
 })
 
 app.get('/cart', async (req, res) => {
-    res.render("cart");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("cart", {user: user});
 })
 
 app.get('/shipping', async (req, res) => {
-    res.render("shipping");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("shipping", {user: user});
 })
 
 app.get('/payment', async (req, res) => {
-    res.render("payment");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("payment", {user: user});
 })
 
 app.get('/thank-you', async (req, res) => {
-    res.render("thanks");
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
+    res.render("thanks", {user: user});
 })
 
 app.get('*', (req, res) => {

@@ -45,8 +45,8 @@
                 
                 <div class="search">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" >
-                        <a class="btn" type="button" ><i class="bi bi-search"></i></a>
+                        <input id="search" type="text" class="form-control" placeholder="Tìm kiếm" >
+                        <a href="/all-product" class="btn" type="button" onclick="search();"><i class="bi bi-search"></i></a>
                     </div>
                 </div>
                 
@@ -57,5 +57,15 @@
         </div>
         <hr>
     </div>
-
+<script>
+        function logout() {
+            if (confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
+                location.href  = "/login";
+            } 
+        }
+        function search(){
+            const name = document.querySelector('search');
+            location.href="/all-product";
+        }
+</script>
     

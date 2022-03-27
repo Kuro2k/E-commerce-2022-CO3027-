@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
         phoneNumber: "+84" + phone
     });
 
-    return res.send(user);
+    res.redirect('/');
 };
 
 module.exports = createUser;
