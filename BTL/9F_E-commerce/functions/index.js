@@ -204,8 +204,14 @@ app.get('/o1000price', async (req, res) => {
 })
 
 app.get('/byname', async (req, res) => {
-    const name = "Mãng cầu";
+    const name = "Hến";
     const products = await handler_firestore.getProductsByName(db, name);
+    res.send(products);
+})
+
+app.get('/search', async (req, res) => {
+    const name = "B";
+    const products = await handler_firestore.searchProducts(db, name);
     res.send(products);
 })
 

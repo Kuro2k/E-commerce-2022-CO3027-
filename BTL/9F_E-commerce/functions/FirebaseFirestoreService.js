@@ -84,6 +84,15 @@ async function getHotProducts(db){
     return (await firestore.getDocs(query)).docs.map(doc => doc.data());
 }
 
+// Search by prefix, case-sensitive
+async function searchProducts(db, name){
+    const product = firestore.collection(db, 'Product');
+    const constraint = firestore.where('name', '>=', name);
+    const constraint1 = firestore.where('name', '<=', name+ '\uf8ff');
+    const query = firestore.query(product, constraint, constraint1)
+    return (await firestore.getDocs(query)).docs.map(doc => doc.data());
+}
+
 module.exports = {
     addProduct: addProduct,
     getProducts: getProducts,
@@ -94,4 +103,5 @@ module.exports = {
     getProductsByName: getProductsByName,
     getNewProducts: getNewProducts,
     getHotProducts: getHotProducts,
+    searchProducts: searchProducts
 };
