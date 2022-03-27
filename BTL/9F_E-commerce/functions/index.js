@@ -87,6 +87,13 @@ app.get('/',async (req, res) =>{
         meat2_productList: meat2_productList
     });
 });
+// app.get('/test', async (req, res) => {
+//     const a = firestore.collection(db, 'Product');
+//     const constraint1 = firestore.where("category", "==", "seafood");
+//     const constraint2 = firestore.where("date_upload", "==", "2022-03-25");
+//     const product_detail = await firestore.query(a, constraint1, constraint2);
+//     res.send((await firestore.getDocs(product_detail)).docs.map(doc => firestore.deleteDoc(doc.ref)));
+// });
 app.get('/test', async (req, res) => {
     await handler_auth.loginUser("abc@gmail.com", "123456");
     console.log(handler_auth.subscribeToAuthChanges())
