@@ -138,44 +138,14 @@ app.get('/product-detail', async (req, res) => {
 })
 
 app.get('/all-products', async (req, res) => {
-    const product_list = await handler_firestore.getProducts(db);
+    var product_list = null;
+    if (!req.query || Object.keys(req.query).length === 0){
+        product_list = await handler_firestore.getProducts(db);
+    } else if (req.query.category && (!req.query.name)){
+        product_list = await handler_firestore.getRelatedProducts(db, req.query.category)
+    }
     // console.log(product_list);
     res.render("all-products", {product_list: product_list});
-})
-
-app.get('/fruitdata', async (req, res) => {
-    const fruit = await handler_firestore.getRelatedProducts(db, "fruit");
-    res.send(fruit);
-})
-
-app.get('/meatdata', async (req, res) => {
-    const meat = await handler_firestore.getRelatedProducts(db, "meat");
-    res.send(meat);
-})
-
-app.get('/seafooddata', async (req, res) => {
-    const seaFood = await handler_firestore.getRelatedProducts(db, "seafood");
-    res.send(seaFood);
-})
-
-app.get('/vegedata', async (req, res) => {
-    const vege = await handler_firestore.getRelatedProducts(db, "vegetable");
-    res.send(vege);
-})
-
-app.get('/sgloc', async (req, res) => {
-    const products = await handler_firestore.getProductsByLocation(db, "TP. Hồ Chí Minh");
-    res.send(products);
-})
-
-app.get('/hnloc', async (req, res) => {
-    const products = await handler_firestore.getProductsByLocation(db, "Hà Nội");
-    res.send(products);
-})
-
-app.get('/dnloc', async (req, res) => {
-    const products = await handler_firestore.getProductsByLocation(db, "Đà Nẵng");
-    res.send(products);
 })
 
 app.get('/ctloc', async (req, res) => {
@@ -211,16 +181,6 @@ app.get('/o1000price', async (req, res) => {
 app.get('/byname', async (req, res) => {
     const name = "Mãng cầu";
     const products = await handler_firestore.getProductsByName(db, name);
-    res.send(products);
-})
-
-app.get('/newproduct', async (req, res) => {
-    const products = await handler_firestore.getNewProducts(db);
-    res.send(products);
-})
-
-app.get('/hotproduct', async (req, res) => {
-    const products = await handler_firestore.getHotProducts(db);
     res.send(products);
 })
 
