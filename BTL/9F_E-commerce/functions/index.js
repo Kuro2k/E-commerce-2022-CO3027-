@@ -94,6 +94,15 @@ app.get('/test', async (req, res) => {
     console.log(handler_auth.subscribeToAuthChanges())
     res.send("ok")
 })
+
+app.get('/login', async (req, res) => {
+    res.render("login");
+})
+
+app.get('/signup', async (req, res) => {
+    res.render("signup");
+})
+
 app.get('/about', async (req, res) => {
     res.render("about");
 })
@@ -130,6 +139,7 @@ app.post('/api/add_product',upload.single('photo'), async (req, res) => {
 app.get('/contact', async (req, res) => {
     res.render("contact");
 })
+
 
 app.get('/product-detail', async (req, res) => {
     const product_detail = await handler_firestore.getProduct(db, req.query);
