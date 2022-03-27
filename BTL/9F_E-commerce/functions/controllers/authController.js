@@ -3,11 +3,12 @@ const { async } = require("@firebase/util");
 var {auth} = require('../FirebaseAdminConfig');
 
 const createUser = async (req, res) => {
-    const {email, password, firstName, lastName} = req.body;
+    const {name,email, phone, password} = req.body;
     const user = await auth.createUser({
         email: email,
         password: password,
-        displayName: `${firstName} ${lastName}`
+        displayName: name,
+        phoneNumber: "+84" + phone
     });
 
     return res.send(user);

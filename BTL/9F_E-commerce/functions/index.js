@@ -33,6 +33,7 @@ app.engine('hbs',engines.handlebars);
 app.set('views','./views');
 app.set('view engine','hbs');
 
+
 var partialsDir = __dirname + '/partials';
 var filenames = fs.readdirSync(partialsDir);
 filenames.forEach(function (filename) {
@@ -51,6 +52,8 @@ var firestore = require("firebase/firestore");
 var storage = require('firebase/storage');
 const handler_firestore = require('./FirebaseFirestoreService');
 const handler_auth = require('./FirebaseAuthService');
+const auth_router = require("./Routes/auth");
+app.use('/auth', auth_router);
 
 var db = firestore.getFirestore(user_app);
 const db_img = admin.storageBucket;
@@ -80,7 +83,12 @@ app.get('/',async (req, res) =>{
     const meat_productList = await handler_firestore.getRelatedProducts(db,'meat', 8);
     const meat1_productList = meat_productList.slice(0,4);
     const meat2_productList = meat_productList.slice(4,8);
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        user = user.displayName;
+    }
     res.render("index",{
+        user: user,
         newest_productList:newest_productList,
         hottest_productList: hottest_productList,
         meat1_productList: meat1_productList,
@@ -98,7 +106,7 @@ app.get('/test', async (req, res) => {
     await handler_auth.loginUser("abc@gmail.com", "123456");
     console.log(handler_auth.subscribeToAuthChanges())
     await handler_auth.logoutUser()
-    console.log(handler_auth.subscribeToAuthChanges())
+    console.log(handler_auth.subscribeToAuthChanges().displayName)
     res.send("ok")
 })
 

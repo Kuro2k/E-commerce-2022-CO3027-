@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="signup-form">
-        <form method="get" name="signup" class="form-style">
+        <form method="post" name="signup" class="form-style" action="/auth/signup">
             <div class="form-logo">
                 <img src="./img/logo.png" alt="logo">
             </div>
@@ -34,22 +34,16 @@
             <input type="email" placeholder="Nhập e-mail" name="email" required> <br>
             
             <label for="phone"><b>Số điện thoại</b></label> <br>
-            <input type="number" placeholder="Nhập số điện thoại" name="phone" required> <br>
+            <input type="string" placeholder="Nhập số điện thoại" name="phone" required> <br>
 
             <label for="psw"><b>Mật khẩu</b></label> <br>
-            <input type="password" placeholder="Nhập mật khẩu" name="psw" required> <br>
+            <input type="password" placeholder="Nhập mật khẩu" name="password" required> <br>
             
             <label for="psw"><b>Nhập lại mật khẩu</b></label> <br>
             <input type="re-password" placeholder="Nhập lại mật khẩu" name="re-psw" required> <br>
 
-            <button type="button" class="btn login-btn" onclick="success();" form="/auth/signup">Đăng ký tài khoản</button>
+            <button class="btn login-btn"  >Đăng ký tài khoản</button>
         </form>
     </div> 
-
-    <script>
-        function success() {
-            alert("Đăng ký tài khoản thành công");
-        }
-    </script>
 </body>
 </html>

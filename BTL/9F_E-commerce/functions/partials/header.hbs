@@ -1,4 +1,22 @@
 <div class="header">
+        {{#if user}}
+        <div class="top-bar">
+            <div class="row">
+                <ul class="col contact">
+                    <li><i class="bi bi-envelope"></i>nhom9@gmail.com</li>
+                    <li><i class="bi bi-telephone"></i>0123456789</li>
+                </ul>
+    
+                <div class="col account">
+                    <p style="font-size: 13px;">
+                        Xin chào, 
+                        <span class="account-name" style="margin-right: 12px;">{{user}}</span> |
+                        <a href="/auth/logout" class="logout" style="margin-left: 12px;" onclick="logout();">Đăng xuất</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{else}}
         <div class="top-bar">
             <div class="row">
                 <ul class="col contact">
@@ -12,7 +30,7 @@
                 </div>
             </div>
         </div>
-    
+        {{/if}}   
         <div class="nav">
                 <div class="logo">
                     <a href="/"><img src="./img/logo.png" alt="logo"></a>
