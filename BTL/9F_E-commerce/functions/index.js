@@ -77,7 +77,7 @@ hbs.registerHelper("product_category", function(category) {
 app.get('/',async (req, res) =>{
     const newest_productList = await handler_firestore.getNewProducts(db);
     const hottest_productList = await handler_firestore.getHotProducts(db);
-    const meat_productList = await handler_firestore.getMeatProducts(db, 8);
+    const meat_productList = await handler_firestore.getRelatedProducts(db,'meat', 8);
     const meat1_productList = meat_productList.slice(0,4);
     const meat2_productList = meat_productList.slice(4,8);
     res.render("index",{
@@ -138,7 +138,9 @@ app.get('/product-detail', async (req, res) => {
 })
 
 app.get('/all-products', async (req, res) => {
-    res.render("all-products");
+    const product_list = await handler_firestore.getProducts(db);
+    // console.log(product_list);
+    res.render("all-products", {product_list: product_list});
 })
 
 app.get('/fruitdata', async (req, res) => {

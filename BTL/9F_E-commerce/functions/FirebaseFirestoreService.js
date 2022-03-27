@@ -6,7 +6,7 @@ const addProduct = async (db, document) => {
     await firestore.addDoc(product, document);
 };
 
-async function getProducts(db, product_detail = {}){
+async function getProducts(db){
     const product = firestore.collection(db, 'Product');
     const productSnapshot = await firestore.getDocs(product);
     const productList = productSnapshot.docs.map(doc => doc.data());
