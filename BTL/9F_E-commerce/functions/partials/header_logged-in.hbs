@@ -7,8 +7,11 @@
                 </ul>
     
                 <div class="col account">
-                    <a href="/login" class="login">Đăng nhập</a> /
-                    <a href="/signup" class="signup">Đăng ký</a>
+                    <p style="font-size: 13px;">
+                        Xin chào, 
+                        <span class="account-name" style="margin-right: 12px;">Nguyễn Văn A</span> |
+                        <a href="#" class="logout" style="margin-left: 12px;" onclick="logout();">Đăng xuất</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -40,4 +43,10 @@
         <hr>
     </div>
 
-    
+    <script>
+        function logout() {
+            if (confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
+                location.href  = "/login";
+            } 
+        }
+    </script>

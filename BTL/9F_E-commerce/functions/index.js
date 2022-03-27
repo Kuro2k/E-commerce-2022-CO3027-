@@ -94,6 +94,21 @@ app.get('/',async (req, res) =>{
 //     const product_detail = await firestore.query(a, constraint1, constraint2);
 //     res.send((await firestore.getDocs(product_detail)).docs.map(doc => firestore.deleteDoc(doc.ref)));
 // });
+app.get('/test', async (req, res) => {
+    await handler_auth.loginUser("abc@gmail.com", "123456");
+    console.log(handler_auth.subscribeToAuthChanges())
+    await handler_auth.logoutUser()
+    console.log(handler_auth.subscribeToAuthChanges())
+    res.send("ok")
+})
+
+app.get('/login', async (req, res) => {
+    res.render("login");
+})
+
+app.get('/signup', async (req, res) => {
+    res.render("signup");
+})
 
 app.get('/about', async (req, res) => {
     res.render("about");
@@ -131,6 +146,7 @@ app.post('/api/add_product',upload.single('photo'), async (req, res) => {
 app.get('/contact', async (req, res) => {
     res.render("contact");
 })
+
 
 app.get('/product-detail', async (req, res) => {
     const product_detail = await handler_firestore.getProduct(db, req.query);
