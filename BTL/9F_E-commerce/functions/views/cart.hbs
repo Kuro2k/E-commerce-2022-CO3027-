@@ -42,54 +42,31 @@
             <div class="col col-md-2">Số tiền</div>
         </div>
         <hr>
-
+        {{#each product_list}}
         <div class="row total-product">
             <div class="col col-md-6 product-info">
                 <div class="row">
                     <div class="col col-md-4 img-container">
-                        <img class="product-img" src="./img/home/watermelon.jpg" alt="watermelon">
+                        <img id="product_img" class="product-img" src={{img_url}} alt={{name}}>
                     </div>
                     <div class="col col-md-8">
-                        <h5 class="product-name"><b>Dưa hấu</b></h5>
+                        <h5 class="product-name"><b>{{name}}</b></h5>
                         <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct();">Xóa</button>
                     </div>
                 </div>
             </div>
-            <div class="col col-md-2 price-container"><span class="price">20000</span>đ</div>
+            <div class="col col-md-2 price-container"><span class="price">{{price}}</span>đ</div>
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input class="qty" type="text" value="1">
+                    <input id="amount" class="qty" type="number" value={{amount}}>
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
             <div class="col col-md-2 price-container"><span class="total-product-price"></span>đ</div>
             <hr>
         </div>
-
-        <div class="row total-product">
-            <div class="col col-md-6 product-info">
-                <div class="row">
-                    <div class="col col-md-4 img-container">
-                        <img class="product-img" src="./img/home/watermelon.jpg" alt="watermelon">
-                    </div>
-                    <div class="col col-md-8">
-                        <h5 class="product-name"><b>Cà chua</b></h5>
-                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct();">Xóa</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-2 price-container"><span class="price">10000</span>đ</div>
-            <div class="col col-md-2 qty-counter">
-                <div class="counter">
-                    <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input class="qty" type="text" value="3">
-                    <span class="up" onClick="increaseCount(event, this)">+</span>
-                </div>
-            </div>
-            <div class="col col-md-2 price-container"><span class="total-product-price"></span>đ</div>
-            <hr>
-        </div>
+        {{/each}}
     </div>
 
     <div class="row total-cal">
@@ -102,7 +79,7 @@
         </div>
 
         <div class="col col-md-3 btn-container">
-            <a href="/shipping" class="btn buy">Mua hàng</a>
+            <a href="/shipping" class="btn buy" onclick="updateCart();" >Mua hàng</a>
         </div>
     </div>
 
@@ -112,6 +89,31 @@
     <script src="./js/app.js"></script>
     <script> 
         calculateProduct();
+
+        const product_price = document.getElementsByClassName("product-price");
+        const price = parseInt(product_price[0].innerText);
+        const product_name = document.getElementsByClassName("product-name")[0].innerText;
+        const product_amout = document.getElementById("amount").value;
+        const body = JSON.stringify({
+            price: price,
+            img_url: product_img_url,
+            name: product_name,
+            amount: product_amout
+        })
+        console.log(body);
+        function updateCart(){
+            fetch('/updateCart', {method: 'post', body: body}).then(resp => {
+            if (resp.status < 200 || resp.status >= 300)
+                throw new Error("You need to login!")
+            return resp.json()
+            })
+            .then(json => {
+                alert("Thêm thành công!");
+            })
+            .catch(err => {
+                alert("Thêm thất bại!");
+            });
+        };
     </script>
 </body>
 </html>

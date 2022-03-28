@@ -53,6 +53,7 @@ var storage = require('firebase/storage');
 const handler_firestore = require('./FirebaseFirestoreService');
 const handler_auth = require('./FirebaseAuthService');
 const auth_router = require("./Routes/auth");
+const { stringify } = require("querystring");
 app.use('/auth', auth_router);
 
 var db = firestore.getFirestore(user_app);
@@ -171,7 +172,12 @@ app.get('/contact', async (req, res) => {
     res.render("contact", {user: user, len_cart: len_cart});
 })
 
-
+app.post("/addToCart", async (req, res) => {
+    const doc = JSON.parse(req.body);
+    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
+    await firestore.addDoc(user_cart, doc);
+    res.send({result: "Success"})
+})
 app.get('/product-detail', async (req, res) => {
     const {user, len_cart} = await isLogged();
     const product_detail = await handler_firestore.getProduct(db, req.query);
@@ -237,11 +243,14 @@ app.get('/search', async (req, res) => {
 
 app.get('/cart', async (req, res) => {
     const {user, len_cart} = await isLogged();
-    res.render("cart", {user: user, len_cart: len_cart});
+    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid)
+    const product_list = (await firestore.getDocs(user_cart)).docs.map(doc => doc.data())
+    res.render("cart", {user: user, len_cart: len_cart, product_list: product_list});
 })
 
 app.get('/shipping', async (req, res) => {
     const {user, len_cart} = await isLogged();
+    
     res.render("shipping", {user: user, len_cart: len_cart});
 })
 
