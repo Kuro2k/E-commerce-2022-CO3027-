@@ -104,10 +104,11 @@
     <script> 
         calculateProduct();
 
+        var list_AmountData = [];
+        updateAmount();
         function updateCart(){
             const nodeAmountList = document.querySelectorAll(".qty");
-            nodeAmountList.forEach(node => console.log(node.attributes))
-            const list_AmountData = Object.keys(nodeAmountList).map(key => nodeAmountList[key].attributes.value.value);
+            nodeAmountList.forEach(node => console.log(node.attributes));
             const nodePriceList = document.querySelectorAll(".price");
             const list_PriceData = Object.keys(nodePriceList).map(key => nodePriceList[key].innerText);
             const nodeCategoryList = document.querySelectorAll(".col.col-md-2.category-container");
@@ -118,6 +119,8 @@
             const list_ImgData = Object.keys(nodeImgList).map(key => nodeImgList[key].attributes.src.value);
             var body = []
             for (let i = 0; i < list_NameData.length; i++) {
+                ///////////////////////////
+                alert(list_AmountData[i]);
                 const item = {
                     name: list_NameData[i],
                     price: parseInt(list_PriceData[i].replace(".", "")),
@@ -141,7 +144,7 @@
             value++;
             input.value = value;
             calculateProduct();
-            product_amount = value;
+            updateAmount();
         }
             
         function decreaseCount(a, b) {
@@ -153,7 +156,14 @@
                 input.value = value;
             }
             calculateProduct();
-            product_amount = value;
+            updateAmount();
+        }
+
+        function updateAmount() {
+            const qty = document.getElementsByClassName("qty");
+            for (let i = 0; i < qty.length; i++) {
+                list_AmountData[i] = qty[i].value;
+            }
         }
     </script>
 </body>
