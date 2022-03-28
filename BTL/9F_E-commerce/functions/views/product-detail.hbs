@@ -14,8 +14,10 @@
     <link rel="stylesheet" href="./css/footer.css">
     
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    
-    <title>Sản phẩm</title>
+    {{#with product_detail}}
+    <title>{{name}}</title>
+    {{/with}}
+
 </head>
 <body>
     <!-- Header Section -->
@@ -26,7 +28,7 @@
         <h2 class="page-name">Chi tiết sản phẩm</h2>
         <p class="route">
                 <a href="/">Trang chủ</a> /
-                <a href="/{{category}}"> {{product_category category}} </a> / 
+                <a href="/all-products?category={{category}}"> {{product_category category}} </a> / 
                 <a href="/product-detail?category={{category}}&name={{name}}"> {{name}}</a>
         </p>
     </div>
