@@ -15,8 +15,8 @@
                 
                 <div class="search">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm" >
-                        <a class="btn" type="button" ><i class="bi bi-search"></i></a>
+                        <input id="search-input" type="text" class="form-control" placeholder="Tìm kiếm" >
+                        <a href="/" id="search-btn" class="btn" type="button"><i class="bi bi-search" onclick="search();"></i></a>
                     </div>
                 </div>
                 
@@ -31,7 +31,11 @@
     <script>
         function logout() {
             if (confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
-                location.href  = "/login";
+                document.getElementById("logout-btn").href = "/login";
             } 
+        }
+        function search(){
+            var input = document.getElementById("search-input").value;
+            document.getElementById("search-btn").href = "/all-products?search=$" + input;
         }
     </script>

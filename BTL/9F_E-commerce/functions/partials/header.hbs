@@ -11,7 +11,7 @@
                     <p style="font-size: 13px;">
                         Xin chào, 
                         <span class="account-name" style="margin-right: 12px;">{{user}}</span> |
-                        <a href="/auth/logout" class="logout" style="margin-left: 12px;" onclick="logout();">Đăng xuất</a>
+                        <a href="/auth/logout" id="logout-btn" class="logout" style="margin-left: 12px;" onclick="logout();">Đăng xuất</a>
                     </p>
                 </div>
             </div>
@@ -45,8 +45,8 @@
                 
                 <div class="search">
                     <div class="input-group mb-3">
-                        <input id="search" type="text" class="form-control" placeholder="Tìm kiếm" >
-                        <a href="/all-products?search=a" class="btn" type="button" onclick="search();"><i class="bi bi-search"></i></a>
+                        <input id="search-input" type="text" class="form-control" placeholder="Tìm kiếm" >
+                        <a href="/" id="search-btn" class="btn" type="button"><i class="bi bi-search" onclick="search();"></i></a>
                     </div>
                 </div>
                 
@@ -60,12 +60,12 @@
 <script>
         function logout() {
             if (confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
-                location.href  = "/login";
+                document.getElementById("logout-btn").href = "/login";
             } 
         }
         function search(){
-            const name = document.querySelector('search');
-            location.href="/all-product";
+            var input = document.getElementById("search-input").value;
+            document.getElementById("search-btn").href = "/all-products?search=$" + input;
         }
 </script>
     

@@ -59,6 +59,21 @@ app.use('/auth', auth_router);
 var db = firestore.getFirestore(user_app);
 const db_img = admin.storageBucket;
 
+hbs.registerHelper('grouped_each', function(every, context, options) {
+    var out = "", subcontext = [], i;
+    if (context && context.length > 0) {
+        for (i = 0; i < context.length; i++) {
+            if (i > 0 && i % every === 0) {
+                out += options.fn(subcontext);
+                subcontext = [];
+            }
+            subcontext.push(context[i]);
+        }
+        out += options.fn(subcontext);
+    }
+    return out;
+});
+
 hbs.registerHelper("link_product_detail", function(product_name, product_type) {
     var product_name = hbs.escapeExpression(product_name);
     var product_type = hbs.escapeExpression(product_type);    

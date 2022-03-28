@@ -15,6 +15,13 @@
     
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <title>Tất cả sản phẩm</title>
+
+    <style>
+        .product {
+            margin-bottom: 32px;
+            float: left;
+        }
+    </style>
 </head>
 <body>
     {{>header user=user}}
@@ -45,15 +52,15 @@
 
             <div class="price-filter">
                 <h5 class="title"><b><u>Lọc theo giá</u></b></h5>
-                <input type="checkbox" id="price1" name="prica1" value="price1" onclick="filter()">
+                <input type="checkbox" id="price1" name="prica1" value="price1" onclick="filter();">
                 <label for="price1"> 0 - 100.000đ </label><br>
-                <input type="checkbox" id="price2" name="price2" value="price2" onclick="filter()">
+                <input type="checkbox" id="price2" name="price2" value="price2" onclick="filter();">
                 <label for="price2"> 100.000đ - 300.000đ </label><br>
-                <input type="checkbox" id="price3" name="price3" value="price3" onclick="filter()">
+                <input type="checkbox" id="price3" name="price3" value="price3" onclick="filter();">
                 <label for="price3"> 300.000đ - 500.000đ </label><br>
-                <input type="checkbox" id="price4" name="price4" value="price4" onclick="filter()">
+                <input type="checkbox" id="price4" name="price4" value="price4" onclick="filter();">
                 <label for="price4"> 500.000đ - 1.000.000đ </label><br>
-                <input type="checkbox" id="price5" name="price5" value="price5" onclick="filter()">
+                <input type="checkbox" id="price5" name="price5" value="price5" onclick="filter();">
                 <label for="price5"> 1.000.000đ trở lên </label><br>
             </div>
 
@@ -72,9 +79,11 @@
         </div>
 
         <div class="col col-md-9 all-products">
-            <div class="row products">
+            {{!-- {{#grouped_each 3 product_list}} --}}
+            <div class="row products justify-content-start">
+                {{!-- {{#each this}} --}}
                 {{#each product_list}}
-                <div class="col product">
+                <div class="product col-4">
                     <a {{ link_product_detail name category}} >
                     
                         <div class="product-img">
@@ -87,6 +96,7 @@
                 </div>
                 {{/each}}
             </div>
+            {{!-- {{/grouped_each}} --}}
 
             <div class="page-pagination">
                 <ul class="pagination">
@@ -115,6 +125,9 @@
 
     <script src="./js/app.js"></script>
     <script>
+        var products = document.getElementsByClassName("product");
+        paddingProduct();
+
         function filter() {
             var price1 = document.getElementById("price1");
             var price2 = document.getElementById("price2");
@@ -123,7 +136,6 @@
             var price5 = document.getElementById("price5");
 
             var prices = document.getElementsByClassName("price");
-            var products = document.getElementsByClassName("product");
             for (let i = 0; i < prices.length; i++){
                 var price = unformatPrice(prices[i].innerHTML);
                 var flag = false;
@@ -174,7 +186,6 @@
             }
         }
 
-
         function filterByPlace(i) {
             var location1 = document.getElementById("location1");
             var location2 = document.getElementById("location2");
@@ -182,7 +193,6 @@
             var location4 = document.getElementById("location4");
 
             var address = document.getElementsByClassName("address");
-            var products = document.getElementsByClassName("product");
                 var location = address[i].innerHTML;
                 var flag = false;
                 if (products[i].style.display == "none") return;
@@ -224,7 +234,32 @@
             
         }
 
+
+        function paddingProduct() {
+            if ((products.length % 3) != 0) {
+                var blank = document.createElement("div");
+                blank.classList.add("col-4");
+                var blank2 = document.createElement("div");
+                blank2.classList.add("col-4");
+                products[products.length - 1].parentNode.insertBefore(blank, products[products.length - 1].nextSibling);
+                blank.parentNode.insertBefore(blank2, blank.nextSibling);
+            }
+        }
     </script>
 
 </body>
 </html>
+
+
+        {{!-- function arrange() {
+            var countAppear = 0;
+            for (let i = 0; i < products.length; i++){
+                if (products[i].style.display != "none") countAppear += 1;
+                if (countAppear == 3) {
+                    var lineBreak = document.createElement("div");
+                    lineBreak.classList.add("w-100");
+                    products[i].parentNode.insertBefore(lineBreak, products[i].nextSibling);
+                    countAppear = 0;
+                }
+            }
+        } --}}
