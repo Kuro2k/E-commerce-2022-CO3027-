@@ -119,8 +119,6 @@
             const list_ImgData = Object.keys(nodeImgList).map(key => nodeImgList[key].attributes.src.value);
             var body = []
             for (let i = 0; i < list_NameData.length; i++) {
-                ///////////////////////////
-                alert(list_AmountData[i]);
                 const item = {
                     name: list_NameData[i],
                     price: parseInt(list_PriceData[i].replace(".", "")),
@@ -133,9 +131,6 @@
             body = JSON.stringify(body);
             
         };
-
-
-
 
         function increaseCount(a, b) {
             var input = b.previousElementSibling;
