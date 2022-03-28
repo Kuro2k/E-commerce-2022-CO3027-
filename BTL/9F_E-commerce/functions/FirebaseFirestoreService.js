@@ -1,10 +1,17 @@
 var firestore = require("firebase/firestore");
 const { async } = require("@firebase/util");
+const handler_auth = require("./FirebaseAuthService")
 
 const addProduct = async (db, document) => {
     const product = firestore.collection(db, 'Product');
     await firestore.addDoc(product, document);
 };
+
+const addToCart = async (db, doc) => {
+    const user = handler_auth.subscribeToAuthChanges();
+    const user_cart = await getUserCart(db, user.uid);
+    
+}
 
 const getUserCart = async(db, uid) => {
     const user_db = firestore.collection(db, "User");
