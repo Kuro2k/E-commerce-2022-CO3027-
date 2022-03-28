@@ -6,6 +6,22 @@ const addProduct = async (db, document) => {
     await firestore.addDoc(product, document);
 };
 
+const getUserCart = async(db, uid) => {
+    const user_db = firestore.collection(db, "User");
+    const constraint = firestore.where("uid", '==', uid);
+    const query = firestore.query(user_db, constraint);
+    const refUser = (await firestore.getDocs(query)).docs.map(doc => {return doc.ref});
+    return firestore.collection(db, refUser[0].path+'/Cart');
+}
+
+const getUserPurchaseHistory = async (db, uid) => {
+    const user_db = firestore.collection(db, "User");
+    const constraint = firestore.where("uid", '==', uid);
+    const query = firestore.query(user_db, constraint);
+    const refUser = (await firestore.getDocs(query)).docs.map(doc => {return doc.ref});
+    return firestore.collection(db, refUser[0].path+'/Purchase_history');
+}
+
 async function getProducts(db){
     const product = firestore.collection(db, 'Product');
     const productSnapshot = await firestore.getDocs(product);
@@ -103,5 +119,7 @@ module.exports = {
     getProductsByName: getProductsByName,
     getNewProducts: getNewProducts,
     getHotProducts: getHotProducts,
-    searchProducts: searchProducts
+    searchProducts: searchProducts,
+    getUserCart: getUserCart,
+    getUserPurchaseHistory: getUserPurchaseHistory
 };

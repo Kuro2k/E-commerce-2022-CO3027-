@@ -77,18 +77,27 @@ hbs.registerHelper("product_category", function(category) {
     } 
 });
 
+const isLogged = async () => {
+    var user = handler_auth.subscribeToAuthChanges();
+    if (user) {
+        const user_cart = await handler_firestore.getUserCart(db, user.uid);
+        
+        const len_cart = (await firestore.getDocs(user_cart)).docs.length;
+        user = user.displayName;
+        return {user: user, len_cart: len_cart}
+    }
+    return {user: null, len_cart: 0}
+}
 app.get('/',async (req, res) =>{
     const newest_productList = await handler_firestore.getNewProducts(db);
     const hottest_productList = await handler_firestore.getHotProducts(db);
     const meat_productList = await handler_firestore.getRelatedProducts(db,'meat', 8);
     const meat1_productList = meat_productList.slice(0,4);
     const meat2_productList = meat_productList.slice(4,8);
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
+    const {user, len_cart} = await isLogged();
     res.render("index",{
         user: user,
+        len_cart: len_cart,
         newest_productList:newest_productList,
         hottest_productList: hottest_productList,
         meat1_productList: meat1_productList,
@@ -103,11 +112,16 @@ app.get('/',async (req, res) =>{
 //     res.send((await firestore.getDocs(product_detail)).docs.map(doc => firestore.deleteDoc(doc.ref)));
 // });
 app.get('/test', async (req, res) => {
-    await handler_auth.loginUser("abc@gmail.com", "123456");
-    console.log(handler_auth.subscribeToAuthChanges())
-    await handler_auth.logoutUser()
-    console.log(handler_auth.subscribeToAuthChanges().displayName)
-    res.send("ok")
+    var user = handler_auth.subscribeToAuthChanges();
+    const user_db = firestore.collection(db, "User");
+    const constraint = firestore.where("uid", '==', user.uid);
+    const query = firestore.query(user_db, constraint);
+    const refUser = (await firestore.getDocs(query)).docs.map(doc => {return doc.ref});
+    const cart_user = firestore.collection(db, refUser[0].path+'/Cart');
+    // const doc1 = firestore.doc(cart_user, 'cart1');
+    // firestore.setDoc(doc1, {value2: "value2"});
+    // firestore.updateDoc();
+    res.send((await firestore.getDocs(cart_user)).docs)
 })
 
 app.get('/login', async (req, res) => {
@@ -119,11 +133,8 @@ app.get('/signup', async (req, res) => {
 })
 
 app.get('/about', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("about", {user: user});
+    const {user, len_cart} = await isLogged();
+    res.render("about", {user: user, len_cart:len_cart});
 })
 app.get('/upload', (req, res) => { 
     res.render("upload")
@@ -156,37 +167,30 @@ app.post('/api/add_product',upload.single('photo'), async (req, res) => {
 })
 
 app.get('/contact', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("contact", {user: user});
+    const {user, len_cart} = await isLogged();
+    res.render("contact", {user: user, len_cart: len_cart});
 })
 
 
 app.get('/product-detail', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
+    const {user, len_cart} = await isLogged();
     const product_detail = await handler_firestore.getProduct(db, req.query);
     const related_products = await handler_firestore.getRelatedProducts(db, req.query.category, 4)
-    res.render("product-detail", {user: user, product_detail: product_detail, related_products: related_products});
+    res.render("product-detail", {user: user, len_cart: len_cart, product_detail: product_detail, related_products: related_products});
 })
 
 app.get('/all-products', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
+    const {user, len_cart} = await isLogged();
     var product_list = null;
     if (!req.query || Object.keys(req.query).length === 0){
         product_list = await handler_firestore.getProducts(db);
     } else if (req.query.category && (!req.query.name)){
         product_list = await handler_firestore.getRelatedProducts(db, req.query.category)
+    } else if (req.query.search){
+        product_list = await handler_firestore.searchProducts(db, req.query.search);
     }
     // console.log(product_list);
-    res.render("all-products", {product_list: product_list, user:user});
+    res.render("all-products", {product_list: product_list, user:user, len_cart: len_cart});
 })
 
 app.get('/ctloc', async (req, res) => {
@@ -232,27 +236,18 @@ app.get('/search', async (req, res) => {
 })
 
 app.get('/cart', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("cart", {user: user});
+    const {user, len_cart} = await isLogged();
+    res.render("cart", {user: user, len_cart: len_cart});
 })
 
 app.get('/shipping', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("shipping", {user: user});
+    const {user, len_cart} = await isLogged();
+    res.render("shipping", {user: user, len_cart: len_cart});
 })
 
 app.get('/payment', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("payment", {user: user});
+    const {user, len_cart} = await isLogged();
+    res.render("payment", {user: user, len_cart});
 })
 
 app.get('/thank-you', async (req, res) => {

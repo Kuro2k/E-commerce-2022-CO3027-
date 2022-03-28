@@ -46,13 +46,13 @@
                 <div class="search">
                     <div class="input-group mb-3">
                         <input id="search" type="text" class="form-control" placeholder="Tìm kiếm" >
-                        <a href="/all-product" class="btn" type="button" onclick="search();"><i class="bi bi-search"></i></a>
+                        <a href="/all-products?search=a" class="btn" type="button" onclick="search();"><i class="bi bi-search"></i></a>
                     </div>
                 </div>
                 
                 <div class="cart-btn">
                     <a href="/cart"><i class="bi bi-cart3"></i></a>
-                    <div class="cart-counter" id="cart-product-counter">2</div>
+                    <div class="cart-counter" id="cart-product-counter">{{len_cart}}</div>
                 </div>
         </div>
         <hr>
