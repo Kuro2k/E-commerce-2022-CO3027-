@@ -185,16 +185,15 @@ app.get('/contact', async (req, res) => {
 
 app.post("/addToCart", async (req, res) => {
     const doc = JSON.parse(req.body);
-    // const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
-    // await firestore.addDoc(user_cart, doc);
-    console.log(doc)
-    res.send(doc);
+    const results = await handler_firestore.addToCart(db, doc);
+    res.send({result: "Success"});
 })
 
 app.post("/updateCart", async (req, res) => {
-    const doc = JSON.parse(req.body);
-    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
-    await firestore.addDoc(user_cart, doc);
+    const docList = JSON.parse(req.body);
+    await handler_firestore.updateCart(db, docList);
+    // const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
+    // await firestore.addDoc(user_cart, doc);
     res.send({result: "Success"})
 })
 app.get('/product-detail', async (req, res) => {
@@ -220,7 +219,7 @@ app.get('/all-products', async (req, res) => {
 
 app.get('/cart', async (req, res) => {
     const {user, len_cart} = await isLogged();
-    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid)
+    const user_cart = await handler_firestore.getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
     const product_list = (await firestore.getDocs(user_cart)).docs.map(doc => doc.data())
     res.render("cart", {user: user, len_cart: len_cart, product_list: product_list});
 })
