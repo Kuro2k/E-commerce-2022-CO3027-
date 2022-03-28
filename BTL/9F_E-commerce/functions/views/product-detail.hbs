@@ -35,7 +35,7 @@
     
     <div class="row product-info">
         <div class="col product-big-img">
-            <img src={{img_url}} alt={{name}}>
+            <img id="product_img" src={{img_url}} alt={{name}}>
         </div>
 
         <div class="col product-description">
@@ -48,13 +48,13 @@
                 <b class="col col-md-3">Số lượng:</b>
                 <div class="col col-md-9 counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input type="text" value="1">
+                    <input id="amount" type="text" value="1">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
 
             <div class="btn-container add-to-cart">
-                <button class="btn" onclick="increaseCartCounter()" data-bs-toggle="modal" data-bs-target="#addSuccessful">
+                <button class="btn" id="addProduct" onclick="addProduct();" data-bs-toggle="modal" data-bs-target="#addSuccessful">
                     <i class="bi bi-cart3"></i>  Thêm vào giỏ hàng
                 </button>
 
@@ -105,7 +105,44 @@
     <script src="./js/app.js"></script>
     <script>
         const product_price = document.getElementsByClassName("product-price");
+        const price = parseInt(product_price[0].innerText);
         product_price[0].innerHTML =  product_price[0].innerHTML.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        const product_name = document.getElementsByClassName("product-name")[0].innerText;
+        const product_img_url = document.getElementById("product_img").src;
+        const product_amout = document.getElementById("amount").value;
+        var product_category = document.getElementsByClassName('product-category')[0].innerText;
+        product_category = product_category.replace("Danh mục: ", "");
+        if (product_category === "Hải sản"){
+            product_category = "seafood";
+        } else if (product_category === "Trái cây"){
+            product_category = 'fruit';
+        } else if (product_category === "Rau củ quả") {
+            product_category = 'vegetable';
+        } else if (product_category === "Thịt") {
+            product_category = 'meat';
+        }
+        const body = JSON.stringify({
+            price: price,
+            img_url: product_img_url,
+            name: product_name,
+            category: product_category,
+            amount: parseInt(product_amout)
+        })
+        console.log(body);
+        function addProduct(){
+            fetch('/addToCart', {method: 'post', body: body}).then(resp => {
+            if (resp.status < 200 || resp.status >= 300)
+                throw new Error("You need to login!")
+            return resp.json()
+            })
+            .then(json => {
+                alert("Thêm thành công!");
+            })
+            .catch(err => {
+                alert("Thêm thất bại!");
+            });
+        };
+        
     </script>
 
 </body>
