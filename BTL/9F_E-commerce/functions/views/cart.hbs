@@ -15,6 +15,18 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     
     <title>Giỏ hàng</title>
+
+    <style>
+        .category-container {
+            margin: auto;
+        }
+        .product-info .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-height: 67px;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -137,9 +149,9 @@
                 value = isNaN(value) ? 0 : value;
                 value--;
                 input.value = value;
-                product_amount = value;
             }
             calculateProduct();
+            product_amount = value;
         }
     </script>
 </body>
