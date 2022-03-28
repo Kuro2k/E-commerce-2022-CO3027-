@@ -130,7 +130,7 @@ app.get('/',async (req, res) =>{
 app.get('/test', async (req, res) => {
     // var user = handler_auth.subscribeToAuthChanges();
     const cart_user = await handler_firestore.getUserCart(db, '1');
-    
+    // const doc1 = firestore.doc(cart_user, 'cart1');
     // firestore.setDoc(doc1, {value2: "value2"});
     // firestore.updateDoc();
     res.send((await firestore.getDocs(cart_user)).docs)
@@ -185,9 +185,10 @@ app.get('/contact', async (req, res) => {
 
 app.post("/addToCart", async (req, res) => {
     const doc = JSON.parse(req.body);
-    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
-    await firestore.addDoc(user_cart, doc);
-    res.send({result: "Success"})
+    // const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
+    // await firestore.addDoc(user_cart, doc);
+    console.log(doc)
+    res.send(doc);
 })
 
 app.post("/updateCart", async (req, res) => {

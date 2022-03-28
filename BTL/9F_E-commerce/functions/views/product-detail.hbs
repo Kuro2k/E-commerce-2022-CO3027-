@@ -107,7 +107,7 @@
         product_price[0].innerHTML =  product_price[0].innerHTML.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         const product_name = document.getElementsByClassName("product-name")[0].innerText;
         const product_img_url = document.getElementById("product_img").src;
-        const product_amout = document.getElementById("amount").value;
+        
         var product_category = document.getElementsByClassName('product-category')[0].innerText;
         product_category = product_category.replace("Danh mục: ", "");
         if (product_category === "Hải sản"){
@@ -119,15 +119,21 @@
         } else if (product_category === "Thịt") {
             product_category = 'meat';
         }
-        const body = JSON.stringify({
+        var body = {
             price: price,
             img_url: product_img_url,
             name: product_name,
             category: product_category,
-            amount: parseInt(product_amout)
-        })
-        console.log(body);
+        };
+        
         function addProduct(){
+            const product_amout = document.getElementById("amount").value;
+            if (typeof body === "string"){
+                body = JSON.parse(body)
+            }
+            body.amount = product_amout;
+            body = JSON.stringify(body);
+            console.log(body);
             fetch('/addToCart', {method: 'post', body: body}).then(resp => {
             if (resp.status < 200 || resp.status >= 300)
                 throw new Error("You need to login!")
