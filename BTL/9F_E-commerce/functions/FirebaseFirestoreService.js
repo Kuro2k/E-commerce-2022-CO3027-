@@ -32,10 +32,10 @@ const updateCart = async (db, docList) => {
     // if (!user) {
     //     return "Fail!";
     // }
+    console.log(docList);
     const user_cart = await getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
     (await firestore.getDocs(user_cart)).docs.map(async (doc) => {await firestore.deleteDoc(doc.ref)});
-    const new_user_cart = await getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
-    docList.map(async (doc) => {await firestore.addDoc(new_user_cart, doc)})
+    docList.forEach(async (doc) => {await firestore.addDoc(user_cart, doc)})
     return "Success";
 }
 

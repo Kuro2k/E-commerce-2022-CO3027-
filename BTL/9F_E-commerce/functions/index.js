@@ -226,8 +226,9 @@ app.get('/cart', async (req, res) => {
 
 app.get('/shipping', async (req, res) => {
     const {user, len_cart} = await isLogged();
-    
-    res.render("shipping", {user: user, len_cart: len_cart});
+    const user_cart = await handler_firestore.getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    const product_list = (await firestore.getDocs(user_cart)).docs.map(doc => doc.data())
+    res.render("shipping", {user: user, len_cart: len_cart, product_list:product_list});
 })
 
 app.get('/payment', async (req, res) => {

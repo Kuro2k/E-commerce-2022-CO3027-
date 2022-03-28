@@ -73,7 +73,7 @@
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input id="amount" class="qty" type="text" value="1">
+                    <input id="amount" class="qty" type="text" value="{{amount}}">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
@@ -93,7 +93,7 @@
         </div>
 
         <div class="col col-md-3 btn-container">
-            <a class="btn buy" onclick="updateCart();" >Mua hàng</a>
+            <a href="/shipping" class="btn buy" onclick="updateCart();" >Mua hàng</a>
         </div>
     </div>
 
@@ -107,8 +107,6 @@
         var list_AmountData = [];
         updateAmount();
         function updateCart(){
-            const nodeAmountList = document.querySelectorAll(".qty");
-            nodeAmountList.forEach(node => console.log(node.attributes));
             const nodePriceList = document.querySelectorAll(".price");
             const list_PriceData = Object.keys(nodePriceList).map(key => nodePriceList[key].innerText);
             const nodeCategoryList = document.querySelectorAll(".col.col-md-2.category-container");
@@ -123,13 +121,20 @@
                     name: list_NameData[i],
                     price: parseInt(list_PriceData[i].replace(".", "")),
                     category: list_CategoryData[i],
-                    amount: list_AmountData[i],
+                    amount: parseInt(list_AmountData[i]),
                     img_url: list_ImgData[i]
                 }
                 body.push(item)
             }
             body = JSON.stringify(body);
-            
+            fetch('/updateCart', {method: 'post', body: body}).then(resp => {
+            if (resp.status < 200 || resp.status >= 300)
+                throw new Error("You need to login!")
+            return resp.json()
+            })
+            .catch(err => {
+                alert("Thêm thất bại!");
+            });
         };
 
         function increaseCount(a, b) {

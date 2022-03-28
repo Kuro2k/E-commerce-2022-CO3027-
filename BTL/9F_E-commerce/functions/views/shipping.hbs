@@ -117,22 +117,15 @@
 
         <div class="col cart-info">
             <div class="items">
+                {{#each product_list}}
                 <div class="row item">
-                    <p class="col col-md-1 qty">1</p>
+                    <p class="col col-md-1 qty">{{amount}}</p>
                     <p class="col col-md-1">x</p>
-                    <p class="col col-md-7 item-name">Dưa hấu</p>
-                    <p class="col col-md-3 price-container"><span class="price product-price">20000</span>đ</p>
+                    <p class="col col-md-7 item-name">{{name}}</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">{{price}}</span>đ</p>
                 </div>
                 <hr>
-
-                <div class="row item">
-                    <p class="col col-md-1 qty">3</p>
-                    <p class="col col-md-1">x</p>
-                    <p class="col col-md-7 item-name">Cà chua</p>
-                    <p class="col col-md-3 price-container"><span class="price product-price">10000</span>đ</p>
-                </div>
-                <hr>
-                
+                {{/each}}
                 <div class="row discount-input">
                     <input type="text" class="col" placeholder="Mã giảm giá">
                     <!-- <div class="btn-container col col-md-3"> -->
