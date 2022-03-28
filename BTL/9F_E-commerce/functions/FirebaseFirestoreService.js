@@ -9,8 +9,34 @@ const addProduct = async (db, document) => {
 
 const addToCart = async (db, doc) => {
     const user = handler_auth.subscribeToAuthChanges();
+    if (!user) {
+        return "Fail!";
+    }
     const user_cart = await getUserCart(db, user.uid);
-    
+    const constraint = firestore.where("name", "==", doc.name);
+    const constraint1 = firestore.where("category", "==", doc.category);
+    const query = firestore.query(user_cart, constraint, constraint1);
+    const products = (await firestore.getDocs(query)).docs;
+    if (products.length == 0){
+        await firestore.addDoc(user_cart, doc);
+    } else {
+        const old_doc = products[0].data();
+        const new_value = doc.amount + old_doc.amount;
+        await firestore.updateDoc(products[0].ref, {amount: new_value});
+    }
+    return "Success";
+}
+
+const updateCart = async (db, docList) => {
+    // const user = handler_auth.subscribeToAuthChanges();
+    // if (!user) {
+    //     return "Fail!";
+    // }
+    const user_cart = await getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
+    (await firestore.getDocs(user_cart)).docs.map(async (doc) => {await firestore.deleteDoc(doc.ref)});
+    const new_user_cart = await getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    docList.map(async (doc) => {await firestore.addDoc(new_user_cart, doc)})
+    return "Success";
 }
 
 const getUserCart = async(db, uid) => {
@@ -117,6 +143,8 @@ async function searchProducts(db, name){
 }
 
 module.exports = {
+    updateCart: updateCart,
+    addToCart: addToCart,
     addProduct: addProduct,
     getProducts: getProducts,
     getProduct: getProduct,

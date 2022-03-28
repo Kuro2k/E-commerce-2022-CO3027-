@@ -103,7 +103,7 @@
         </div>
 
     {{>footer}}
-
+    <script src="./js/app.js"></script>
     <script>
         const product_price = document.getElementsByClassName("product-price");
         const price = parseInt(product_price[0].innerText);
@@ -135,7 +135,7 @@
             if (typeof body === "string"){
                 body = JSON.parse(body)
             }
-            body.amount = product_amout;
+            body.amount = parseInt(product_amout);
             body = JSON.stringify(body);
             console.log(body);
             fetch('/addToCart', {method: 'post', body: body}).then(resp => {
