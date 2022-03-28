@@ -54,20 +54,22 @@
             </div>
 
             <div class="btn-container add-to-cart">
-                <button class="btn" id="addProduct" onclick="addProduct();" data-bs-toggle="modal" data-bs-target="#addSuccessful">
+                <button class="btn" id="addProduct" onclick="addProduct();" 
+                    {{!-- data-bs-toggle="modal" data-bs-target="#addSuccessful" --}}
+                >
                     <i class="bi bi-cart3"></i>  Thêm vào giỏ hàng
                 </button>
 
-                <div class="modal fade" id="addSuccessful" tabindex="-1" aria-labelledby="addSuccessfulLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-body">
-                        <i class="bi bi-check-circle"></i>
-                        <p>Thêm vào giỏ thành công</p>
+                {{!-- <div class="modal fade" id="addSuccessful" tabindex="-1" aria-labelledby="addSuccessfulLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-body">
+                            <i class="bi bi-check-circle"></i>
+                            <p>Thêm vào giỏ thành công</p>
+                        </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
-                </div>
+                </div> --}}
             </div>
             
             <p class="product-share"><b>Chia sẻ:</b> 
@@ -102,14 +104,13 @@
 
     {{>footer}}
 
-    <script src="./js/app.js"></script>
     <script>
         const product_price = document.getElementsByClassName("product-price");
         const price = parseInt(product_price[0].innerText);
         product_price[0].innerHTML =  product_price[0].innerHTML.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         const product_name = document.getElementsByClassName("product-name")[0].innerText;
         const product_img_url = document.getElementById("product_img").src;
-        const product_amout = document.getElementById("amount").value;
+        var product_amount = document.getElementById("amount").value;
         var product_category = document.getElementsByClassName('product-category')[0].innerText;
         product_category = product_category.replace("Danh mục: ", "");
         if (product_category === "Hải sản"){
@@ -126,9 +127,11 @@
             img_url: product_img_url,
             name: product_name,
             category: product_category,
-            amount: parseInt(product_amout)
+            amount: parseInt(product_amount)
         })
         console.log(body);
+
+
         function addProduct(){
             fetch('/addToCart', {method: 'post', body: body}).then(resp => {
             if (resp.status < 200 || resp.status >= 300)
@@ -142,6 +145,27 @@
                 alert("Thêm thất bại!");
             });
         };
+
+
+        function increaseCount(a, b) {
+            var input = b.previousElementSibling;
+            var value = parseInt(input.value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            input.value = value;
+            product_amount = value;
+        }
+            
+        function decreaseCount(a, b) {
+            var input = b.nextElementSibling;
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                value = isNaN(value) ? 0 : value;
+                value--;
+                input.value = value;
+                product_amount = value;
+            }
+        }
         
     </script>
 

@@ -36,7 +36,8 @@
 
     <div class="total-products">
         <div class="row list-heading">
-            <div class="col col-md-6 name">Sản phẩm</div>
+            <div class="col col-md-4 name">Sản phẩm</div>
+            <div class="col col-md-2">Danh mục</div>
             <div class="col col-md-2">Đơn giá</div>
             <div class="col col-md-2">Số lượng</div>
             <div class="col col-md-2">Số tiền</div>
@@ -44,7 +45,7 @@
         <hr>
         {{#each product_list}}
         <div class="row total-product">
-            <div class="col col-md-6 product-info">
+            <div class="col col-md-4 product-info">
                 <div class="row">
                     <div class="col col-md-4 img-container">
                         <img id="product_img" class="product-img" src={{img_url}} alt={{name}}>
@@ -55,11 +56,12 @@
                     </div>
                 </div>
             </div>
+            <div class="col col-md-2 category-container">Rau củ quả</div>
             <div class="col col-md-2 price-container"><span class="price">{{price}}</span>đ</div>
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input id="amount" class="qty" type="number" value={{amount}}>
+                    <input id="amount" class="qty" type="text" value={{amount}}>
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
@@ -93,12 +95,12 @@
         const product_price = document.getElementsByClassName("product-price");
         const price = parseInt(product_price[0].innerText);
         const product_name = document.getElementsByClassName("product-name")[0].innerText;
-        const product_amout = document.getElementById("amount").value;
+        const product_amount = document.getElementById("amount").value;
         const body = JSON.stringify({
             price: price,
             img_url: product_img_url,
             name: product_name,
-            amount: product_amout
+            amount: parseInt(product_amount)
         })
         console.log(body);
         function updateCart(){
@@ -114,6 +116,31 @@
                 alert("Thêm thất bại!");
             });
         };
+
+
+
+
+        function increaseCount(a, b) {
+            var input = b.previousElementSibling;
+            var value = parseInt(input.value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            input.value = value;
+            calculateProduct();
+            product_amount = value;
+        }
+            
+        function decreaseCount(a, b) {
+            var input = b.nextElementSibling;
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                value = isNaN(value) ? 0 : value;
+                value--;
+                input.value = value;
+                product_amount = value;
+            }
+            calculateProduct();
+        }
     </script>
 </body>
 </html>
