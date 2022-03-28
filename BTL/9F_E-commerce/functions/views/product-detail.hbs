@@ -122,17 +122,22 @@
         } else if (product_category === "Thịt") {
             product_category = 'meat';
         }
-        const body = JSON.stringify({
+        var body = {
             price: price,
             img_url: product_img_url,
             name: product_name,
             category: product_category,
             amount: parseInt(product_amount)
-        })
-        console.log(body);
-
-
+        };
+        
         function addProduct(){
+            const product_amout = document.getElementById("amount").value;
+            if (typeof body === "string"){
+                body = JSON.parse(body)
+            }
+            body.amount = product_amout;
+            body = JSON.stringify(body);
+            console.log(body);
             fetch('/addToCart', {method: 'post', body: body}).then(resp => {
             if (resp.status < 200 || resp.status >= 300)
                 throw new Error("You need to login!")
