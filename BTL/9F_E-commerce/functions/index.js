@@ -128,13 +128,9 @@ app.get('/',async (req, res) =>{
 //     res.send((await firestore.getDocs(product_detail)).docs.map(doc => firestore.deleteDoc(doc.ref)));
 // });
 app.get('/test', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    const user_db = firestore.collection(db, "User");
-    const constraint = firestore.where("uid", '==', user.uid);
-    const query = firestore.query(user_db, constraint);
-    const refUser = (await firestore.getDocs(query)).docs.map(doc => {return doc.ref});
-    const cart_user = firestore.collection(db, refUser[0].path+'/Cart');
-    // const doc1 = firestore.doc(cart_user, 'cart1');
+    // var user = handler_auth.subscribeToAuthChanges();
+    const cart_user = await handler_firestore.getUserCart(db, '1');
+    
     // firestore.setDoc(doc1, {value2: "value2"});
     // firestore.updateDoc();
     res.send((await firestore.getDocs(cart_user)).docs)
@@ -193,6 +189,13 @@ app.post("/addToCart", async (req, res) => {
     await firestore.addDoc(user_cart, doc);
     res.send({result: "Success"})
 })
+
+app.post("/updateCart", async (req, res) => {
+    const doc = JSON.parse(req.body);
+    const user_cart = await handler_firestore.getUserCart(db, handler_auth.subscribeToAuthChanges().uid);
+    await firestore.addDoc(user_cart, doc);
+    res.send({result: "Success"})
+})
 app.get('/product-detail', async (req, res) => {
     const {user, len_cart} = await isLogged();
     const product_detail = await handler_firestore.getProduct(db, req.query);
@@ -212,48 +215,6 @@ app.get('/all-products', async (req, res) => {
     }
     // console.log(product_list);
     res.render("all-products", {product_list: product_list, user:user, len_cart: len_cart});
-})
-
-app.get('/ctloc', async (req, res) => {
-    const products = await handler_firestore.getProductsByLocation(db, "Cần Thơ");
-    res.send(products);
-})
-
-app.get('/u100price', async (req, res) => {
-    const products = await handler_firestore.getProductsByPrice(db, 0, 100000);
-    res.send(products);
-})
-
-app.get('/u300price', async (req, res) => {
-    const products = await handler_firestore.getProductsByPrice(db, 100000, 300000);
-    res.send(products);
-})
-
-app.get('/u500price', async (req, res) => {
-    const products = await handler_firestore.getProductsByPrice(db, 300000, 500000);
-    res.send(products);
-})
-
-app.get('/u1000price', async (req, res) => {
-    const products = await handler_firestore.getProductsByPrice(db, 500000, 1000000);
-    res.send(products);
-})
-
-app.get('/o1000price', async (req, res) => {
-    const products = await handler_firestore.getO1000Products(db, 1000000, 100000000);
-    res.send(products);
-})
-
-app.get('/byname', async (req, res) => {
-    const name = "Hến";
-    const products = await handler_firestore.getProductsByName(db, name);
-    res.send(products);
-})
-
-app.get('/search', async (req, res) => {
-    const name = "B";
-    const products = await handler_firestore.searchProducts(db, name);
-    res.send(products);
 })
 
 app.get('/cart', async (req, res) => {
