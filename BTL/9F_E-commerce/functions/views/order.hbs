@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="./css/about.css">
     <link rel="stylesheet" href="./css/footer.css"> 
     <link rel="stylesheet" href="./css/shipping.css">
+    <link rel="stylesheet" href="./css/payment.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <title>Vận chuyển</title>
+    <title>Thông tin đặt hàng</title>
 
     <style>
         .price-container {
@@ -27,11 +28,11 @@
 
 
     <div class="page-info">
-        <h2 class="page-name">Vận chuyển</h2>
+        <h2 class="page-name">Thông tin đặt hàng</h2>
         <p class="route">
             <a href="/">Trang chủ</a> /
             <a href="/cart">Giỏ hàng</a> /
-            <a href="/shipping">Vận chuyển</a>
+            <a href="/order">Thông tin đặt hàng</a>
         </p>
     </div>
 
@@ -107,10 +108,23 @@
                 </div>
             </div>
 
+            <h6 class="title"><b>Phương thức thanh toán</b></h6>
+            <div class="info-container">
+                <input type="radio" name="pay-method" id="cash" required>
+                <label for="cash">Thanh toán khi nhận hàng</label>
+
+                <!-- Các phương thức khác -->
+                {{!-- <hr>
+                
+                <input type="radio" name="pay-method" id="momo">
+                <label for="momo">Thanh toán bằng ví MoMo</label> --}}
+                
+            </div>
+
             <div class="row navigation">
-                <a href="/cart" class="col back">Trở về giỏ hàng</a>
+                <a href="/cart" class="col back" style="text-decoration: underline;">Trở về giỏ hàng</a>
                 <div class="btn-container col">
-                    <a href="/payment" class="btn">Thanh toán</a>
+                    <a class="btn" id="order-btn" onclick="checkFilled();">Đặt hàng</a>
                 </div>
             </div>
         </div>
@@ -134,9 +148,9 @@
                 <hr>
                 
                 <div class="row discount-input">
-                    <input type="text" class="col" placeholder="Mã giảm giá">
+                    <input type="text" class="col" placeholder="Mã giảm giá" id="coupon">
                     <!-- <div class="btn-container col col-md-3"> -->
-                    <button class="btn col">Thêm mã</button>
+                    <button class="btn col" onclick="checkCoupon();">Thêm mã</button>
                     <!-- </div> -->
                 </div>
                 <hr>
@@ -151,7 +165,7 @@
                     </div>
                     <div class="row">
                         <p class="col col-md-9">Giảm giá</p>
-                        <p class="col col-md-3 price-container" style="color:black"><span class="price discount-price">-20000</span>đ</p>
+                        <p class="col col-md-3 price-container" style="color:black"><span class="price" id="discount-price">0</span>đ</p>
                     </div>
                     <hr>
                     
@@ -171,9 +185,20 @@
     </script>
 
     <script>
-        const qty = document.getElementsByClassName("qty");
-        const product_price = document.getElementsByClassName("product-price");
-        const discount = document.getElementsByClassName("discount-price")[0].innerHTML.slice(0, -1);
+        var customer_name;
+        var customer_address;
+        var customer_phone;
+
+
+
+
+
+
+
+        var qty = document.getElementsByClassName("qty");
+        var product_price = document.getElementsByClassName("product-price");
+        var discount;
+        
         var subtotal_count = 0;
         for (let i = 0; i < qty.length; i++){
             let total_ammount = parseFloat(product_price[i].innerHTML) * 1000 * parseInt(qty[i].innerHTML, 10);
@@ -186,20 +211,61 @@
         var myInput = document.getElementById('myInput')
 
         function editAddress() {
-            let name = document.forms["edit-form"]["name"].value;
-            let phone = document.forms["edit-form"]["phone"].value;
-            let address = document.forms["edit-form"]["address"].value;
+            customer_name = document.forms["edit-form"]["name"].value;
+            customer_phone = document.forms["edit-form"]["phone"].value;
+            customer_address = document.forms["edit-form"]["address"].value;
 
-            document.getElementById("customer-name").innerHTML = name;
-            document.getElementById("customer-phone").innerHTML = phone;
-            document.getElementById("customer-address").innerHTML = address;
+            document.getElementById("customer-name").innerHTML = customer_name;
+            document.getElementById("customer-phone").innerHTML = customer_phone;
+            document.getElementById("customer-address").innerHTML = customer_address;
         }
 
         function chooseShipMethod(i){
             const ship_fee = document.getElementsByClassName("shipping-price")[i].innerHTML.slice(0, -1);
             document.getElementsByClassName("shipping-price-cal")[0].innerHTML = ship_fee;
-            const total = subtotal_count + unformatPrice(ship_fee) + unformatPrice(discount);
+            calculateTotal(ship_fee);
+        }
+
+        function calculateTotal(ship_fee) {
+            discount = unformatPrice(document.getElementById("discount-price").innerHTML);
+            var total = subtotal_count + unformatPrice(ship_fee) + discount;
             document.getElementsByClassName("total-price")[0].innerHTML = formatOnePrice(total);
+        }
+
+
+        function checkCoupon() {
+            var code = document.getElementById("coupon").value;
+            if (code == "coupon20k") {
+                discount = -20000;  
+                alert("Thêm mã giảm giá thành công!");
+                document.getElementById("discount-price").innerHTML = formatOnePrice(discount);
+            }
+
+            else if (code == "coupon5k") {
+                discount = -5000;  
+                alert("Thêm mã giảm giá thành công!");
+                document.getElementById("discount-price").innerHTML = formatOnePrice(discount);
+            }
+
+            else alert("Mã giảm giá không hợp lệ")
+
+            var ship = document.getElementsByClassName("shipping-price-cal")[0].innerHTML;
+            if (ship == "");
+            else calculateTotal(ship);
+        }
+
+
+        function checkFilled() {
+            var normal_ship = document.getElementById("normal").checked;
+            var fast_ship = document.getElementById("fast").checked;
+            var cash_pay = document.getElementById("cash").checked;
+            if (!normal_ship && !fast_ship)
+                alert("Xin vui lòng chọn phương thức vận chuyển.")
+
+            if (!cash_pay) alert("Xin vui lòng chọn phương thức thanh toán.")
+            
+            else document.getElementById("order-btn").href = "/thank-you"
+
         }
     </script>
 </body>

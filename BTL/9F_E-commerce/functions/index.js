@@ -224,10 +224,10 @@ app.get('/cart', async (req, res) => {
     res.render("cart", {user: user, len_cart: len_cart, product_list: product_list});
 })
 
-app.get('/shipping', async (req, res) => {
+app.get('/order', async (req, res) => {
     const {user, len_cart} = await isLogged();
     
-    res.render("shipping", {user: user, len_cart: len_cart});
+    res.render("order", {user: user, len_cart: len_cart});
 })
 
 app.get('/payment', async (req, res) => {

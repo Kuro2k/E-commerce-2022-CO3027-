@@ -7,7 +7,9 @@ function formatPrice() {
 }
 
 function unformatPrice(price) {
-    return parseFloat(price) * 1000;
+    if (price.includes("."))
+        return parseFloat(price) * 1000;
+    return parseInt(price);
 }
 
 function formatOnePrice(price) {

@@ -73,7 +73,7 @@
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
                     <span class="down" onClick="decreaseCount(event, this)">-</span>
-                    <input id="amount" class="qty" type="text" value="1">
+                    <input id="amount" class="qty" type="text" value="13">
                     <span class="up" onClick="increaseCount(event, this)">+</span>
                 </div>
             </div>
@@ -93,7 +93,7 @@
         </div>
 
         <div class="col col-md-3 btn-container">
-            <a class="btn buy" onclick="updateCart();" >Mua hàng</a>
+            <a id="buy-btn" class="btn buy" onclick="updateCart();" >Mua hàng</a>
         </div>
     </div>
 
@@ -129,7 +129,7 @@
                 body.push(item)
             }
             body = JSON.stringify(body);
-            
+            document.getElementById("buy-btn").href = "/order";
         };
 
         function increaseCount(a, b) {
