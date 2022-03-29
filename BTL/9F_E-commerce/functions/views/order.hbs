@@ -131,22 +131,15 @@
 
         <div class="col cart-info">
             <div class="items">
+                {{#each product_list}}
                 <div class="row item">
-                    <p class="col col-md-1 qty">1</p>
+                    <p class="col col-md-1 qty">{{amount}}</p>
                     <p class="col col-md-1">x</p>
-                    <p class="col col-md-7 item-name">Dưa hấu</p>
-                    <p class="col col-md-3 price-container"><span class="price product-price">20000</span>đ</p>
+                    <p class="col col-md-7 item-name">{{name}}</p>
+                    <p class="col col-md-3 price-container"><span class="price product-price">{{price}}</span>đ</p>
                 </div>
                 <hr>
-
-                <div class="row item">
-                    <p class="col col-md-1 qty">3</p>
-                    <p class="col col-md-1">x</p>
-                    <p class="col col-md-7 item-name">Cà chua</p>
-                    <p class="col col-md-3 price-container"><span class="price product-price">10000</span>đ</p>
-                </div>
-                <hr>
-                
+                {{/each}}
                 <div class="row discount-input">
                     <input type="text" class="col" placeholder="Mã giảm giá" id="coupon">
                     <!-- <div class="btn-container col col-md-3"> -->
@@ -156,22 +149,22 @@
                 <hr>
                 <div class="total">
                     <div class="row">
-                        <p class="col col-md-9">Tạm tính</p>
-                        <p class="col col-md-3 price-container" style="color:black"><span class="subtotal"></span>đ</p>
+                        <p class="col col-md-7">Tạm tính</p>
+                        <p class="col col-md-5 price-container" style="color:black"><span class="subtotal"></span>đ</p>
                     </div>
                     <div class="row">
-                        <p class="col col-md-9">Phí vận chuyển</p>
-                        <p class="col col-md-3 price-container" style="color:black"><span class="price shipping-price-cal"></span>đ</p>
+                        <p class="col col-md-7">Phí vận chuyển</p>
+                        <p class="col col-md-5 price-container" style="color:black"><span class="price shipping-price-cal"></span>đ</p>
                     </div>
                     <div class="row">
-                        <p class="col col-md-9">Giảm giá</p>
-                        <p class="col col-md-3 price-container" style="color:black"><span class="price" id="discount-price">0</span>đ</p>
+                        <p class="col col-md-7">Giảm giá</p>
+                        <p class="col col-md-5 price-container" style="color:black"><span class="price" id="discount-price">0</span>đ</p>
                     </div>
                     <hr>
                     
                     <div class="row">
-                        <p class="col col-md-9">Tổng cộng</p>
-                        <h5 class="col col-md-3 price-container" style="color:black"><span class="price total-price"></span>đ</h5>
+                        <p class="col col-md-7">Tổng cộng</p>
+                        <h5 class="col col-md-5 price-container" style="color:black"><span class="price total-price"></span>đ</h5>
                 </div>
                     
                 </div>
