@@ -140,8 +140,9 @@ app.get('/upload', (req, res) => {
     res.render("upload")
 })
 
-app.get('/add_product', (req, res) => {
-    res.render('add_product');
+app.get('/add_product', async (req, res) => {
+    const {user, len_cart, uid} = await isLogged();
+    res.render('add_product', {user: user});
 })
 
 app.post('/api/add_product',upload.single('photo'), async (req, res) => {

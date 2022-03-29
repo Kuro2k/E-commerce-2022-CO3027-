@@ -59,9 +59,11 @@
     </div>
 <script>
         function logout() {
-            if (confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
-                document.getElementById("logout-btn").href = "/login";
-            } 
+            if (!confirm("Bạn có chắc chắn muốn đăng xuất ?")) {
+                document.getElementById("logout-btn").href = "#";
+            } else{
+                document.getElementById("logout-btn").href = "/auth/logout";
+            }
         }
         function search(){
             var input = document.getElementById("search-input").value;
