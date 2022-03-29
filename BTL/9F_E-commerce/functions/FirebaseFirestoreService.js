@@ -21,6 +21,7 @@ const addToCart = async (db, doc, uid) => {
         const new_value = doc.amount + old_doc.amount;
         await firestore.updateDoc(products[0].ref, {amount: new_value});
     }
+    return (await firestore.getDocs(user_cart)).docs.length
 }
 
 const updateCart = async (db, docList, uid) => {

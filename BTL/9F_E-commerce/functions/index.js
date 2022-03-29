@@ -178,10 +178,11 @@ app.post("/addToCart", async (req, res) => {
     } else {
         try {
             const doc = JSON.parse(req.body);
-            await handler_firestore.addToCart(db, doc, uid);
-            res.send({result: "Success"});
+            const num_cart = await handler_firestore.addToCart(db, doc, uid);
+            res.status(200).send({result: num_cart});
         } catch (error) {
-            res.status(100).send("Thêm thất bại");
+            console.log(error.message);
+            res.status(100).send(error.message);
         } 
     }
 })
