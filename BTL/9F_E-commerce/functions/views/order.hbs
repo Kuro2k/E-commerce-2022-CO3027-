@@ -91,7 +91,7 @@
             <div class="info-container">
                 <div class="row ship-input">
                     <div class="method-radio col-md-9">
-                        <input type="radio" name="ship-method" id="normal">
+                        <input type="radio" name="ship-method" id="normal" onClick="chooseShipMethod(0);"> 
                         <label for="normal" onClick="chooseShipMethod(0);">Vận chuyển thường</label>
                     </div>
 
@@ -100,7 +100,7 @@
                 <hr>
                 <div class="row ship-input">
                     <div class="method-radio col-md-9">
-                        <input type="radio" name="ship-method" id="fast">
+                        <input type="radio" name="ship-method" id="fast" onClick="chooseShipMethod(1);">
                         <label for="fast" onClick="chooseShipMethod(1);">Vận chuyển nhanh</label>
                     </div>
 
@@ -114,10 +114,10 @@
                 <label for="cash">Thanh toán khi nhận hàng</label>
 
                 <!-- Các phương thức khác -->
-                {{!-- <hr>
+                <hr>
                 
                 <input type="radio" name="pay-method" id="momo">
-                <label for="momo">Thanh toán bằng ví MoMo</label> --}}
+                <label for="momo">Thanh toán bằng ví MoMo</label>
                 
             </div>
 
@@ -257,13 +257,20 @@
             var normal_ship = document.getElementById("normal").checked;
             var fast_ship = document.getElementById("fast").checked;
             var cash_pay = document.getElementById("cash").checked;
+            var momo = document.getElementById("momo").checked;
+
+            if ((normal_ship || fast_ship) && cash_pay)
+                document.getElementById("order-btn").href = "/thank-you";
+
             if (!normal_ship && !fast_ship)
                 alert("Xin vui lòng chọn phương thức vận chuyển.")
 
-            if (!cash_pay) alert("Xin vui lòng chọn phương thức thanh toán.")
+            if (!cash_pay && !momo) alert("Xin vui lòng chọn phương thức thanh toán.")
             
-            else document.getElementById("order-btn").href = "/thank-you"
-
+            if (momo) {
+                // do something
+                alert("do something momo momo momo")
+            }
         }
     </script>
 </body>
