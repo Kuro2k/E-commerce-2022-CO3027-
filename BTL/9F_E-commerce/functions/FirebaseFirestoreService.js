@@ -39,6 +39,15 @@ const updateCart = async (db, docList) => {
     return "Success";
 }
 
+const addOrderDetail = async (db, doc) => {
+    const user_order = await getUserOrder(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
+    const orderPath = await firestore.addDoc(user_order, doc);
+    const order_id = orderPath.id;
+    const time = new Date().getTime();
+    await firestore.updateDoc(orderPath, {order_id: order_id, time: time});
+    return order_id;
+}
+
 const getUserCart = async(db, uid) => {
     const user_db = firestore.collection(db, "User");
     const constraint = firestore.where("uid", '==', uid);
@@ -47,12 +56,12 @@ const getUserCart = async(db, uid) => {
     return firestore.collection(db, refUser[0].path+'/Cart');
 }
 
-const getUserPurchaseHistory = async (db, uid) => {
+const getUserOrder = async (db, uid) => {
     const user_db = firestore.collection(db, "User");
     const constraint = firestore.where("uid", '==', uid);
     const query = firestore.query(user_db, constraint);
     const refUser = (await firestore.getDocs(query)).docs.map(doc => {return doc.ref});
-    return firestore.collection(db, refUser[0].path+'/Purchase_history');
+    return firestore.collection(db, refUser[0].path+'/Order');
 }
 
 async function getProducts(db){
@@ -143,6 +152,7 @@ async function searchProducts(db, name){
 }
 
 module.exports = {
+    addOrderDetail: addOrderDetail,
     updateCart: updateCart,
     addToCart: addToCart,
     addProduct: addProduct,
@@ -156,5 +166,5 @@ module.exports = {
     getHotProducts: getHotProducts,
     searchProducts: searchProducts,
     getUserCart: getUserCart,
-    getUserPurchaseHistory: getUserPurchaseHistory
+    getUserOrder: getUserOrder
 };

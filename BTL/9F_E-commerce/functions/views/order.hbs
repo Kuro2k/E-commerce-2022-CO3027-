@@ -124,7 +124,7 @@
             <div class="row navigation">
                 <a href="/cart" class="col back" style="text-decoration: underline;">Trở về giỏ hàng</a>
                 <div class="btn-container col">
-                    <a class="btn" id="order-btn" onclick="checkFilled();">Đặt hàng</a>
+                    <a class="btn" id="order-btn" onclick="processOrder();">Đặt hàng</a>
                 </div>
             </div>
         </div>
@@ -252,24 +252,66 @@
             else calculateTotal(ship);
         }
 
+        function getOrderDetail(){
+            var normal_ship = document.getElementById("normal").checked;
+            var fast_ship = document.getElementById("fast").checked;
+            const discount = document.getElementById("discount-price").innerHTML   
+            var shipFee;
+            if (normal_ship){
+                shipFee = "15.000";
+            } else {
+                shipFee = "35.000";
+            }
+            const total_price = document.getElementsByClassName("total-price")[0].innerHTML;
+            
+            const name_receiver = document.getElementById("customer-name").innerHTML;
+            const address_receiver = document.getElementById("customer-phone").innerHTML;
+            const phone_receiver = document.getElementById("customer-address").innerHTML;
+            const receiver_info = {
+                name_receiver: name_receiver,
+                address_receiver: address_receiver,
+                phone_receiver: phone_receiver
+            }
+            const order_detail = {
+                receiver_info: receiver_info,
+                shipFee: shipFee,
+                discount: discount,
+                total_price: total_price
+            }
+            return order_detail
+        }
 
-        function checkFilled() {
+        function processOrder() {
             var normal_ship = document.getElementById("normal").checked;
             var fast_ship = document.getElementById("fast").checked;
             var cash_pay = document.getElementById("cash").checked;
             var momo = document.getElementById("momo").checked;
 
-            if ((normal_ship || fast_ship) && cash_pay)
-                document.getElementById("order-btn").href = "/thank-you";
-
-            if (!normal_ship && !fast_ship)
+            if (!normal_ship && !fast_ship){
                 alert("Xin vui lòng chọn phương thức vận chuyển.")
+                return "fail"
+            }
+            if (!cash_pay && !momo){
+                alert("Xin vui lòng chọn phương thức thanh toán.")
+                return "fail"
+                document.getElementById("order-btn").href = `/thank-you?orderId=${data.order_id}`;
+            }
+            if ((normal_ship || fast_ship) && cash_pay){
+                const order_detail = getOrderDetail();
+                order_detail.pay_method = "cash";
+                var order_id;
+                fetch("/addOrderDetail", {method: "post", body: JSON.stringify(order_detail)})
+                .catch(err => {
+                    alert("Đặt hàng thất bại!");
+                })
+                
+                document.getElementById("order-btn").href = `/thank-you`;
+            }
 
-            if (!cash_pay && !momo) alert("Xin vui lòng chọn phương thức thanh toán.")
-            
             if (momo) {
                 // do something
                 alert("do something momo momo momo")
+                return "momo"
             }
         }
     </script>

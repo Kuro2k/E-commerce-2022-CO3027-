@@ -121,11 +121,8 @@ app.get('/',async (req, res) =>{
     });
 });
 // app.get('/test', async (req, res) => {
-//     const a = firestore.collection(db, 'Product');
-//     const constraint1 = firestore.where("category", "==", "seafood");
-//     const constraint2 = firestore.where("date_upload", "==", "2022-03-25");
-//     const product_detail = await firestore.query(a, constraint1, constraint2);
-//     res.send((await firestore.getDocs(product_detail)).docs.map(doc => firestore.deleteDoc(doc.ref)));
+//     const a = await handler_firestore.getUserOrder(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
+//     res.send((await firestore.getDocs(a)).docs.map(doc => firestore.deleteDoc(doc.ref)));
 // });
 app.get('/test', async (req, res) => {
     // var user = handler_auth.subscribeToAuthChanges();
@@ -236,7 +233,7 @@ app.get('/order', async (req, res) => {
 })
 
 app.post('/updateReceiverInfo', async (req, res) => {
-    const  doc = JSON.parse(req.body);
+    const doc = JSON.parse(req.body);
     const user_db = firestore.collection(db, "User");
     const constraint = firestore.where("uid", "==", "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
     const query = firestore.query(user_db, constraint);
@@ -249,12 +246,21 @@ app.get('/payment', async (req, res) => {
     res.render("payment", {user: user, len_cart});
 })
 
+app.post('/addOrderDetail', async (req, res) => {
+    const order_detail = JSON.parse(req.body);
+    const order_id = await handler_firestore.addOrderDetail(db, order_detail);
+    res.send({order_id: order_id});
+})
+
 app.get('/thank-you', async (req, res) => {
-    var user = handler_auth.subscribeToAuthChanges();
-    if (user) {
-        user = user.displayName;
-    }
-    res.render("thanks", {user: user});
+    const {user, len_cart} = await isLogged();
+    const user_order = await handler_firestore.getUserOrder(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    const constraint1 = firestore.orderBy("time", "desc");
+    const constraint2 = firestore.limit(1)
+    const query = firestore.query(user_order, constraint1,constraint2);
+    const order = (await firestore.getDocs(query)).docs.map(doc => doc.data())
+    console.log(order)
+    res.render("thanks", {user: user,  len_cart: len_cart,order: order[0]});
 })
 
 app.get('*', (req, res) => {
