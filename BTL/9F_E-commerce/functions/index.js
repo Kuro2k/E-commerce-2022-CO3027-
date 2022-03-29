@@ -227,10 +227,23 @@ app.get('/cart', async (req, res) => {
 app.get('/order', async (req, res) => {
     const {user, len_cart} = await isLogged();
     const user_cart = await handler_firestore.getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    const user_db = firestore.collection(db, "User");
+    const constraint = firestore.where("uid", "==", "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    const query = firestore.query(user_db, constraint);
+    const receiver_info = (await firestore.getDocs(query)).docs[0].data()
     const product_list = (await firestore.getDocs(user_cart)).docs.map(doc => doc.data())
-    res.render("order", {user: user, len_cart: len_cart, product_list:product_list});
+    res.render("order", {user: user, len_cart: len_cart, product_list:product_list, receiver_info: receiver_info});
 })
 
+app.post('/updateReceiverInfo', async (req, res) => {
+    const  doc = JSON.parse(req.body);
+    const user_db = firestore.collection(db, "User");
+    const constraint = firestore.where("uid", "==", "ogQllI52OPSGSP8Wt0cd4rUG1jo1")
+    const query = firestore.query(user_db, constraint);
+    const receiver_ref = (await firestore.getDocs(query)).docs[0].ref
+    await firestore.updateDoc(receiver_ref, doc);
+    res.send({result: "Success"})
+})
 app.get('/payment', async (req, res) => {
     const {user, len_cart} = await isLogged();
     res.render("payment", {user: user, len_cart});

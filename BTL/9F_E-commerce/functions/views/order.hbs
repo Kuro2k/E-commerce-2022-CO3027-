@@ -53,13 +53,13 @@
                             <h5 class="modal-title" id="editAddressLabel"><b>Địa chỉ nhận hàng</b></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="" name="edit-form">
+                        <form action="" name="edit-form" id="form-address">
                             <div class="modal-body">
                                 <input type="text" id="name" name="name" placeholder="Họ và tên*">
                                 <input type="text" id="phone" name="phone" placeholder="Số điện thoại*">
                                 <textarea id="address" name="address" placeholder="Địa chỉ nhận hàng*" style="height:100px"></textarea>
                                 <!-- <textarea id="address-note" name="address-note" placeholder="Ghi chú về địa chỉ" style="height:70px"></textarea> -->
-                                <input type="checkbox" name="default-address" id="default-address">
+                                <input type="checkbox" name="default-address" id="default-address" value="">
                                 <label for="default-address">Sử dụng làm địa chỉ mặc định</label>
                             </div>
                             <div class="modal-footer">
@@ -77,13 +77,13 @@
                 
                 <div class="customer-info">
                     <span><b>Tên:</b></span>
-                    <span id="customer-name">Nguyễn Văn A</span>
+                    <span id="customer-name">{{receiver_info.name_receiver}}</span>
                     <br>
                     <span><b>Địa chỉ:</b></span>
-                    <span id="customer-address">Số 123, Đường 456, Huyện ABC, Quận E, TP. Z</span>
+                    <span id="customer-address">{{receiver_info.address_receiver}}</span>
                     <br>
                     <span><b>Điện thoại:</b></span>
-                    <span id="customer-phone">0123456789</span>
+                    <span id="customer-phone">{{receiver_info.phone_receiver}}</span>
                 </div>
             </div>
 
@@ -182,12 +182,6 @@
         var customer_address;
         var customer_phone;
 
-
-
-
-
-
-
         var qty = document.getElementsByClassName("qty");
         var product_price = document.getElementsByClassName("product-price");
         var discount;
@@ -211,6 +205,17 @@
             document.getElementById("customer-name").innerHTML = customer_name;
             document.getElementById("customer-phone").innerHTML = customer_phone;
             document.getElementById("customer-address").innerHTML = customer_address;
+            const formData = new FormData(document.getElementById('form-address'));
+            var body = JSON.stringify({
+                name_receiver: customer_name,
+                address_receiver: customer_address,
+                phone_receiver: customer_phone
+            });
+            if (formData.get("default-address") !== null){
+                fetch("/updateReceiverInfo", {method: "post", body:body}).catch(err => {
+                alert("Đặt địa chỉ mặt định thất bại!");
+            })
+            }
         }
 
         function chooseShipMethod(i){
