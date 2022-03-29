@@ -93,7 +93,7 @@
         </div>
 
         <div class="col col-md-3 btn-container">
-            <a href="/order" id="buy-btn" class="btn buy" onclick="updateCart();" >Mua hàng</a>
+            <a href="" id="buy-btn" class="btn buy" onclick="updateCart(); return true;"> Mua hàng</a>
         </div>
     </div>
 
@@ -122,19 +122,11 @@
                     price: parseInt(list_PriceData[i].replace(".", "")),
                     category: list_CategoryData[i],
                     amount: parseInt(list_AmountData[i]),
-                    img_url: list_ImgData[i]
                 }
                 body.push(item)
             }
             body = JSON.stringify(body);
-            fetch('/updateCart', {method: 'post', body: body}).then(resp => {
-            if (resp.status < 200 || resp.status >= 300)
-                throw new Error("You need to login!")
-            return resp.json()
-            })
-            .catch(err => {
-                alert("Thêm thất bại!");
-            });
+            document.getElementById("buy-btn").href=`/order?update_cart=${body}`;
         };
 
         function increaseCount(a, b) {

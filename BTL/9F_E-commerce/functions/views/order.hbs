@@ -112,13 +112,6 @@
             <div class="info-container">
                 <input type="radio" name="pay-method" id="cash" required>
                 <label for="cash">Thanh toán khi nhận hàng</label>
-
-                <!-- Các phương thức khác -->
-                <hr>
-                
-                <input type="radio" name="pay-method" id="momo">
-                <label for="momo">Thanh toán bằng ví MoMo</label>
-                
             </div>
 
             <div class="row navigation">
@@ -285,33 +278,20 @@
             var normal_ship = document.getElementById("normal").checked;
             var fast_ship = document.getElementById("fast").checked;
             var cash_pay = document.getElementById("cash").checked;
-            var momo = document.getElementById("momo").checked;
 
             if (!normal_ship && !fast_ship){
                 alert("Xin vui lòng chọn phương thức vận chuyển.")
                 return "fail"
             }
-            if (!cash_pay && !momo){
+            if (!cash_pay){
                 alert("Xin vui lòng chọn phương thức thanh toán.")
                 return "fail"
                 document.getElementById("order-btn").href = `/thank-you?orderId=${data.order_id}`;
             }
             if ((normal_ship || fast_ship) && cash_pay){
                 const order_detail = getOrderDetail();
-                order_detail.pay_method = "cash";
-                var order_id;
-                fetch("/addOrderDetail", {method: "post", body: JSON.stringify(order_detail)})
-                .catch(err => {
-                    alert("Đặt hàng thất bại!");
-                })
-                
-                document.getElementById("order-btn").href = `/thank-you`;
-            }
-
-            if (momo) {
-                // do something
-                alert("do something momo momo momo")
-                return "momo"
+                order_detail.pay_method = "cash";              
+                document.getElementById("order-btn").href = `/thank-you?order_detail=${JSON.stringify(order_detail)}`;
             }
         }
     </script>

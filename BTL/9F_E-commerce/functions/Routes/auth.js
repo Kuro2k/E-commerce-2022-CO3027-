@@ -13,7 +13,8 @@ auth_router.post('/login', async (req, res) => {
         await handler_auth.loginUser(email, password);
         res.redirect('/');
     } catch (error) {
-        res.status(401).send(error)
+        res.send("Bạn đã nhập sai tên hoặc mật khẩu vui lòng nhập lại");
+        res.redirect('/login')
     }
 })
 auth_router.get('/logout', async (req, res) => {
@@ -28,7 +29,7 @@ auth_router.get('/logout', async (req, res) => {
 auth_router.post('/forgetpsw', async (req, res) => {
     try {
         await handler_auth.sendPasswordResetEmail(req.body.email);
-        res.status(200).send("oke");
+        res.status(200).send("Email reset password đã được gửi đi");
     } catch (error) {
         res.status(401).send(error)
     }

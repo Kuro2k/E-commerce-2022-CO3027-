@@ -46,7 +46,7 @@
                 <div class="search">
                     <div class="input-group mb-3">
                         <input id="search-input" type="text" class="form-control" placeholder="Tìm kiếm" >
-                        <a href="/" id="search-btn" class="btn" type="button"><i class="bi bi-search" onclick="search();"></i></a>
+                        <a href="" id="search-btn" class="btn" type="button"><i class="bi bi-search" onclick="search();"></i></a>
                     </div>
                 </div>
                 
@@ -65,7 +65,7 @@
         }
         function search(){
             var input = document.getElementById("search-input").value;
-            document.getElementById("search-btn").href = "/all-products?search=$" + input;
+            document.getElementById("search-btn").href = "/all-products?search=" + input;
         }
 </script>
     

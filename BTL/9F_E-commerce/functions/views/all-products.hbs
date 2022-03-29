@@ -28,7 +28,11 @@
 
 
     <div class="page-info">
-        <h2 class="page-name">Tất cả sản phẩm</h2>
+        {{#if page_name}}
+            <h2 class="page-name">{{page_name}}</h2>
+        {{else}}
+            <h2 class="page-name">Tất cả sản phẩm</h2>
+        {{/if}}
         <p class="route">
             <a href="/">Trang chủ</a> /
             <a href="/all-products">Sản phẩm</a>

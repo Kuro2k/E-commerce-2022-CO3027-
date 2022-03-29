@@ -7,12 +7,9 @@ const addProduct = async (db, document) => {
     await firestore.addDoc(product, document);
 };
 
-const addToCart = async (db, doc) => {
-    const user = handler_auth.subscribeToAuthChanges();
-    if (!user) {
-        return "Fail!";
-    }
-    const user_cart = await getUserCart(db, user.uid);
+const addToCart = async (db, doc, uid) => {
+    console.log(uid)
+    const user_cart = await getUserCart(db, uid);
     const constraint = firestore.where("name", "==", doc.name);
     const constraint1 = firestore.where("category", "==", doc.category);
     const query = firestore.query(user_cart, constraint, constraint1);
@@ -24,23 +21,33 @@ const addToCart = async (db, doc) => {
         const new_value = doc.amount + old_doc.amount;
         await firestore.updateDoc(products[0].ref, {amount: new_value});
     }
-    return "Success";
 }
 
-const updateCart = async (db, docList) => {
-    // const user = handler_auth.subscribeToAuthChanges();
-    // if (!user) {
-    //     return "Fail!";
-    // }
-    console.log(docList);
-    const user_cart = await getUserCart(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
+const updateCart = async (db, docList, uid) => {
+    for (let i = 0; i < docList.length; i++){
+        if (docList[i].category === "Trái cây"){
+            docList[i].category = "fruit";
+        } else if (docList[i].category === "Rau củ quả"){
+            docList[i].category = "vegetable";
+        } else if (docList[i].category === "Thịt") {
+            docList[i].category = "meat";
+        } else {
+            docList[i].category = "seafood";
+        } 
+        const product_db = firestore.collection(db, "Product")
+        const constraint1 = firestore.where("name","==", docList[i].name);
+        const constraint2 = firestore.where("category", "==", docList[i].category);
+        const query = firestore.query(product_db, constraint1, constraint2);
+        const product = (await firestore.getDocs(query)).docs[0].data();
+        docList[i].img_url=product.img_url;
+    }
+    const user_cart = await getUserCart(db, uid);
     (await firestore.getDocs(user_cart)).docs.map(async (doc) => {await firestore.deleteDoc(doc.ref)});
     docList.forEach(async (doc) => {await firestore.addDoc(user_cart, doc)})
-    return "Success";
 }
 
-const addOrderDetail = async (db, doc) => {
-    const user_order = await getUserOrder(db, "ogQllI52OPSGSP8Wt0cd4rUG1jo1");
+const addOrderDetail = async (db, doc, uid) => {
+    const user_order = await getUserOrder(db, uid);
     const orderPath = await firestore.addDoc(user_order, doc);
     const order_id = orderPath.id;
     const time = new Date().getTime();
