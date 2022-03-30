@@ -13,10 +13,10 @@ auth_router.post('/login', async (req, res) => {
         await handler_auth.loginUser(email, password);
         res.redirect('/');
     } catch (error) {
-        res.send("Bạn đã nhập sai tên hoặc mật khẩu vui lòng nhập lại");
-        res.redirect('/login')
+        res.redirect('/login?error=wrongUserPassword')
     }
 })
+
 auth_router.get('/logout', async (req, res) => {
     try {
         await handler_auth.logoutUser();

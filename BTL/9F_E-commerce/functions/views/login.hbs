@@ -33,6 +33,9 @@
                 </a>
                 
             </div>
+            {{#if error}} 
+                <b >{{error}}</b> <br>
+            {{/if}}
             <label for="email"><b>Email</b></label> <br>
             <input type="email" placeholder="Nhập E-mail" name="email" required> <br>
 
@@ -53,18 +56,11 @@
                 </button>
             </div>
         </form>
-
-        <div class="btn-container google-login">
-            <a href="" class="btn google-btn">
-                <img src="./img/google-logo.png" alt="google">
-                <span>Đăng nhập bằng Google</span>
-            </a>
-        </div>
     </div>  
 
     <script>
         function forgotPass() {
-            alert("Mật khẩu mới đã được gửi vào email user***@gmail.com");
+            alert("Mật khẩu mới đã được gửi vào email của bạn!);
         }
     </script>
 </body>

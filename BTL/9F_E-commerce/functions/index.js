@@ -125,7 +125,10 @@ app.get('/',async (req, res) =>{
 // });
 
 app.get('/login', async (req, res) => {
-    res.render("login");
+    var error;
+    if (req.query.error)
+        error="Bạn đã nhập sai tên đăng nhập hoặc mật khẩu";
+    res.render("login", {error: error});
 })
 
 app.get('/signup', async (req, res) => {
