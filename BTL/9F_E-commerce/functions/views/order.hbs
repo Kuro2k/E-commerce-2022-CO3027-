@@ -21,6 +21,15 @@
             text-align: right;
             color: #56B280;
         }
+
+        input[type=text], input[type=email], input[type=number], select, textarea {
+            width: 100%;
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box; 
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
@@ -55,10 +64,9 @@
                         </div>
                         <form action="" name="edit-form" id="form-address">
                             <div class="modal-body">
-                                <input type="text" id="name" name="name" placeholder="Họ và tên*">
-                                <input type="text" id="phone" name="phone" placeholder="Số điện thoại*">
-                                <textarea id="address" name="address" placeholder="Địa chỉ nhận hàng*" style="height:100px"></textarea>
-                                <!-- <textarea id="address-note" name="address-note" placeholder="Ghi chú về địa chỉ" style="height:70px"></textarea> -->
+                                <input type="text" id="name" name="name" placeholder="Họ và tên">
+                                <input type="number" id="phone" name="phone" placeholder="Số điện thoại">
+                                <textarea id="address" name="address" placeholder="Địa chỉ nhận hàng" style="height:100px"></textarea>
                                 <input type="checkbox" name="default-address" id="default-address" value="">
                                 <label for="default-address">Sử dụng làm địa chỉ mặc định</label>
                             </div>
@@ -278,7 +286,14 @@
             var normal_ship = document.getElementById("normal").checked;
             var fast_ship = document.getElementById("fast").checked;
             var cash_pay = document.getElementById("cash").checked;
+            var name = document.getElementById("customer-name").innerHTML;
+            var address = document.getElementById("customer-address").innerHTML;
+            var phone = document.getElementById("customer-phone").innerHTML;
 
+            if (name == "" || address == ""  || phone == "") {
+                alert("Xin vui lòng nhập đầy đủ thông tin giao hàng.")
+                return "fail" 
+            }
             if (!normal_ship && !fast_ship){
                 alert("Xin vui lòng chọn phương thức vận chuyển.")
                 return "fail"
