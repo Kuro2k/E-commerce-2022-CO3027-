@@ -133,27 +133,31 @@
         
         function addProduct(){
             const product_amout = document.getElementById("amount").value;
-            if (typeof body === "string"){
-                body = JSON.parse(body)
+            if (parseInt(product_amout, 10) > 0){
+                if (typeof body === "string"){
+                    body = JSON.parse(body)
+                }
+                body.amount = parseInt(product_amout);
+                body = JSON.stringify(body);
+                fetch('/addToCart', {method: 'post', body: body}).then(resp => {
+                if (resp.status >= 300)
+                    throw new Error("Bạn cần đăng nhập!")
+                else if (resp.status < 200)
+                    throw new Error("Thêm vào giỏ hàng thất bại!")
+                return resp.json()
+                })
+                .then(json => {
+                    alert("Thêm vào giỏ hàng thành công!");
+                    document.getElementById("cart-product-counter").innerHTML = json.result;
+                    console.log(json.result);
+                    return;
+                })
+                .catch(err => {
+                    alert(err.message);
+                });
             }
-            body.amount = parseInt(product_amout);
-            body = JSON.stringify(body);
-            fetch('/addToCart', {method: 'post', body: body}).then(resp => {
-            if (resp.status >= 300)
-                throw new Error("Bạn cần đăng nhập!")
-            else if (resp.status < 200)
-                throw new Error("Thêm vào giỏ hàng thất bại!")
-            return resp.json()
-            })
-            .then(json => {
-                alert("Thêm vào giỏ hàng thành công!");
-                document.getElementById("cart-product-counter").innerHTML = json.result;
-                console.log(json.result);
-                return;
-            })
-            .catch(err => {
-                alert(err.message);
-            });
+
+            else alert("Vui lòng chọn số lượng sản phẩm lớn hơn 0");
         };
 
 

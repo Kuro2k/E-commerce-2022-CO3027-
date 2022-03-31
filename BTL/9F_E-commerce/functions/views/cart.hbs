@@ -107,27 +107,49 @@
         var list_AmountData = [];
         updateAmount();
         function updateCart(){
-            const nodePriceList = document.querySelectorAll(".price");
-            const list_PriceData = Object.keys(nodePriceList).map(key => nodePriceList[key].innerText);
-            const nodeCategoryList = document.querySelectorAll(".col.col-md-2.category-container");
-            const list_CategoryData = Object.keys(nodeCategoryList).map(key => nodeCategoryList[key].innerText);
-            const nodeNameList = document.querySelectorAll(".product-name");
-            const list_NameData = Object.keys(nodeNameList).map(key => nodeNameList[key].innerText);
-            const nodeImgList = document.querySelectorAll(".product-img");
-            const list_ImgData = Object.keys(nodeImgList).map(key => nodeImgList[key].attributes.src.value);
-            var body = []
-            for (let i = 0; i < list_NameData.length; i++) {
-                const item = {
-                    name: list_NameData[i],
-                    price: parseInt(list_PriceData[i].replace(".", "")),
-                    category: list_CategoryData[i],
-                    amount: parseInt(list_AmountData[i]),
-                }
-                body.push(item)
+            var negative = false;
+            var checkqty = document.getElementsByClassName('qty');
+            for (let i = 0; i < checkqty.length; i++) {
+                if (parseInt(checkqty[i].value, 10) <= 0) 
+                    negative = true;
             }
-            body = JSON.stringify(body);
-            document.getElementById("buy-btn").href=`/order?update_cart=${body}`;
+
+            if (document.getElementsByClassName("total-product").length == 0) {
+                alert("Giỏ hàng đang trống. Vui lòng thêm sản phẩm vào giỏ hàng.");
+                document.getElementById("buy-btn").href = "#";
+            }
+
+            else if (negative) {
+                alert("Vui lòng chọn số lượng sản phẩm lớn hơn 0");
+                document.getElementById("buy-btn").href = "#";
+            }
+
+            else {
+                const nodePriceList = document.querySelectorAll(".price");
+                const list_PriceData = Object.keys(nodePriceList).map(key => nodePriceList[key].innerText);
+                const nodeCategoryList = document.querySelectorAll(".col.col-md-2.category-container");
+                const list_CategoryData = Object.keys(nodeCategoryList).map(key => nodeCategoryList[key].innerText);
+                const nodeNameList = document.querySelectorAll(".product-name");
+                const list_NameData = Object.keys(nodeNameList).map(key => nodeNameList[key].innerText);
+                const nodeImgList = document.querySelectorAll(".product-img");
+                const list_ImgData = Object.keys(nodeImgList).map(key => nodeImgList[key].attributes.src.value);
+                var body = []
+                for (let i = 0; i < list_NameData.length; i++) {
+                    const item = {
+                        name: list_NameData[i],
+                        price: parseInt(list_PriceData[i].replace(".", "")),
+                        category: list_CategoryData[i],
+                        amount: parseInt(list_AmountData[i]),
+                    }
+                    body.push(item)
+                }
+                body = JSON.stringify(body);
+                document.getElementById("buy-btn").href=`/order?update_cart=${body}`;
+            }
+
         };
+            
+
 
         function increaseCount(a, b) {
             var input = b.previousElementSibling;
