@@ -290,7 +290,8 @@ app.get('/thank-you', async (req, res) => {
     if (req.query.order_detail){
         const order_detail = JSON.parse(req.query.order_detail);
         const order_id = await handler_firestore.addOrderDetail(db, order_detail, uid);
-        res.render("thanks", {user: user,  len_cart: len_cart,order: order_id});
+        await handler_firestore.updateCart(db, [], uid);
+        res.render("thanks", {user: user,  len_cart: 0,order: order_id});
     } else{
         res.redirect("/")
     }

@@ -25,7 +25,7 @@ const addToCart = async (db, doc, uid) => {
 }
 
 const updateCart = async (db, docList, uid) => {
-    if (docList === []){
+    if (docList === [{}]){
         const user_cart = await getUserCart(db, uid);
         (await firestore.getDocs(user_cart)).docs.map(async (doc) => {await firestore.deleteDoc(doc.ref)});
         return;
