@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="signup-form">
-        <form method="post" name="signup" class="form-style" action="/auth/signup">
+        <form name="signup" class="form-style" >
             <div class="form-logo">
                 <a href="/">
                     <img src="./img/logo.png" alt="logo">
@@ -30,29 +30,69 @@
             </div>
 
             <label for="name"><b>Họ và tên</b></label> <br>
-            <input type="name" placeholder="Nhập họ và tên" name="name" required> <br>
+            <input id="name" type="name" placeholder="Nhập họ và tên" name="name" required> <br>
 
             <label for="email"><b>Email</b></label> <br>
-            <input type="email" placeholder="Nhập e-mail" name="email" required> <br>
+            <input id="email" type="email" placeholder="Nhập e-mail" name="email" required> <br>
             
             <label for="phone"><b>Số điện thoại</b></label> <br>
-            <input type="string" placeholder="Nhập số điện thoại" name="phone" required> <br>
+            <input id="phone" type="string" placeholder="Nhập số điện thoại" name="phone" required> <br>
 
             <label for="psw"><b>Mật khẩu</b></label> <br>
-            <input type="password" placeholder="Nhập mật khẩu" name="password" required> <br>
+            <input id="psw" type="password" placeholder="Nhập mật khẩu" name="password" required> <br>
             
             <label for="psw"><b>Nhập lại mật khẩu</b></label> <br>
-            <input type="password" placeholder="Nhập lại mật khẩu" name="re-psw" required> <br>
+            <input id="re_psw" type="password" placeholder="Nhập lại mật khẩu" name="re-psw" required> <br>
 
-            <button class="btn login-btn" style="margin-bottom: 28px;" >Đăng ký tài khoản</button>
+            <button class="btn login-btn" style="margin-bottom: 28px;"  onclick="signUp(); return false;">Đăng ký tài khoản</button>
 
-            {{!-- <div class="btn-container google-login">
-                <a href="" class="btn google-btn">
-                    <img src="./img/google-logo.png" alt="google">
-                    <span>Đăng nhập bằng Google</span>
-                </a>
-            </div> --}}
         </form>
     </div> 
 </body>
+<script>
+    function signUp() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const psw = document.getElementById('psw').value;
+        const re_psw = document.getElementById('re_psw').value;
+        if ( name && email && phone && psw && re_psw) {
+            if (psw !== re_psw){
+                alert("Nhập lại mật khẩu bị sai")
+                return
+            } else {
+                body = JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    psw: psw,
+                    re_psw: re_psw
+                })
+                fetch('/auth/signup', {method: "post", body: body}).then( resp => {
+                    return resp.json()
+                }).then(json => {
+                    if (json.error) {
+                        alert(json.error)
+                        return
+                    } else {
+
+                        document.body.innerHTML = 'Tạo tài khoản thành công!. Trở về trang chủ' 
+                    }
+                })
+            }
+        } else {
+            if (!name){
+                alert("Vui lòng nhập tên!")
+            } else if (!email) {
+                alert("Vui lòng nhập email")
+            } else if (!phone) {
+                alert("Vui lòng nhập số điện thoại!")
+            } else if (!psw) {
+                alert("Vui lòng nhập mật khẩu")
+            } else if (!re_psw) {
+                alert("Vui lòng điền vào ô nhập lại mật khẩu")
+            }
+        }
+    }
+</script>
 </html>
