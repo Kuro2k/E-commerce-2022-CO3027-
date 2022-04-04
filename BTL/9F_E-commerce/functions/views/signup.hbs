@@ -75,7 +75,7 @@
                         alert(json.error)
                         return
                     } else {
-                        document.body.innerHTML = 'Tạo tài khoản thành công!. Trở về trang chủ' 
+                        if(!alert("Tạo tài khoản thành công!")) document.location = '/login';
                     }
                 })
             }
