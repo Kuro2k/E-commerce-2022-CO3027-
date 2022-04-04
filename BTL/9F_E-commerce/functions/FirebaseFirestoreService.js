@@ -25,6 +25,11 @@ const addToCart = async (db, doc, uid) => {
 }
 
 const updateCart = async (db, docList, uid) => {
+    if (docList === []){
+        const user_cart = await getUserCart(db, uid);
+        (await firestore.getDocs(user_cart)).docs.map(async (doc) => {await firestore.deleteDoc(doc.ref)});
+        return;
+    }
     for (let i = 0; i < docList.length; i++){
         if (docList[i].category === "Trái cây"){
             docList[i].category = "fruit";

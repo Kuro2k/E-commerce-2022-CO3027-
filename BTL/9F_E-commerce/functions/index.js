@@ -234,9 +234,15 @@ app.get('/cart', async (req, res) => {
     res.render("cart", {user: user, len_cart: len_cart, product_list: product_list});
 })
 app.post("/updateCart", async (req, res) => {
+    var {user, len_cart, uid} = await isLogged();
     const docList = JSON.parse(req.body);
+    if (docList[0] == {}){
+        len_cart = 0;
+    } else{
+        len_cart = docList.length
+    }
     await handler_firestore.updateCart(db, docList, uid);
-    res.status(200).send({result: "Success"});
+    res.status(200).send({result: len_cart});
 })
 app.get('/order', async (req, res) => {
     const {user, len_cart, uid} = await isLogged();

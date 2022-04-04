@@ -149,7 +149,6 @@
                 .then(json => {
                     alert("Thêm vào giỏ hàng thành công!");
                     document.getElementById("cart-product-counter").innerHTML = json.result;
-                    console.log(json.result);
                     return;
                 })
                 .catch(err => {

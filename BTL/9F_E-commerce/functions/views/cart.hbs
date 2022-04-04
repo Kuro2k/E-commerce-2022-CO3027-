@@ -64,7 +64,7 @@
                     </div>
                     <div class="col col-md-8">
                         <h5 class="product-name"><b>{{name}}</b></h5>
-                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct();">Xóa</button>
+                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove(); calculateProduct(); newCart();">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -72,9 +72,9 @@
             <div class="col col-md-2 price-container"><span class="price" id="price">{{price}}</span>đ</div>
             <div class="col col-md-2 qty-counter">
                 <div class="counter">
-                    <span class="down" onClick="decreaseCount(event, this)">-</span>
+                    <span class="down" onClick="decreaseCount(event, this); newCart();">-</span>
                     <input id="amount" class="qty" type="text" value="{{amount}}">
-                    <span class="up" onClick="increaseCount(event, this)">+</span>
+                    <span class="up" onClick="increaseCount(event, this); newCart();">+</span>
                 </div>
             </div>
             <div class="col col-md-2 price-container"><span class="total-product-price"></span>đ</div>
@@ -117,6 +117,7 @@
             if (document.getElementsByClassName("total-product").length == 0) {
                 alert("Giỏ hàng đang trống. Vui lòng thêm sản phẩm vào giỏ hàng.");
                 document.getElementById("buy-btn").href = "#";
+                
             }
 
             else if (negative) {
@@ -131,8 +132,6 @@
                 const list_CategoryData = Object.keys(nodeCategoryList).map(key => nodeCategoryList[key].innerText);
                 const nodeNameList = document.querySelectorAll(".product-name");
                 const list_NameData = Object.keys(nodeNameList).map(key => nodeNameList[key].innerText);
-                const nodeImgList = document.querySelectorAll(".product-img");
-                const list_ImgData = Object.keys(nodeImgList).map(key => nodeImgList[key].attributes.src.value);
                 var body = []
                 for (let i = 0; i < list_NameData.length; i++) {
                     const item = {
@@ -149,7 +148,33 @@
 
         };
             
-
+        function newCart() {
+            const nodePriceList = document.querySelectorAll(".price");
+            const list_PriceData = Object.keys(nodePriceList).map(key => nodePriceList[key].innerText);
+            const nodeCategoryList = document.querySelectorAll(".col.col-md-2.category-container");
+            const list_CategoryData = Object.keys(nodeCategoryList).map(key => nodeCategoryList[key].innerText);
+            const nodeNameList = document.querySelectorAll(".product-name");
+            const list_NameData = Object.keys(nodeNameList).map(key => nodeNameList[key].innerText);
+            var body = []
+            for (let i = 0; i < list_NameData.length; i++) {
+                const item = {
+                    name: list_NameData[i],
+                    price: parseInt(list_PriceData[i].replace(".", "")),
+                    category: list_CategoryData[i],
+                    amount: parseInt(list_AmountData[i]),
+                }
+                body.push(item)
+            }
+            if (body == []){
+                body = [{}]
+            }
+            body = JSON.stringify(body);
+            fetch('/updateCart', {method: "post", body: body}).then(resp => {
+                return resp.json()
+            }).then(json => {
+                document.getElementById("cart-product-counter").innerHTML = json.result;
+            })
+        }
 
         function increaseCount(a, b) {
             var input = b.previousElementSibling;
